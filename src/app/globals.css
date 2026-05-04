@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+:root {
+  --bg-color: #181818;
+  --text-color: #fdfff5;
+  --line-color: #fdfff5;
+  --font-weight: 100;
+  --font-weight-bio: 100;
+  --opacity: 0.5;
+  --tag-bg-color: #ffffff1a;
+  --tag-border-color: #ffffff4d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  min-height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.5;
+  transition: 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.light {
+  --bg-color: #fdfeff;
+  --text-color: #181818;
+  --line-color: #181818;
+  --font-weight: 500;
+  --font-weight-bio: 300;
+  --opacity: 1;
+  --tag-bg-color: #0000001a;
+  --tag-border-color: #0000004d;
+}
+
+@theme inline {
+  --font-noto: var(--font-noto-sans);
+  --font-dot: var(--font-dot-gothic);
+  --animate-blink: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.cloud-one,
+.cloud-two,
+.cloud-three,
+.cloud-four,
+.cloud-five {
+  position: absolute;
+  overflow: hidden;
+  background: #414141;
+  opacity: 50%;
+  filter: blur(45px);
+  pointer-events: none;
+}
+
+.cloud-one {
+  top: 5%;
+  left: -15%;
+  z-index: 0;
+  width: 550px;
+  height: 850px;
+  rotate: 160deg;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.cloud-two {
+  top: 25%;
+  right: 30%;
+  z-index: 0;
+  width: 450px;
+  height: 190px;
+  rotate: 25deg;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.cloud-three {
+  top: 60%;
+  right: 20%;
+  z-index: -1;
+  width: 450px;
+  height: 550px;
+  rotate: 90deg;
+  border-radius: 50% 50% 50% 50% / 50% 50% 20% 20%;
+}
+
+.cloud-five {
+  right: -400px;
+  bottom: -500px;
+  z-index: 0;
+  width: 550px;
+  height: 850px;
+  rotate: 160deg;
+  border-radius: 60% 50% 30% 70% / 60% 30% 70% 40%;
+}
+
+@media (max-width: 768px) {
+  .cloud-one,
+  .cloud-two,
+  .cloud-three,
+  .cloud-four,
+  .cloud-five {
+    display: none;
+  }
+
+  @keyframes popupIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.9) translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes checkBounce {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.2);
+    }
+    80% {
+      transform: scale(0.95);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes glowPulse {
+    0%,
+    100% {
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.8);
+    }
+  }
+
+  .animate-popupIn {
+    animation: popupIn 0.35s ease-out;
+  }
+
+  .animate-check {
+    animation: checkBounce 0.5s ease-out;
+  }
+
+  .animate-glow {
+    animation: glowPulse 1.5s ease-in-out infinite;
+  }
+}
