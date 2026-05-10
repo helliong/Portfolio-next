@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getAssetPath } from "@/lib/getAssetPath";
 
 const socials = [
   {
@@ -65,7 +66,7 @@ export default function Contact() {
               className="transition hover:scale-110"
             >
               <img
-                src={isLight ? social.dark : social.light}
+                src={getAssetPath(isLight ? social.dark : social.light)}
                 alt={social.label}
                 className="w-9 sm:w-10 md:w-11 lg:w-[48px]"
               />

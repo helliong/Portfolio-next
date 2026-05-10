@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
+import { getAssetPath } from "@/lib/getAssetPath";
 
 const text = "front-end.web(developer)";
 

@@ -1,4 +1,5 @@
 import { projects } from "@/data/projects";
+import { getAssetPath } from "@/lib/getAssetPath";
 import Link from "next/link";
 
 export default function Projects() {
@@ -20,7 +21,7 @@ export default function Projects() {
                 className="flex gap-5 max-md:flex-col"
               >
                 <img
-                  src={project.image}
+                  src={getAssetPath(project.image)}
                   alt={project.name}
                   className="w-full max-w-[270px] shrink-0 rounded-[5px] border border-white transition hover:scale-[1.03] md:w-[270px]"
                 />

@@ -1,4 +1,5 @@
 import { experienceGroups } from "@/data/projects";
+import { getAssetPath } from "@/lib/getAssetPath";
 
 const socials = [
   { label: "INSTAGRAM", href: "https://www.instagram.com/hellliong/" },
@@ -21,7 +22,7 @@ export default function About() {
       <div className="mt-14 flex flex-col gap-8 lg:mt-[10%] lg:flex-row lg:gap-10">
         <div className="flex justify-center lg:block">
           <img
-            src="/assets/img/svg/author-photo.svg"
+            src={getAssetPath("/assets/img/svg/author-photo.svg")}
             alt="Author Photo"
             className="
     h-auto
