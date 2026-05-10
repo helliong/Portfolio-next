@@ -1,5 +1,4 @@
 import { cases } from "@/data/projects";
-import { getAssetPath } from "@/lib/getAssetPath";
 
 export default function Cases() {
   return (
@@ -19,7 +18,7 @@ export default function Cases() {
             className="flex cursor-pointer flex-col"
           >
             <img
-              src={getAssetPath(item.image)}
+              src={item.image}
               alt={item.alt}
               className="w-full max-w-[270px] rounded-[5px] border border-white transition hover:scale-[1.03]"
             />

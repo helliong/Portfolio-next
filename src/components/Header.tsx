@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
-import { getAssetPath } from "@/lib/getAssetPath";
+
 
 const text = "front-end.web(developer)";
 
@@ -86,8 +86,8 @@ export default function Header() {
         <img
           src={
             isLight
-              ? getAssetPath("/logoBlack.svg")
-              : getAssetPath("/logoWhite.svg")
+              ? "/logoBlack.svg"
+              : "/logoWhite.svg"
           }
           alt="logo"
           className="h-auto w-[52px] sm:w-[64px] lg:w-[72px]"

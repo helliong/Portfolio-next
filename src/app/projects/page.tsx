@@ -1,7 +1,6 @@
 import { projects } from "@/data/projects";
 import Link from "next/link";
-import { getAssetPath } from "@/lib/getAssetPath";
-import { basePath } from "@/lib/basePath";
+
 
 export default function ProjectsPage() {
   return (
@@ -29,7 +28,7 @@ export default function ProjectsPage() {
                 className="flex gap-6 max-md:flex-col"
               >
                 <img
-                  src={getAssetPath(project.image)}
+                  src={project.image}
                   alt={project.name}
                   className="h-auto w-[270px] shrink-0 rounded-[5px] border border-white transition duration-300 hover:scale-[1.03] max-md:w-full"
                 />

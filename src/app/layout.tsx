@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DotGothic16, Noto_Sans } from "next/font/google";
 import "./globals.css";
-import { getAssetPath } from "@/lib/getAssetPath";
 
 const notoSans = Noto_Sans({
   subsets: ["latin", "cyrillic"],
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   title: "Egor Yakovlev | Frontend developer",
   description: "Frontend developer portfolio",
   icons: {
-    icon: getAssetPath("/logoWhite.svg"),
+    icon: "/logoWhite.svg",
   },
 };
 
