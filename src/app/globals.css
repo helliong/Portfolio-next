@@ -330,6 +330,7 @@ body.light {
   .portfolio-nav button,
   .portfolio-nav a {
     font-size: 12px;
+    display: none
   }
 
   .page-container {
