@@ -1,2 +1,1 @@
-export const basePath =
-  process.env.NODE_ENV === "production" ? "/Portfolio-next" : "";
+export const basePath = "";

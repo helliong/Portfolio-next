@@ -8,7 +8,7 @@ export default function ProjectsPage() {
     <main className="min-h-screen bg-[var(--bg-color)] px-4 py-16 text-[var(--text-color)] transition-colors duration-300">
       <div className="mx-auto max-w-[1478px]">
         <a
-          href={basePath}
+          href="/"
           className="mb-16 inline-flex text-[16px] opacity-60 transition hover:opacity-100"
         >
           ← back home
