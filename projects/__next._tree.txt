@@ -7,4 +7,4 @@
 :HL["/assets/img/svg/leaf-project.svg","image"]
 :HL["/assets/img/svg/password-project.svg","image"]
 :HL["/assets/img/svg/nophoto.svg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"projects","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"_vNFdSa5rfCdcBhokg0GO"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"projects","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"NhtlmXjxBq5dPXmoXrAmt"}
