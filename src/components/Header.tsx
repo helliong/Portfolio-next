@@ -86,13 +86,12 @@ export default function Header() {
         <img
           src={
             isLight
-              ? "/assets/img/icons/logoBlack.svg"
-              : "/assets/img/icons/logoWhite.svg"
+              ? getAssetPath("/logoBlack.svg")
+              : getAssetPath("/logoWhite.svg")
           }
           alt="logo"
-          className="w-[52px] sm:w-[64px] lg:w-auto"
+          className="h-auto w-[52px] sm:w-[64px] lg:w-[72px]"
         />
-
         <div className="relative text-sm font-semibold sm:text-base">
           <button
             type="button"

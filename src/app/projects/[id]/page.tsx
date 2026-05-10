@@ -1,4 +1,5 @@
 import { projects } from "@/data/projects";
+import { getAssetPath } from "@/lib/getAssetPath";
 
 type Props = {
   params: Promise<{
@@ -33,7 +34,7 @@ export default async function ProjectPage({ params }: Props) {
         </h1>
 
         <img
-          src={project.image}
+          src={getAssetPath(project.image)}
           alt={project.name}
           className="mb-6 w-full rounded-lg border"
         />

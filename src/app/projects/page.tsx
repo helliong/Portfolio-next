@@ -1,12 +1,14 @@
 import { projects } from "@/data/projects";
 import Link from "next/link";
+import { getAssetPath } from "@/lib/getAssetPath";
+import { basePath } from "@/lib/basePath";
 
 export default function ProjectsPage() {
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-4 py-16 text-[var(--text-color)] transition-colors duration-300">
       <div className="mx-auto max-w-[1478px]">
         <a
-          href="/"
+          href={basePath}
           className="mb-16 inline-flex text-[16px] opacity-60 transition hover:opacity-100"
         >
           ← back home
@@ -27,7 +29,7 @@ export default function ProjectsPage() {
                 className="flex gap-6 max-md:flex-col"
               >
                 <img
-                  src={project.image}
+                  src={getAssetPath(project.image)}
                   alt={project.name}
                   className="h-auto w-[270px] shrink-0 rounded-[5px] border border-white transition duration-300 hover:scale-[1.03] max-md:w-full"
                 />
