@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "deploy": "gh-pages -d out --dotfiles"
+    "lint": "next lint"
+    
   },
   "dependencies": {
     "@tailwindcss/postcss": "latest",
