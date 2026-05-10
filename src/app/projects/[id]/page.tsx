@@ -6,6 +6,12 @@ type Props = {
   }>;
 };
 
+export function generateStaticParams() {
+  return projects.map((project) => ({
+    id: project.id,
+  }));
+}
+
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
 

@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-
-    devIndicators: false
+  output: "export",
+  devIndicators: false,
 };
 
 export default nextConfig;
