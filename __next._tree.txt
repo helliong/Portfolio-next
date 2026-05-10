@@ -10,4 +10,4 @@
 :HL["/Portfolio-next/assets/img/svg/leaf-project.svg","image"]
 :HL["/Portfolio-next/assets/img/svg/password-project.svg","image"]
 :HL["/Portfolio-next/assets/img/svg/author-photo.svg","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"NhtlmXjxBq5dPXmoXrAmt"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}},"staleTime":300,"buildId":"QqCjxqKUWSdiU1jPCycdY"}
