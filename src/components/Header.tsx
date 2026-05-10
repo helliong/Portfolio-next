@@ -50,25 +50,22 @@ export default function Header() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  function toggleTheme() {
+  const toggleTheme = () => {
     setIsLight((prev) => {
       const next = !prev;
       document.body.classList.toggle("light", next);
       return next;
     });
-  }
+  };
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
-
     if (!el) return;
 
-    el.scrollIntoView({
+    window.scrollTo({
+      top: el.offsetTop,
       behavior: "smooth",
-      block: "start",
     });
-
-    window.history.replaceState(null, "", "/");
   };
 
   const showSuccessPopup = () => {
@@ -80,8 +77,11 @@ export default function Header() {
   };
 
   return (
-    <header id="home" className="relative flex min-h-screen flex-col">
-      <div className="flex justify-between max-md:flex-col max-md:gap-2.5">
+    <header
+      id="home"
+      className="relative flex min-h-screen flex-col pt-6 sm:pt-8 lg:pt-[7vh]"
+    >
+      <div className="flex items-start justify-between gap-4">
         <img
           src={
             isLight
@@ -89,21 +89,22 @@ export default function Header() {
               : "/assets/img/icons/logoWhite.svg"
           }
           alt="logo"
-          className="w-auto max-md:w-[15vw]"
+          className="w-[52px] sm:w-[64px] lg:w-auto"
         />
 
-        <div className="relative cursor-pointer text-base font-semibold text-[var(--text-color)]">
+        <div className="relative text-sm font-semibold sm:text-base">
           <button
             type="button"
             onClick={() => setIsPopupOpen(true)}
-            className="flex items-end text-[var(--text-color)] cursor-pointer"
+            className="flex cursor-pointer items-end text-[var(--text-color)]"
           >
             <span className="relative top-[6px] mr-1 h-[2px] w-4 bg-[var(--line-color)]" />
             self service
           </button>
+
           <span
-            className="block text-right text-[10px] font-[var(--font-weight)] opacity-[var(--opacity)]"
             onClick={() => setIsPopupOpen(true)}
+            className="block cursor-pointer text-right text-[10px] font-[var(--font-weight)] opacity-[var(--opacity)]"
           >
             20% OFF
           </span>
@@ -111,60 +112,53 @@ export default function Header() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="absolute right-[-50%] top-1/2 origin-top-left translate-y-[75vh] -rotate-90 cursor-pointer rounded-2xl text-[15px] font-semibold transition max-md:hidden"
+            className="
+  hidden
+  lg:block
+  lg:absolute
+  lg:right-[-50%]
+  lg:top-30%
+  lg:origin-top-left
+  lg:-rotate-90
+  lg:translate-y-[75vh]
+
+  cursor-pointer
+  text-[15px]
+  font-semibold
+  opacity-80
+  transition
+  hover:opacity-100
+"
           >
             {isLight ? "dark mode" : "light mode"}
           </button>
         </div>
       </div>
 
-      <div className="relative max-md:hidden">
-        <nav className="absolute left-[-6%] top-[82vh] z-10 flex origin-top-left -rotate-90 gap-[55px] group/menu">
-          {["contact", "about", "projects", "cases", "home"].map((item) => {
-            const isHome = item === "home";
+      <nav className="portfolio-nav">
+        {["contact", "about", "projects", "cases", "home"].map(
+          (item, index) => (
+            <button
+              key={item}
+              type="button"
+              onClick={() => scrollToSection(item)}
+            >
+              {item}
+              <span
+                className={`nav-line ${index === 4 ? "nav-line-home" : ""}`}
+              />
+            </button>
+          ),
+        )}
+      </nav>
 
-            return (
-              <button
-                key={item}
-                type="button"
-                onClick={() => {
-                  const el = document.getElementById(item);
-                  if (!el) return;
-
-                  window.scrollTo({
-                    top: el.offsetTop,
-                    behavior: "smooth",
-                  });
-
-                  window.history.replaceState(null, "", "/");
-                }}
-                className="group/item text-lg font-normal lowercase"
-              >
-                {item}
-
-                <span
-                  className={`
-            mt-1.5 block h-[1.5px] bg-[var(--line-color)] transition-[width,opacity] duration-300 ease-out
-            ${
-              isHome
-                ? "w-4 opacity-100 group-hover/menu:opacity-0 group-hover/menu:w-0 group-hover/item:opacity-100 group-hover/item:w-4"
-                : "w-0 opacity-0 group-hover/item:w-4 group-hover/item:opacity-100"
-            }
-          `}
-                />
-              </button>
-            );
-          })}
-        </nav>
-      </div>
-
-      <div className="mt-[10%] flex min-h-[40vh] items-center justify-center">
-        <span className="relative inline-block font-dot text-[50px] max-md:text-center max-md:text-[28px]">
+      <div className="flex min-h-[55vh] items-center justify-center text-center lg:mt-[10%] lg:min-h-[40vh]">
+        <span className="relative inline-block font-dot text-[30px] sm:text-[38px] md:text-[46px] lg:text-[50px]">
           {typedText}
-          <span className="absolute left-full top-full h-1 w-[35px] -translate-y-[5px] animate-blink bg-[var(--line-color)] max-md:w-5" />
+          <span className="absolute left-full top-full h-1 w-5 -translate-y-[5px] animate-blink bg-[var(--line-color)] sm:w-[28px] lg:w-[35px]" />
         </span>
       </div>
-      
+
       <SelfServicePopup
         isOpen={isPopupOpen}
         onClose={() => setIsPopupOpen(false)}

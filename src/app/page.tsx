@@ -8,17 +8,16 @@ import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
-    <main className="relative overflow-x-hidden overflow-y-hidden">
+    <main className="relative overflow-hidden bg-[var(--bg-color)] text-[var(--text-color)]">
       <BackgroundClouds />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1478px] px-[2%] pt-[7vh] font-noto text-[50px] max-md:pt-[2vh] max-md:text-2xl">
+      <div className="page-container relative z-10 font-noto">
         <Header />
         <Cases />
         <Projects />
         <About />
         <Contact />
         <Footer />
-        <div className="cloud-five" />
       </div>
     </main>
   );

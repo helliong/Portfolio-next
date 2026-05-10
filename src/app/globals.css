@@ -113,7 +113,7 @@ body.light {
   border-radius: 60% 50% 30% 70% / 60% 30% 70% 40%;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .cloud-one,
   .cloud-two,
   .cloud-three,
@@ -170,5 +170,169 @@ body.light {
 
   .animate-glow {
     animation: glowPulse 1.5s ease-in-out infinite;
+  }
+} */
+
+/* ===== RESPONSIVE PORTFOLIO ===== */
+
+.page-container {
+  width: 100%;
+  max-width: 1478px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.portfolio-nav {
+  position: absolute;
+  left: -6%;
+  top: 30%;
+  z-index: 50;
+  display: flex;
+  gap: 55px;
+  transform-origin: top left;
+  transform: translateY(55vh) rotate(-90deg);
+}
+
+.portfolio-nav button,
+.portfolio-nav a {
+  font-size: 18px;
+  font-weight: 400;
+  text-transform: lowercase;
+  cursor: pointer;
+}
+
+.nav-line {
+  display: block;
+  margin-top: 6px;
+  height: 1.5px;
+  width: 0;
+  opacity: 0;
+  background: var(--line-color);
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.portfolio-nav button:hover .nav-line,
+.portfolio-nav a:hover .nav-line {
+  width: 16px;
+  opacity: 1;
+}
+
+.nav-line-home {
+  width: 16px;
+  opacity: 1;
+}
+
+.portfolio-nav:hover .nav-line-home {
+  width: 0;
+  opacity: 0;
+}
+
+.portfolio-nav button:hover .nav-line-home,
+.portfolio-nav a:hover .nav-line-home {
+  width: 16px;
+  opacity: 1;
+}
+
+@keyframes popupIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes checkBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.8);
+  }
+}
+
+.animate-popupIn {
+  animation: popupIn 0.35s ease-out;
+}
+
+.animate-check {
+  animation: checkBounce 0.5s ease-out;
+}
+
+.animate-glow {
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 1280px) {
+  .page-container {
+    padding: 0 32px;
+  }
+
+  .portfolio-nav {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .page-container {
+    padding: 0 24px;
+  }
+
+  .portfolio-nav {
+    display: none;
+  }
+
+  .portfolio-nav button,
+  .portfolio-nav a {
+    font-size: 13px;
+  }
+
+  body {
+    padding-bottom: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 0 16px;
+  }
+
+  .cloud-one,
+  .cloud-two,
+  .cloud-three,
+  .cloud-four,
+  .cloud-five {
+    display: none
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-nav button,
+  .portfolio-nav a {
+    font-size: 12px;
+  }
+
+  .page-container {
+    padding: 0 14px;
   }
 }
