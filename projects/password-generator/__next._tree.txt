@@ -1,0 +1,6 @@
+:HL["/_next/static/chunks/0vvf7cr2bly0n.css","style"]
+:HL["/_next/static/media/13c8bea787795a91-s.p.0l3mtu3k~c~p5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/6beed150a745887e-s.p.0rt_xiixxti87.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/dc6d2a64e9dbf3bc-s.p.11~i--ovv74c_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/assets/img/svg/password-project.svg","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"projects","param":null,"prefetchHints":0,"slots":{"children":{"name":"id","param":{"type":"d","key":"password-generator","siblings":null},"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}}}},"staleTime":300,"buildId":"ghbnBvJVboA-5uLsAbnF1"}

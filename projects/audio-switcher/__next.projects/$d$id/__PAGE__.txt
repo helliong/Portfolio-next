@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/01xlw8hd842-c.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+3:"$Sreact.suspense"
+:HL["/assets/img/svg/nophoto.svg","image"]
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"min-h-screen bg-[var(--bg-color)] px-4 py-16 text-[var(--text-color)]","children":["$","div",null,{"className":"mx-auto max-w-[1000px]","children":[["$","a",null,{"href":"/projects","className":"mb-10 inline-block opacity-60","children":"← back"}],["$","h1",null,{"className":"mb-6 text-[40px] font-bold lowercase","children":"Audio switcher"}],["$","img",null,{"src":"/assets/img/svg/nophoto.svg","alt":"Audio switcher","className":"mb-6 w-full rounded-lg border"}],["$","p",null,{"className":"text-[16px] opacity-[var(--opacity)]","children":"Audio switcher is a web application designed to allow users to easily switch between different audio sources. The platform provides a simple interface for selecting and managing audio inputs, making it easy to toggle between various sound options. Built with a user-friendly interface, Audio switcher aims to simplify the audio management process for users."}]]}]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"ghbnBvJVboA-5uLsAbnF1"}
+4:null
