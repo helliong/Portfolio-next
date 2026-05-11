@@ -9,6 +9,7 @@
   --opacity: 0.5;
   --tag-bg-color: #ffffff1a;
   --tag-border-color: #ffffff4d;
+  --form-shadow: 0 0 60px rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -46,6 +47,7 @@ body.light {
   --opacity: 1;
   --tag-bg-color: #0000001a;
   --tag-border-color: #0000004d;
+  --form-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
 }
 
 @theme inline {
@@ -279,5 +281,4 @@ body.light {
     padding: 0 14px;
   }
 
-  
 }

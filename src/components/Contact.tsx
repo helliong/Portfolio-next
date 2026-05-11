@@ -3,7 +3,6 @@
 import { title } from "node:process";
 import { useEffect, useState } from "react";
 
-
 const socials = [
   {
     label: "Instagram",
@@ -72,13 +71,13 @@ export default function Contact() {
 
         <div
           className="
-    mt-14 w-full max-w-[760px]
+     mt-14 w-full max-w-[760px]
     rounded-[32px]
-    border border-white/10
-    bg-white/[0.03]
+    border border-[var(--tag-border-color)]
+    bg-[var(--tag-bg-color)]
     p-6 sm:p-8 lg:p-10
-    shadow-[0_0_60px_rgba(255,255,255,0.03)]
-    backdrop-blur-xl
+    shadow-[var(--form-shadow)]
+    backdrop-blur-x1
   "
         >
           <form
@@ -160,21 +159,28 @@ export default function Contact() {
                   name="name"
                   placeholder="your name"
                   className="
-        rounded-2xl border border-white/10
-        bg-white/[0.03]
+        rounded-2xl border
+        border-[var(--tag-border-color)]
+        bg-[var(--tag-bg-color)]
         px-5 py-4 text-[15px]
         text-[var(--text-color)]
-        placeholder:text-white/35
+        placeholder:text-[var(--text-color)]/35
         outline-none transition-all duration-300
 
         focus:border-[var(--line-color)]
-        focus:bg-white/[0.05]
+        focus:bg-[var(--tag-bg-color)]
         focus:shadow-[0_0_20px_rgba(255,255,255,0.05)]
+
+        light:border-black/10
+        light:bg-black/[0.03]
+        light:placeholder:text-black/35
+        light:focus:bg-black/[0.05]
+        light:focus:shadow-[0_0_20px_rgba(0,0,0,0.05)]
       "
                 />
 
                 {errors.name && (
-                  <span className="text-[12px] text-red-400 font-bold">
+                  <span className="text-[12px] font-bold text-red-400 light:text-red-500">
                     {errors.name}
                   </span>
                 )}
@@ -186,21 +192,27 @@ export default function Contact() {
                   name="email"
                   placeholder="email"
                   className="
-        rounded-2xl border border-white/10
-        bg-white/[0.03]
+        rounded-2xl border
+        border-[var(--tag-border-color)] bg-[var(--tag-bg-color)]
         px-5 py-4 text-[15px]
         text-[var(--text-color)]
-        placeholder:text-white/35
+        placeholder:text-[var(--text-color)]/35
         outline-none transition-all duration-300
 
         focus:border-[var(--line-color)]
-        focus:bg-white/[0.05]
+        focus:bg-[var(--tag-bg-color)]
         focus:shadow-[0_0_20px_rgba(255,255,255,0.05)]
+
+        light:border-black/10
+        light:bg-black/[0.03]
+        light:placeholder:text-black/35
+        light:focus:bg-black/[0.05]
+        light:focus:shadow-[0_0_20px_rgba(0,0,0,0.05)]
       "
                 />
 
                 {errors.email && (
-                  <span className="text-[12px] text-red-400 font-bold">
+                  <span className="text-[12px] font-bold text-red-400 light:text-red-500">
                     {errors.email}
                   </span>
                 )}
@@ -212,16 +224,22 @@ export default function Contact() {
               name="projectType"
               placeholder="project type"
               className="
-    rounded-2xl border border-white/10
-    bg-white/[0.03]
+    rounded-2xl border
+    border-[var(--tag-border-color)] bg-[var(--tag-bg-color)]
     px-5 py-4 text-[15px]
     text-[var(--text-color)]
-    placeholder:text-white/35
+    placeholder:text-[var(--text-color)]/35
     outline-none transition-all duration-300
 
     focus:border-[var(--line-color)]
-    focus:bg-white/[0.05]
+    focus:bg-[var(--tag-bg-color)]
     focus:shadow-[0_0_20px_rgba(255,255,255,0.05)]
+
+    light:border-black/10
+    light:bg-black/[0.03]
+    light:placeholder:text-black/35
+    light:focus:bg-black/[0.05]
+    light:focus:shadow-[0_0_20px_rgba(0,0,0,0.05)]
   "
             />
 
@@ -231,21 +249,27 @@ export default function Contact() {
                 name="message"
                 placeholder="tell me about your project"
                 className="
-      resize-none rounded-2xl border border-white/10
-      bg-white/[0.03]
+      resize-none rounded-2xl border
+      border-[var(--tag-border-color)] bg-[var(--tag-bg-color)]
       px-5 py-4 text-[15px]
       text-[var(--text-color)]
-      placeholder:text-white/35
+      placeholder:text-[var(--text-color)]/35
       outline-none transition-all duration-300
 
       focus:border-[var(--line-color)]
-      focus:bg-white/[0.05]
+      focus:bg-[var(--tag-bg-color)]
       focus:shadow-[0_0_20px_rgba(255,255,255,0.05)]
+
+      light:border-black/10
+      light:bg-black/[0.03]
+      light:placeholder:text-black/35
+      light:focus:bg-black/[0.05]
+      light:focus:shadow-[0_0_20px_rgba(0,0,0,0.05)]
     "
               />
 
               {errors.message && (
-                <span className="text-[12px] text-red-400 font-bold ">
+                <span className="text-[12px] font-bold text-red-400 light:text-red-500">
                   {errors.message}
                 </span>
               )}
@@ -259,13 +283,13 @@ export default function Contact() {
                 </p>
 
                 {errors.submit && (
-                  <span className="text-[12px] text-red-400 font-bold">
+                  <span className="text-[12px] font-bold text-red-400 light:text-red-500">
                     {errors.submit}
                   </span>
                 )}
 
                 {success && (
-                  <span className="text-[12px] text-green-400 font-bold">
+                  <span className="text-[12px] font-bold text-green-400 light:text-green-600">
                     {success}
                   </span>
                 )}
@@ -285,6 +309,8 @@ export default function Contact() {
       hover:bg-[var(--text-color)]
       hover:text-[var(--bg-color)]
       hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]
+
+      light:hover:shadow-[0_0_30px_rgba(0,0,0,0.12)]
 
       disabled:cursor-not-allowed
       disabled:opacity-50
@@ -310,16 +336,13 @@ export default function Contact() {
               className="transition hover:scale-110"
               title={social.title}
             >
-              
               <img
                 src={isLight ? social.dark : social.light}
                 alt={social.label}
                 className="w-9 sm:w-10 md:w-11 lg:w-[48px]"
               />
             </a>
-            
           ))}
-          
         </div>
       </div>
     </section>
