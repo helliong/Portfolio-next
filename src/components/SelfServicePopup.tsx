@@ -12,6 +12,7 @@ type Errors = {
   name: string;
   email: string;
   message: string;
+  submit: string;
 };
 
 export default function SelfServicePopup({
@@ -21,11 +22,13 @@ export default function SelfServicePopup({
 }: Props) {
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   const [errors, setErrors] = useState<Errors>({
     name: "",
     email: "",
     message: "",
+    submit: "",
   });
 
   useEffect(() => {
@@ -48,7 +51,7 @@ export default function SelfServicePopup({
     if (!isOpen) return;
 
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === "Escape" && !isSending) {
         onClose();
       }
     };
@@ -58,12 +61,13 @@ export default function SelfServicePopup({
     return () => {
       document.removeEventListener("keydown", handleEsc);
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, isSending, onClose]);
 
   const clearError = (field: keyof Errors) => {
     setErrors((prev) => ({
       ...prev,
       [field]: "",
+      submit: "",
     }));
   };
 
@@ -71,7 +75,9 @@ export default function SelfServicePopup({
 
   return (
     <div
-      onClick={onClose}
+      onClick={() => {
+        if (!isSending) onClose();
+      }}
       className={`
         fixed inset-0 z-[100] flex items-center justify-center bg-black/60 px-4 backdrop-blur-sm
         transition-opacity duration-300
@@ -93,7 +99,8 @@ export default function SelfServicePopup({
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-4 cursor-pointer text-[24px] opacity-60 transition hover:opacity-100"
+          disabled={isSending}
+          className="absolute right-5 top-4 cursor-pointer text-[24px] opacity-60 transition hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-30"
         >
           ×
         </button>
@@ -111,7 +118,7 @@ export default function SelfServicePopup({
         <form
           noValidate
           className="mt-8 flex flex-col gap-4"
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
 
             const form = e.currentTarget;
@@ -122,18 +129,23 @@ export default function SelfServicePopup({
             const emailInput = form.elements.namedItem(
               "email",
             ) as HTMLInputElement;
+            const projectTypeInput = form.elements.namedItem(
+              "projectType",
+            ) as HTMLInputElement;
             const messageInput = form.elements.namedItem(
               "message",
             ) as HTMLTextAreaElement;
 
             const name = nameInput.value.trim();
             const email = emailInput.value.trim();
+            const projectType = projectTypeInput.value.trim();
             const message = messageInput.value.trim();
 
             const newErrors: Errors = {
               name: "",
               email: "",
               message: "",
+              submit: "",
             };
 
             if (!name) {
@@ -156,17 +168,46 @@ export default function SelfServicePopup({
               return;
             }
 
-            onClose();
+            try {
+              setIsSending(true);
 
-            setTimeout(() => {
-              onSuccess();
-              form.reset();
-              setErrors({
-                name: "",
-                email: "",
-                message: "",
+              const response = await fetch("/api/send", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  name,
+                  email,
+                  projectType,
+                  message,
+                }),
               });
-            }, 300);
+
+              if (!response.ok) {
+                throw new Error("Failed to send request");
+              }
+
+              onClose();
+
+              setTimeout(() => {
+                onSuccess();
+                form.reset();
+                setErrors({
+                  name: "",
+                  email: "",
+                  message: "",
+                  submit: "",
+                });
+              }, 300);
+            } catch {
+              setErrors((prev) => ({
+                ...prev,
+                submit: "something went wrong. please try again later",
+              }));
+            } finally {
+              setIsSending(false);
+            }
           }}
         >
           <div className="flex flex-col gap-1">
@@ -174,9 +215,10 @@ export default function SelfServicePopup({
               name="name"
               type="text"
               placeholder="your name"
+              disabled={isSending}
               onChange={() => clearError("name")}
               className={`
-                rounded-xl border bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition
+                rounded-xl border bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition disabled:cursor-not-allowed disabled:opacity-60
                 ${
                   errors.name
                     ? "border-red-500 focus:border-red-500"
@@ -195,9 +237,10 @@ export default function SelfServicePopup({
               name="email"
               type="email"
               placeholder="email"
+              disabled={isSending}
               onChange={() => clearError("email")}
               className={`
-                rounded-xl border bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition
+                rounded-xl border bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition disabled:cursor-not-allowed disabled:opacity-60
                 ${
                   errors.email
                     ? "border-red-500 focus:border-red-500"
@@ -215,7 +258,8 @@ export default function SelfServicePopup({
             name="projectType"
             type="text"
             placeholder="project type"
-            className="rounded-xl border border-[var(--tag-border-color)] bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition focus:border-[var(--line-color)]"
+            disabled={isSending}
+            className="rounded-xl border border-[var(--tag-border-color)] bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition focus:border-[var(--line-color)] disabled:cursor-not-allowed disabled:opacity-60"
           />
 
           <div className="flex flex-col gap-1">
@@ -223,9 +267,10 @@ export default function SelfServicePopup({
               name="message"
               placeholder="tell me about your project"
               rows={5}
+              disabled={isSending}
               onChange={() => clearError("message")}
               className={`
-                resize-none rounded-xl border bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition
+                resize-none rounded-xl border bg-[var(--tag-bg-color)] px-4 py-3 text-[15px] outline-none transition disabled:cursor-not-allowed disabled:opacity-60
                 ${
                   errors.message
                     ? "border-red-500 focus:border-red-500"
@@ -241,11 +286,16 @@ export default function SelfServicePopup({
             )}
           </div>
 
+          {errors.submit && (
+            <span className="text-[12px] text-red-400">{errors.submit}</span>
+          )}
+
           <button
             type="submit"
-            className="mt-2 rounded-full border border-[var(--line-color)] px-8 py-3 text-[16px] font-medium lowercase transition hover:bg-[var(--text-color)] hover:text-[var(--bg-color)]"
+            disabled={isSending}
+            className="mt-2 rounded-full border border-[var(--line-color)] px-8 py-3 text-[16px] font-medium lowercase transition hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] disabled:cursor-not-allowed disabled:opacity-50"
           >
-            send request
+            {isSending ? "sending..." : "send request"}
           </button>
         </form>
       </div>
