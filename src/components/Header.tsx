@@ -136,7 +136,7 @@ export default function Header() {
       </div>
 
       <nav className="portfolio-nav">
-        {["contact", "about", "projects", "cases", "home"].map(
+        {["contact", "projects", "cases", "about", "home"].map(
           (item, index) => (
             <button
               key={item}

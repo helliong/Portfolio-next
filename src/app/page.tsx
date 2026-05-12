@@ -13,9 +13,9 @@ export default function Home() {
 
       <div className="page-container relative z-10 font-noto">
         <Header />
+        <About />
         <Cases />
         <Projects />
-        <About />
         <Contact />
         <Footer />
       </div>
