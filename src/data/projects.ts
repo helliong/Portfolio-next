@@ -19,14 +19,14 @@ export const cases = [
   {
     id: "construction",
     name: "construction",
-    image: "/assets/img/mockup-construction-project.png",
+    image: "/assets/img/mockup-construction-project-optimized.webp",
     alt: "construction project",
     link: "https://github.com/helliong/KONSTRUKT",
   },
   {
     id: "link cast",
     name: "link cast",
-    image: "/assets/img/mockup-linkcast.png",
+    image: "/assets/img/mockup-linkcast-optimized.webp",
     alt: "link cast project",
     link: "https://linkcast.helliong.space/",
   },
@@ -36,7 +36,7 @@ export const projects: Project[] = [
   {
     id: "gallery-python",
     name: "Gallery on python",
-    image: "/assets/img/mockup-gallery-project.png",
+    image: "/assets/img/mockup-gallery-project-optimized.webp",
     alt: "Gallery on python",
     description:
       "This is a simple and neat gallery project that combines standard web technologies with a small Python script to automate the creation of an image structure. Essentially, it is an interactive static gallery where the frontend displays and navigates through images, while the backend creates a JSON tree of available files.",
@@ -46,7 +46,7 @@ export const projects: Project[] = [
   {
     id: "snake",
     name: "Snake game",
-    image: "/assets/img/mockup-snake-project.png",
+    image: "/assets/img/mockup-snake-project-optimized.webp",
     alt: "Snake game",
     description:
       "This is a concise browser version of the classic arcade game Snake, with a focus on mobile usability. JavaScript handles the core game logic, HTML provides the markup, and CSS is responsible for the styling.",
@@ -56,7 +56,7 @@ export const projects: Project[] = [
   {
     id: "leaf-catcher",
     name: "Leaf catcher",
-    image: "/assets/img/mockup-leafcatcher.png",
+    image: "/assets/img/mockup-leafcatcher-optimized.webp",
     alt: "Leaf catcher game",
     description:
       "This is a small interactive web game with friendly and clear gameplay: catch falling leaves and avoid dangerous red instances. The project is lightweight, cross-platform, and runs directly in the browser without a backend.",
@@ -66,7 +66,7 @@ export const projects: Project[] = [
   {
     id: "password-generator",
     name: "Password generator",
-    image: "/assets/img/mockup-password-project.png",
+    image: "/assets/img/mockup-password-project-optimized.webp",
     alt: "Password generator",
     description:
       "This is a small client-side web project that quickly and conveniently generates strong passwords. It is a typical frontend utility where markup sets the interface, styles decorate the visual part, and JavaScript implements the generation logic.",

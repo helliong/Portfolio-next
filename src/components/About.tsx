@@ -20,19 +20,22 @@ export default function About() {
 
       <div className="mt-14 flex flex-col gap-8 lg:mt-[10%] lg:flex-row lg:gap-10">
         <div className="flex justify-center lg:block">
-          <img
-            src={"/assets/img/svg/author-photo.svg"}
-            alt="Author Photo"
+          <div
             className="
-    h-auto
-  w-[240px]
-  sm:w-[300px]
-  md:w-[380px]
-  lg:w-[460px]
-  xl:w-[620px]
-  shrink-0
-  "
-          />
+      size-[150px]
+      overflow-hidden rounded-full shrink-0
+      sm:size-[180px]
+      md:size-[220px]
+      lg:size-[260px]
+      xl:size-[300px]
+    "
+          >
+            <img
+              src="/assets/img/svg/author-photo-900w.webp"
+              alt="Author Photo"
+              className="h-full w-full object-cover object-center"
+            />
+          </div>
         </div>
 
         <div className="flex flex-col">
