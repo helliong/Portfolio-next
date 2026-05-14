@@ -24,11 +24,11 @@ export const cases = [
     link: "https://github.com/helliong/KONSTRUKT",
   },
   {
-    id: "school",
-    name: "school",
+    id: "link cast",
+    name: "link cast",
     image: "/assets/img/svg/school-project.svg",
-    alt: "school project",
-    link: "/projects/school",
+    alt: "link cast project",
+    link: "https://linkcast.helliong.space/",
   },
 ];
 
