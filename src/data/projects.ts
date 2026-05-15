@@ -1,3 +1,5 @@
+import React from "react";
+
 export type Project = {
   id: string;
   name: string;
@@ -94,7 +96,16 @@ export const projects: Project[] = [
     tags: ["AutoHotkey"],
     link: "https://github.com/helliong/audio-switcher",
   },
-  
+  {
+    id: "bmi-calculator",
+    name: "BMI calculator",
+    image: "/assets/img/mockup-bmi-app-optimized.webp",
+    alt: "BMI calculator",
+    description:
+      "BMI calculator is a simple web application designed to help users calculate their Body Mass Index (BMI). The platform provides a user-friendly interface for entering height and weight information, and then displays the calculated BMI along with relevant health information. Built with a focus on simplicity and usability, the BMI calculator aims to make health tracking accessible to everyone.",
+    tags: ["next.js", "typescript", "tailwind", "supabase", "react"],
+    link: "https://github.com/helliong/bmi-calculator",
+  },
 ];
 
 export const experienceGroups = [
