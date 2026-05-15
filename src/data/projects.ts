@@ -110,7 +110,7 @@ export const projects: Project[] = [
 
 export const experienceGroups = [
   {
-    title: "I’ve had experiences with",
+    title: "I have experience with",
     items: [
       "MySQL Database",
       "GIT, GitHub",
@@ -121,7 +121,7 @@ export const experienceGroups = [
     ],
   },
   {
-    title: "I have years of experience with",
+    title: "I’m confident with",
     items: [
       "Coding HTML",
       "Coding CSS3",
@@ -133,7 +133,7 @@ export const experienceGroups = [
     ],
   },
   {
-    title: "I work and study about",
+    title: "I work with and study",
     items: [
       "Studying React",
       "Studying TypeScript",

@@ -99,7 +99,7 @@ export default function Header() {
             className="flex cursor-pointer items-end text-[var(--text-color)]"
           >
             <span className="relative top-[6px] mr-1 h-[2px] w-4 bg-[var(--line-color)]" />
-            self service
+            order a website
           </button>
 
           <span
