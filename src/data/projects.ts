@@ -103,6 +103,17 @@ export const projects: Project[] = [
     "link": "https://github.com/helliong/linkcast"
   },
   {
+    "id": "audio-switcher",
+    "name": "Audio Switcher",
+    "image": "/assets/img/projects/mockup-audio-switcher.webp",
+    "alt": "Audio Switcher",
+    "description": "No description yet.",
+    "tags": [
+      "autohotkey"
+    ],
+    "link": "https://github.com/helliong/audio-switcher"
+  },
+  {
     "id": "snake",
     "name": "Snake",
     "image": "/assets/img/projects/mockup-snake.webp",
