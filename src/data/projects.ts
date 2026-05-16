@@ -72,7 +72,7 @@ export const projects: Project[] = [
   {
     "id": "qr-link-generator",
     "name": "Qr Link Generator",
-    "image": "/assets/img/projects/no-photo.webp",
+    "image": "/assets/img/projects/mockup-qr-link-generator.webp",
     "alt": "Qr Link Generator",
     "description": "No description yet.",
     "tags": [
