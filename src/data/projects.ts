@@ -151,10 +151,10 @@ export const projects: Project[] = [
     "link": "https://github.com/helliong/password-generator"
   },
   {
-    "id": "konstrukt",
-    "name": "KONSTRUKT",
-    "image": "/assets/img/projects/mockup-KONSTRUKT.webp",
-    "alt": "KONSTRUKT",
+    "id": "construction",
+    "name": "Construction",
+    "image": "/assets/img/projects/mockup-construction.webp",
+    "alt": "Construction",
     "description": "My second landing",
     "tags": [
       "css",
@@ -162,7 +162,7 @@ export const projects: Project[] = [
       "jquery",
       "pet-project"
     ],
-    "link": "https://github.com/helliong/KONSTRUKT"
+    "link": "https://github.com/helliong/construction"
   },
   {
     "id": "leafcatcher",
