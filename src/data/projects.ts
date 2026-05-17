@@ -44,6 +44,7 @@ export const experienceGroups = [
     items: [
       "MySQL Database",
       "postgreSQL Database",
+      "supabase Database",
       "GIT, GitHub",
       "Coding PHP",
       "Figma, Adobe Illustrator",
@@ -61,7 +62,7 @@ export const experienceGroups = [
       "Creating Logos",
       "Creating UI/UX Designs",
       "Using Figma",
-    ],
+    ], 
   },
   {
     title: "I work with and study",
