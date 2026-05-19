@@ -79,6 +79,17 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "linkcast",
+    "name": "Linkcast",
+    "image": "/assets/img/projects/mockup-linkcast.webp",
+    "alt": "Linkcast",
+    "description": "No description yet.",
+    "tags": [
+      "python"
+    ],
+    "link": "https://github.com/helliong/linkcast"
+  },
+  {
     "id": "qr-link-generator",
     "name": "Qr Link Generator",
     "image": "/assets/img/projects/mockup-qr-link-generator.webp",
@@ -99,17 +110,6 @@ export const projects: Project[] = [
       "python"
     ],
     "link": "https://github.com/helliong/bmi-calculator"
-  },
-  {
-    "id": "linkcast",
-    "name": "Linkcast",
-    "image": "/assets/img/projects/mockup-linkcast.webp",
-    "alt": "Linkcast",
-    "description": "No description yet.",
-    "tags": [
-      "python"
-    ],
-    "link": "https://github.com/helliong/linkcast"
   },
   {
     "id": "audio-switcher",
