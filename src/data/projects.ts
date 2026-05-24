@@ -90,17 +90,6 @@ export const projects: Project[] = [
     "link": "https://github.com/helliong/image-crop"
   },
   {
-    "id": "vscode-extension",
-    "name": "Vscode Extension",
-    "image": "/assets/img/projects/no-photo.webp",
-    "alt": "Vscode Extension",
-    "description": "No description yet.",
-    "tags": [
-      "css"
-    ],
-    "link": "https://github.com/helliong/vscode-extension"
-  },
-  {
     "id": "linkcast",
     "name": "Linkcast",
     "image": "/assets/img/projects/mockup-linkcast.webp",
