@@ -79,6 +79,28 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "image-crop",
+    "name": "Image Crop",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Image Crop",
+    "description": "No description yet.",
+    "tags": [
+      "javascript"
+    ],
+    "link": "https://github.com/helliong/image-crop"
+  },
+  {
+    "id": "vscode-extension",
+    "name": "Vscode Extension",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Vscode Extension",
+    "description": "No description yet.",
+    "tags": [
+      "css"
+    ],
+    "link": "https://github.com/helliong/vscode-extension"
+  },
+  {
     "id": "linkcast",
     "name": "Linkcast",
     "image": "/assets/img/projects/mockup-linkcast.webp",
