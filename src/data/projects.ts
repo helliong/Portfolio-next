@@ -79,6 +79,17 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "unit-tests-practice-",
+    "name": "Unit Tests Practice ",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Unit Tests Practice ",
+    "description": "No description yet.",
+    "tags": [
+      "typescript"
+    ],
+    "link": "https://github.com/helliong/unit-tests-practice-"
+  },
+  {
     "id": "image-crop",
     "name": "Image Crop",
     "image": "/assets/img/projects/no-photo.webp",
