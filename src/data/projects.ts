@@ -83,7 +83,7 @@ export const projects: Project[] = [
     "name": "Unit Tests Practice ",
     "image": "/assets/img/projects/no-photo.webp",
     "alt": "Unit Tests Practice ",
-    "description": "No description yet.",
+    "description": "portfolio-hidden",
     "tags": [
       "typescript"
     ],
