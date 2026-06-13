@@ -79,17 +79,6 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
-    "id": "image-crop",
-    "name": "Image Crop",
-    "image": "/assets/img/projects/no-photo.webp",
-    "alt": "Image Crop",
-    "description": "No description yet.",
-    "tags": [
-      "javascript"
-    ],
-    "link": "https://github.com/helliong/image-crop"
-  },
-  {
     "id": "linkcast",
     "name": "Linkcast",
     "image": "/assets/img/projects/mockup-linkcast.webp",
@@ -134,40 +123,6 @@ export const projects: Project[] = [
     "link": "https://github.com/helliong/audio-switcher"
   },
   {
-    "id": "snake",
-    "name": "Snake",
-    "image": "/assets/img/projects/mockup-snake.webp",
-    "alt": "Snake",
-    "description": "Snake game that works on the phone. -made by helliong-",
-    "tags": [
-      "game",
-      "html",
-      "html-css-javascript",
-      "js",
-      "pet-project",
-      "snake",
-      "snake-game",
-      "web-game",
-      "javascript"
-    ],
-    "link": "https://github.com/helliong/snake"
-  },
-  {
-    "id": "gallerypython",
-    "name": "GalleryPython",
-    "image": "/assets/img/projects/mockup-galleryPython.webp",
-    "alt": "GalleryPython",
-    "description": "No description yet.",
-    "tags": [
-      "gallery",
-      "json",
-      "pet-project",
-      "python",
-      "css"
-    ],
-    "link": "https://github.com/helliong/galleryPython"
-  },
-  {
     "id": "password-generator",
     "name": "Password Generator",
     "image": "/assets/img/projects/mockup-password-generator.webp",
@@ -194,21 +149,5 @@ export const projects: Project[] = [
       "pet-project"
     ],
     "link": "https://github.com/helliong/construction"
-  },
-  {
-    "id": "leafcatcher",
-    "name": "Leafcatcher",
-    "image": "/assets/img/projects/mockup-leafcatcher.webp",
-    "alt": "Leafcatcher",
-    "description": "Catch leaves, but be careful with the red ones :)",
-    "tags": [
-      "css",
-      "html",
-      "js",
-      "pet-project",
-      "web",
-      "web-game"
-    ],
-    "link": "https://github.com/helliong/leafcatcher"
   }
 ];
