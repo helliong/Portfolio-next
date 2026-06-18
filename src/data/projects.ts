@@ -79,6 +79,17 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "market-ai",
+    "name": "Market Ai",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Market Ai",
+    "description": "No description yet.",
+    "tags": [
+      "typescript"
+    ],
+    "link": "https://github.com/helliong/market-ai"
+  },
+  {
     "id": "linkcast",
     "name": "Linkcast",
     "image": "/assets/img/projects/mockup-linkcast.webp",
