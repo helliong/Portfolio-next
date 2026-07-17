@@ -85,6 +85,11 @@ export const projects: Project[] = [
     "alt": "Market Ai",
     "description": "No description yet.",
     "tags": [
+      "docker",
+      "microservice",
+      "nextjs",
+      "react",
+      "tailwindcss",
       "typescript"
     ],
     "link": "https://github.com/helliong/market-ai"
