@@ -79,6 +79,25 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "campus-and-code",
+    "name": "Campus And Code",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Campus And Code",
+    "description": "No description yet.",
+    "tags": [
+      "docker",
+      "nextjs",
+      "nodemailer",
+      "postgresql",
+      "react",
+      "s3-storage",
+      "scss",
+      "typescript",
+      "zustand"
+    ],
+    "link": "https://github.com/helliong/Campus-and-code"
+  },
+  {
     "id": "market-ai",
     "name": "Market Ai",
     "image": "/assets/img/projects/no-photo.webp",
