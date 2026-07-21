@@ -26,3 +26,6 @@
 - ссылка на GitHub-репозиторий;
 - ссылка на Live Demo;
 - краткое описание функционала проекта.
+
+
+https://www.figma.com/design/pjC6zGAdTU0UyiZNH9rZIo/Portfolio?node-id=0-1&p=f&t=GWJXQVAEyJpP6Zsg-0
