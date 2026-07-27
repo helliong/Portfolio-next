@@ -79,6 +79,21 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "lumea-candles",
+    "name": "Lumea Candles",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Lumea Candles",
+    "description": "No description yet.",
+    "tags": [
+      "nextjs",
+      "pet-project",
+      "scss-modules",
+      "typescript",
+      "scss"
+    ],
+    "link": "https://github.com/helliong/lumea-candles"
+  },
+  {
     "id": "campus-and-code",
     "name": "Campus And Code",
     "image": "/assets/img/projects/no-photo.webp",
