@@ -79,6 +79,17 @@ export const experienceGroups = [
 
 export const projects: Project[] = [
   {
+    "id": "pinwindow",
+    "name": "PinWindow",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "PinWindow",
+    "description": "No description yet.",
+    "tags": [
+      "c#"
+    ],
+    "link": "https://github.com/helliong/pinWindow"
+  },
+  {
     "id": "lumea-candles",
     "name": "Lumea Candles",
     "image": "/assets/img/projects/no-photo.webp",
