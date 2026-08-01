@@ -88,7 +88,7 @@ export const projects: Project[] = [
   {
     id: "pinwindow",
     name: "PinWindow",
-    image: "/assets/img/projects/mockup-pinWindow.webp",
+    image: "/assets/img/projects/mockup-pinwindow.webp",
     alt: "PinWindow",
     description: "No description yet.",
     tags: ["c#"],

@@ -24,10 +24,13 @@ function slugify(value) {
 }
 
 function imageExists(repoName) {
+  const normalizedName = slugify(repoName);
   const extensions = [".webp", ".png", ".jpg", ".jpeg", ".svg"];
 
   return extensions.find((ext) =>
-    fs.existsSync(path.join(PROJECTS_IMG_DIR, `mockup-${repoName}${ext}`)),
+    fs.existsSync(
+      path.join(PROJECTS_IMG_DIR, `mockup-${normalizedName}${ext}`),
+    ),
   );
 }
 
