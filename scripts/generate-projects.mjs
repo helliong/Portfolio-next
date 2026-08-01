@@ -48,11 +48,10 @@ async function getRepos() {
 
 function createProject(repo) {
   const id = slugify(repo.name);
-
   const foundExt = imageExists(repo.name);
 
   const image = foundExt
-    ? `/assets/img/projects/mockup-${repo.name}${foundExt}`
+    ? `/assets/img/projects/mockup-${id}${foundExt}`
     : "/assets/img/projects/no-photo.webp";
 
   const tags = [
