@@ -30,7 +30,7 @@ export const cases: Project[] = [
   {
     id: "market-ai",
     name: "Market Ai",
-    image: "/assets/img/projects/mockup-marketai.webp",
+    image: "/assets/img/projects/mockup-market-ai.webp",
     alt: "Market Ai",
     description: "No description yet.",
     tags: [
@@ -97,7 +97,7 @@ export const projects: Project[] = [
   {
     id: "lumea-candles",
     name: "Lumea Candles",
-    image: "/assets/img/projects/mockup-lumea.webp",
+    image: "/assets/img/projects/mockup-lumea-candles.webp",
     alt: "Lumea Candles",
     description: "No description yet.",
     tags: ["nextjs", "pet-project", "scss-modules", "typescript", "scss"],
@@ -106,7 +106,7 @@ export const projects: Project[] = [
   {
     id: "campus-and-code",
     name: "Campus And Code",
-    image: "/assets/img/projects/mockup-campuscode.webp",
+    image: "/assets/img/projects/mockup-Campus-and-code.webp",
     alt: "Campus And Code",
     description: "No description yet.",
     tags: [
@@ -125,7 +125,7 @@ export const projects: Project[] = [
   {
     id: "market-ai",
     name: "Market Ai",
-    image: "/assets/img/projects/mockup-marketai.webp",
+    image: "/assets/img/projects/mockup-market-ai.webp",
     alt: "Market Ai",
     description: "No description yet.",
     tags: [

@@ -103,7 +103,7 @@ export const cases: Project[] = [
   {
     id: "market-ai",
     name: "Market Ai",
-    image: "/assets/img/projects/mockup-marketai.webp",
+    image: "/assets/img/projects/mockup-market-ai.webp",
     alt: "Market Ai",
     description: "No description yet.",
     tags: [
