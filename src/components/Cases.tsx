@@ -2,7 +2,10 @@ import { cases } from "@/data/projects";
 
 export default function Cases() {
   return (
-    <section id="cases" className="scroll-mt-10 py-24 sm:py-32 lg:py-[20%] lg:pb-[25%]">
+    <section
+      id="cases"
+      className="scroll-mt-10 py-24 sm:py-32 lg:py-[20%] lg:pb-[25%]"
+    >
       <div className="relative flex flex-col items-center gap-10 lg:flex-row lg:items-start lg:justify-between">
         <span className="relative flex whitespace-nowrap text-[28px] font-bold lg:right-[95px] lg:mt-[120px] lg:-translate-y-1/2 lg:-rotate-90 lg:text-3xl">
           amazing cases
