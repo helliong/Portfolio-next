@@ -1,168 +1,146 @@
 "use client";
 
+import { ArrowDown, ArrowUpRight, MapPin, Moon, Sun } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
 
-
-const text = "front-end.web(developer)";
-
-const navItems = [
-  { id: "contact", label: "contact" },
-  { id: "projects", label: "projects" },
-  { id: "services", label: "services" },
-  { id: "about", label: "about" },
-  { id: "home", label: "home" },
-];
+const navItems = ["about", "services", "projects", "contact"];
 
 export default function Header() {
-  const [typedText, setTypedText] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [isLight, setIsLight] = useState(false);
 
   useEffect(() => {
-    let index = 0;
-    let isDeleting = false;
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    const typeEffect = () => {
-      if (!isDeleting) {
-        setTypedText(text.substring(0, index + 1));
-        index += 1;
-
-        if (index === text.length) {
-          timeoutId = setTimeout(() => {
-            isDeleting = true;
-            typeEffect();
-          }, 1200);
-          return;
-        }
-      } else {
-        setTypedText(text.substring(0, index - 1));
-        index -= 1;
-
-        if (index === 0) {
-          timeoutId = setTimeout(() => {
-            isDeleting = false;
-            typeEffect();
-          }, 500);
-          return;
-        }
-      }
-
-      timeoutId = setTimeout(typeEffect, isDeleting ? 40 : 80);
-    };
-
-    typeEffect();
-
-    return () => clearTimeout(timeoutId);
+    setIsLight(document.body.classList.contains("light"));
   }, []);
 
   const toggleTheme = () => {
-    setIsLight((prev) => {
-      const next = !prev;
+    setIsLight((current) => {
+      const next = !current;
       document.body.classList.toggle("light", next);
       return next;
     });
   };
 
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    window.scrollTo({
-      top: el.offsetTop,
-      behavior: "smooth",
-    });
-  };
-
   const showSuccessPopup = () => {
     setIsSuccessOpen(true);
-
-    setTimeout(() => {
-      setIsSuccessOpen(false);
-    }, 2000);
+    window.setTimeout(() => setIsSuccessOpen(false), 2000);
   };
 
   return (
-    <header
-      id="home"
-      className="relative flex min-h-screen flex-col pt-6 sm:pt-8 lg:pt-[7vh]"
-    >
-      <div className="flex items-start justify-between gap-4">
-        <img
-          src={
-            isLight
-              ? "/logoBlack.svg"
-              : "/logoWhite.svg"
-          }
-          alt="logo"
-          className="h-auto w-[52px] sm:w-[64px] lg:w-[72px]"
-        />
-        <div className="relative text-sm font-semibold sm:text-base">
+    <header id="home" className="site-header">
+      <div className="topbar">
+        <a href="#home" aria-label="Back to top" className="brand-mark">
+          <Image
+            src={isLight ? "/logoBlack.svg" : "/logoWhite.svg"}
+            alt="Egor Yakovlev"
+            width={52}
+            height={36}
+            priority
+          />
+        </a>
+
+        <nav className="desktop-nav" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <a key={item} href={`#${item}`}>
+              {item}
+            </a>
+          ))}
+        </nav>
+
+        <div className="topbar-actions">
           <button
             type="button"
+            className="order-action"
             onClick={() => setIsPopupOpen(true)}
-            className="flex cursor-pointer items-end text-[var(--text-color)]"
           >
-            <span className="relative top-[6px] mr-1 h-[2px] w-4 bg-[var(--line-color)]" />
-            order a website
+            <span>order a website</span>
+            <small>20% OFF</small>
           </button>
-
-          <span
-            onClick={() => setIsPopupOpen(true)}
-            className="block cursor-pointer text-right text-[10px] font-[var(--font-weight)] opacity-[var(--opacity)]"
-          >
-            20% OFF
-          </span>
-
+          <span className="topbar-divider" aria-hidden="true" />
           <button
             type="button"
+            className="icon-action"
             onClick={toggleTheme}
-            className="
-  hidden
-  lg:block
-  lg:absolute
-  lg:right-[-50%]
-  lg:top-30%
-  lg:origin-top-left
-  lg:-rotate-90
-  lg:translate-y-[75vh]
-
-  cursor-pointer
-  text-[15px]
-  font-semibold
-  opacity-80
-  transition
-  hover:opacity-100
-"
+            aria-label={
+              isLight ? "Switch to dark mode" : "Switch to light mode"
+            }
+            title={isLight ? "dark mode" : "light mode"}
           >
-            {isLight ? "dark mode" : "light mode"}
+            {isLight ? <Moon size={17} /> : <Sun size={17} />}
+            <span>{isLight ? "dark mode" : "light mode"}</span>
           </button>
         </div>
       </div>
 
-      <nav className="portfolio-nav">
-        {navItems.map((item, index) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={() => scrollToSection(item.id)}
-          >
-            {item.label}
-            <span
-              className={`nav-line ${index === 4 ? "nav-line-home" : ""}`}
-            />
-          </button>
-        ))}
-      </nav>
+      <div className="hero-grid">
+        <div className="hero-copy">
+          <div>
+            <h1 className="font-dot">
+              front-end web
+              <br />
+              developer
+              <span className="blink-cursor" aria-hidden="true" />
+            </h1>
+            <p>I build fast, accessible and focused web experiences.</p>
+          </div>
 
-      <div className="flex min-h-[55vh] items-center justify-center text-center lg:mt-[10%] lg:min-h-[40vh]">
-        <span className="relative inline-block font-dot text-[30px] sm:text-[38px] md:text-[46px] lg:text-[50px]">
-          {typedText}
-          <span className="absolute left-full top-full h-1 w-5 -translate-y-[5px] animate-blink bg-[var(--line-color)] sm:w-[28px] lg:w-[35px]" />
-        </span>
+          <div className="hero-meta">
+            <span className="status-label">available for freelance</span>
+            <span className="meta-separator" aria-hidden="true" />
+            <span>
+              <MapPin size={14} aria-hidden="true" /> based in Russia
+            </span>
+            <span className="meta-separator" aria-hidden="true" />
+            <span>UTC +6</span>
+          </div>
+
+          <a href="#projects" className="scroll-link">
+            <ArrowDown size={18} aria-hidden="true" />
+            scroll to explore
+          </a>
+        </div>
+
+        <article className="featured-project">
+          <div className="featured-heading">
+            <span className="section-kicker">selected project</span>
+            <div className="featured-title-row">
+              <h2>pin window</h2>
+              <span className="status-label">open source</span>
+            </div>
+          </div>
+
+          <Link href="/projects/pinwindow" className="featured-media">
+            <Image
+              src="/assets/img/projects/mockup-pinwindow.webp"
+              alt="QR Link Generator project preview"
+              fill
+              sizes="(max-width: 900px) 100vw, 52vw"
+              priority
+            />
+          </Link>
+
+          <div className="featured-footer">
+            <Link href="/projects/pinwindow" className="text-link">
+              view project <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
+            <div className="featured-facts">
+              <span>
+                <small>role</small>developer
+              </span>
+              <span>
+                <small>stack</small>typescript
+              </span>
+              <span>
+                <small>status</small>published
+              </span>
+            </div>
+          </div>
+        </article>
       </div>
 
       <SelfServicePopup
@@ -170,7 +148,6 @@ export default function Header() {
         onClose={() => setIsPopupOpen(false)}
         onSuccess={showSuccessPopup}
       />
-
       <SuccessPopup
         isOpen={isSuccessOpen}
         onClose={() => setIsSuccessOpen(false)}

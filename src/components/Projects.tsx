@@ -1,53 +1,81 @@
+import { getProjectDetails } from "@/data/projectDetails";
 import { projects } from "@/data/projects";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+
+const featuredIds = [
+  "qr-link-generator",
+  "campus-and-code",
+  "market-ai",
+  "lumea-candles",
+  "pinwindow",
+  "linkcast",
+];
+
+const featuredProjects = featuredIds
+  .map((id) => projects.find((project) => project.id === id))
+  .filter((project) => project !== undefined)
+  .map(getProjectDetails);
 
 export default function Projects() {
   return (
-    <section id="projects" className="scroll-mt-10 py-24 sm:py-32 lg:py-[12%]">
-      <div className="relative">
-        <h2 className="flex flex-col text-[28px] font-bold lowercase lg:right-0 lg:top-0 lg:items-end lg:text-3xl">
-          personal projects
-          <span className="mt-1.5 h-1 w-[75px] bg-[var(--line-color)]" />
+    <section id="projects" className="portfolio-section projects-section">
+      <div className="section-heading">
+        <span className="accent-dash" aria-hidden="true" />
+        <h2>
+          selected projects / {String(featuredProjects.length).padStart(2, "0")}
         </h2>
-
-        <div className="mt-16 grid w-full grid-cols-1 gap-10 lg:mt-[200px] lg:grid-cols-2 lg:gap-x-20 lg:gap-y-[60px]">
-          {projects.slice(0, 4).map((project) => (
-            <article key={project.id}>
-              <a
-                href={`/projects/${project.id}`}
-                className="flex gap-5 max-md:flex-col"
-              >
-                <img
-                  src={project.image}
-                  alt={project.name}
-                  className="w-full max-w-[270px] shrink-0 rounded-[5px] border border-white transition hover:scale-[1.03] md:w-[270px]"
-                />
-
-                <div>
-                  <h3 className="mb-2 text-[22px] font-semibold lowercase sm:text-[24px]">
-                    {project.name}
-                  </h3>
-
-                  <p className="max-w-[420px] text-[14px] font-light leading-[1.4] opacity-[var(--opacity)]">
-                    {project.description}
-                  </p>
-                </div>
-              </a>
-            </article>
-          ))}
-        </div>
       </div>
 
-      {projects.length > 4 && (
-        <div className="mt-14 flex justify-center lg:mt-20">
-          <Link
-            href="/projects"
-            className="rounded-full border border-[var(--line-color)] px-7 py-3 text-[15px] font-medium lowercase transition hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] sm:px-8 sm:text-[16px]"
-          >
-            see all projects
-          </Link>
-        </div>
-      )}
+      <div className="project-list">
+        {featuredProjects.map((project, index) => (
+          <article className="project-row" key={project.id}>
+            <div className="project-index">
+              {String(index + 1).padStart(2, "0")}
+            </div>
+
+            <div className="project-copy">
+              <h3>{project.name}</h3>
+              <p>{project.summary}</p>
+              <div className="project-tags">
+                <span className="status-label">repository</span>
+                {project.tags.slice(0, 4).map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              <div className="project-links">
+                <Link href={`/projects/${project.id}`} className="text-link">
+                  case study <ArrowUpRight size={16} aria-hidden="true" />
+                </Link>
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-link muted-link"
+                >
+                  github <ArrowUpRight size={16} aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+
+            <Link href={`/projects/${project.id}`} className="project-media">
+              <Image
+                src={project.image}
+                alt={project.alt}
+                fill
+                sizes="(max-width: 767px) 100vw, 48vw"
+              />
+            </Link>
+          </article>
+        ))}
+      </div>
+
+      <div className="projects-more">
+        <Link href="/projects" className="text-link">
+          view all projects <ArrowUpRight size={17} aria-hidden="true" />
+        </Link>
+      </div>
     </section>
   );
 }
