@@ -1,6 +1,7 @@
 "use client";
 
 import { getProjectDetails } from "@/data/projectDetails";
+import { projectCategories, projectOrder } from "@/data/projectOrder";
 import { projects } from "@/data/projects";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
@@ -12,32 +13,6 @@ import SuccessPopup from "./SuccessPopup";
 type ProjectFilter = "all" | "web" | "apps" | "tools";
 
 const filters: ProjectFilter[] = ["all", "web", "apps", "tools"];
-
-const projectOrder = [
-  "qr-link-generator",
-  "campus-and-code",
-  "market-ai",
-  "lumea-candles",
-  "pinwindow",
-  "linkcast",
-  "bmi-calculator",
-  "audio-switcher",
-  "password-generator",
-  "construction",
-];
-
-const projectCategories: Record<string, Exclude<ProjectFilter, "all">> = {
-  "qr-link-generator": "tools",
-  "campus-and-code": "web",
-  "market-ai": "web",
-  "lumea-candles": "web",
-  pinwindow: "apps",
-  linkcast: "tools",
-  "bmi-calculator": "tools",
-  "audio-switcher": "apps",
-  "password-generator": "tools",
-  construction: "web",
-};
 
 const orderedProjects = projectOrder
   .map((id) => projects.find((project) => project.id === id))
@@ -54,7 +29,9 @@ export default function ProjectsArchive() {
       activeFilter === "all"
         ? orderedProjects
         : orderedProjects.filter(
-            (project) => projectCategories[project.id] === activeFilter,
+            (project) =>
+              projectCategories[project.id as keyof typeof projectCategories] ===
+              activeFilter,
           ),
     [activeFilter],
   );
