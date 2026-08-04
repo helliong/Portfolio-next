@@ -1196,7 +1196,10 @@ body.light .projects-archive-logo-light {
   align-items: center;
   gap: 14px;
   padding-bottom: 7px;
+  cursor: pointer;
+  border: 0;
   border-bottom: 2px solid var(--accent-color);
+  background: transparent;
   font-size: clamp(24px, 2.2vw, 38px);
   text-decoration: none;
   text-transform: uppercase;
