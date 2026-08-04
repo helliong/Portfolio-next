@@ -81,7 +81,7 @@ export default function Header() {
         <div className="hero-copy">
           <div>
             <h1 className="font-dot">
-              front-end web
+              <span className="hero-title-line">front-end web</span>
               <br />
               developer
               <span className="blink-cursor" aria-hidden="true" />
