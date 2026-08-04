@@ -60,12 +60,14 @@ export default function Projects() {
             </div>
 
             <Link href={`/projects/${project.id}`} className="project-media">
-              <Image
-                src={project.image}
-                alt={project.alt}
-                fill
-                sizes="(max-width: 767px) 100vw, 48vw"
-              />
+              <span className="project-media-frame">
+                <Image
+                  src={project.image}
+                  alt={project.alt}
+                  fill
+                  sizes="(max-width: 767px) calc(100vw - 68px), 42vw"
+                />
+              </span>
             </Link>
           </article>
         ))}
