@@ -14,9 +14,7 @@ export default function Projects() {
           {projects.slice(0, 4).map((project) => (
             <article key={project.id}>
               <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/projects/${project.id}`}
                 className="flex gap-5 max-md:flex-col"
               >
                 <img

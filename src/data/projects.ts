@@ -6,6 +6,7 @@ export type Project = {
   description: string;
   tags: string[];
   link: string;
+  liveDemo?: string | null;
 };
 
 export const cases: Project[] = [

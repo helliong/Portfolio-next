@@ -1,10 +1,10 @@
 import About from "@/components/About";
 import BackgroundClouds from "@/components/BackgroundClouds";
-import Cases from "@/components/Cases";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Projects from "@/components/Projects";
+import WhatICanDo from "@/components/WhatICanDo";
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
       <div className="page-container relative z-10 font-noto">
         <Header />
         <About />
-        <Cases />
+        <WhatICanDo />
         <Projects />
         <Contact />
         <Footer />

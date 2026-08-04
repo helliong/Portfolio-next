@@ -7,6 +7,14 @@ import SuccessPopup from "./SuccessPopup";
 
 const text = "front-end.web(developer)";
 
+const navItems = [
+  { id: "contact", label: "contact" },
+  { id: "projects", label: "projects" },
+  { id: "services", label: "services" },
+  { id: "about", label: "about" },
+  { id: "home", label: "home" },
+];
+
 export default function Header() {
   const [typedText, setTypedText] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -136,20 +144,18 @@ export default function Header() {
       </div>
 
       <nav className="portfolio-nav">
-        {["contact", "projects", "cases", "about", "home"].map(
-          (item, index) => (
-            <button
-              key={item}
-              type="button"
-              onClick={() => scrollToSection(item)}
-            >
-              {item}
-              <span
-                className={`nav-line ${index === 4 ? "nav-line-home" : ""}`}
-              />
-            </button>
-          ),
-        )}
+        {navItems.map((item, index) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => scrollToSection(item.id)}
+          >
+            {item.label}
+            <span
+              className={`nav-line ${index === 4 ? "nav-line-home" : ""}`}
+            />
+          </button>
+        ))}
       </nav>
 
       <div className="flex min-h-[55vh] items-center justify-center text-center lg:mt-[10%] lg:min-h-[40vh]">

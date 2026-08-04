@@ -1,7 +1,4 @@
 import { projects } from "@/data/projects";
-import Link from "next/link";
-
-
 export default function ProjectsPage() {
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-4 py-16 text-[var(--text-color)] transition-colors duration-300">
@@ -22,9 +19,7 @@ export default function ProjectsPage() {
           {projects.map((project) => (
             <article key={project.id}>
               <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/projects/${project.id}`}
                 className="flex gap-6 max-md:flex-col"
               >
                 <img

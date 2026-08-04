@@ -69,6 +69,7 @@ function createProject(repo) {
     description: repo.description || "No description yet.",
     tags: [...new Set(tags)],
     link: repo.html_url,
+    liveDemo: repo.homepage || null,
   };
 }
 
@@ -81,6 +82,7 @@ function toTs(projects) {
   description: string;
   tags: string[];
   link: string;
+  liveDemo?: string | null;
 };
 
 export const cases: Project[] = [
