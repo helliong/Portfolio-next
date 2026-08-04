@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { DotGothic16, Noto_Sans } from "next/font/google";
+import { DotGothic16, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
-const notoSans = Noto_Sans({
+const robotoMono = Roboto_Mono({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-noto-sans",
+  variable: "--font-roboto-mono",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const dotGothic = DotGothic16({
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${notoSans.variable} ${dotGothic.variable}`}>{children}</body>
+      <body className={`${robotoMono.variable} ${dotGothic.variable}`}>{children}</body>
     </html>
   );
 }

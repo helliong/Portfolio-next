@@ -31,11 +31,13 @@ export default function WhatICanDo() {
         {services.map((service) => (
           <article key={service.number} className="service-item">
             <span className="service-number">{service.number}</span>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-            <ul>
-              {service.items.map((item) => <li key={item}>{item}</li>)}
-            </ul>
+            <div className="service-content">
+              <h3>{service.title}</h3>
+              <p>{service.description}</p>
+              <ul>
+                {service.items.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
           </article>
         ))}
       </div>
