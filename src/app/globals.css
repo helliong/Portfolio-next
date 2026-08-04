@@ -1107,28 +1107,106 @@ body.light .projects-archive-logo-light {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background-image: linear-gradient(var(--border-color) 1px, transparent 1px), linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  border-color: rgba(243, 243, 237, 0.28);
+  background-color: #0b0c0c;
+  background-image: linear-gradient(rgba(243, 243, 237, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(243, 243, 237, 0.2) 1px, transparent 1px);
   background-size: 36px 36px;
 }
 
-.about-mark span {
+.about-mark-logo {
   position: relative;
   z-index: 1;
-  padding: 0 10px;
-  background: var(--bg-color);
-  font-family: var(--font-roboto), "Roboto", sans-serif;
-  font-size: clamp(72px, 8vw, 138px);
-  font-weight: 400;
-  line-height: 1;
+  display: grid;
+  width: clamp(148px, 12vw, 196px);
+  aspect-ratio: 1.4 / 1;
+  padding: clamp(20px, 2.2vw, 30px);
+  background: #0b0c0c;
+  place-items: center;
+}
+
+.about-mark-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .about-mark i {
   position: absolute;
-  right: 16%;
-  bottom: 20%;
+  top: 82%;
+  left: 84%;
   width: 18px;
   height: 18px;
   background: var(--accent-color);
+  box-shadow: 0 0 0 rgba(201, 255, 49, 0);
+  transform: translate(-50%, -50%);
+  animation: aboutMarkMove 24s steps(1, end) infinite, aboutMarkPulse 2.4s ease-in-out infinite;
+  will-change: top, left, box-shadow;
+}
+
+@keyframes aboutMarkMove {
+  0%, 6% {
+    top: 82%;
+    left: 84%;
+  }
+  8%, 14% {
+    top: 82%;
+    left: 14%;
+  }
+  16%, 22% {
+    top: 14%;
+    left: 14%;
+  }
+  24%, 30% {
+    top: 14%;
+    left: 84%;
+  }
+  32%, 38% {
+    top: 88%;
+    left: 50%;
+  }
+  40%, 46% {
+    top: 48%;
+    left: 22%;
+  }
+  48%, 54% {
+    top: 48%;
+    left: 78%;
+  }
+  56%, 62% {
+    top: 12%;
+    left: 50%;
+  }
+  64%, 70% {
+    top: 52%;
+    left: 8%;
+  }
+  72%, 78% {
+    top: 68%;
+    left: 90%;
+  }
+  80%, 86% {
+    top: 86%;
+    left: 66%;
+  }
+  88%, 94% {
+    top: 24%;
+    left: 32%;
+  }
+  96%, 100% {
+    top: 82%;
+    left: 84%;
+  }
+}
+
+@keyframes aboutMarkPulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 0 rgba(201, 255, 49, 0);
+  }
+  50% {
+    opacity: 0.72;
+    box-shadow: 0 0 16px rgba(201, 255, 49, 0.42);
+  }
 }
 
 .process-grid {
@@ -1654,6 +1732,11 @@ body.light .footer-logo-light {
   .project-popup,
   .project-popup-backdrop {
     transition: none;
+  }
+
+  .about-mark i {
+    animation: none;
+    will-change: auto;
   }
 }
 

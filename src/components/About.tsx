@@ -1,4 +1,5 @@
 import { projects } from "@/data/projects";
+import Image from "next/image";
 
 export default function About() {
   return (
@@ -26,8 +27,15 @@ export default function About() {
           </div>
         </div>
 
-        <div className="about-mark" aria-label="EY monogram">
-          <span>EY</span>
+        <div className="about-mark" aria-label="Egor Yakovlev logo">
+          <span className="about-mark-logo">
+            <Image
+              src="/logoWhite.svg"
+              alt=""
+              width={182}
+              height={130}
+            />
+          </span>
           <i aria-hidden="true" />
         </div>
       </div>
