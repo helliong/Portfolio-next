@@ -182,10 +182,14 @@ button {
   line-height: 1.1;
 }
 
-.order-action::before {
+.order-action span {
+  position: relative;
+}
+
+.order-action span::before {
   position: absolute;
-  top: 8px;
-  left: 0;
+  right: calc(100% + 11px);
+  bottom: 1px;
   width: 15px;
   height: 1px;
   background: var(--line-color);
@@ -256,7 +260,7 @@ button {
   margin-left: 0.08em;
   background: currentColor;
   animation: blink 1s steps(1) infinite;
-  vertical-align: 0.06em;
+  vertical-align: 0;
 }
 
 .hero-copy p {
@@ -649,12 +653,12 @@ button {
 
 .about-stats div {
   min-width: 0;
-  padding-right: clamp(12px, 1vw, 18px);
+  padding-right: clamp(22px, 1.8vw, 34px);
 }
 
 .about-stats div + div {
   border-left: 1px solid var(--border-color);
-  padding-left: clamp(10px, 0.8vw, 14px);
+  padding-left: clamp(14px, 1.25vw, 20px);
 }
 
 .about-stats div:last-child {
@@ -695,7 +699,7 @@ button {
   z-index: 1;
   padding: 0 10px;
   background: var(--bg-color);
-  font-family: var(--font-roboto-mono), "Roboto Mono", monospace;
+  font-family: var(--font-roboto), "Roboto", sans-serif;
   font-size: clamp(72px, 8vw, 138px);
   font-weight: 400;
   line-height: 1;
@@ -1043,7 +1047,7 @@ body.light .footer-logo-light {
     font-size: 11px;
   }
 
-  .order-action::before {
+  .order-action span::before {
     width: 11px;
   }
 
@@ -1096,15 +1100,11 @@ body.light .footer-logo-light {
   }
 
   .about-stats {
-    gap: 0;
+    gap: 10px;
   }
 
   .about-stats div + div {
-    padding-left: 8px;
-  }
-
-  .about-stats div {
-    padding-right: 10px;
+    padding-left: 10px;
   }
 
   .contact-section {
