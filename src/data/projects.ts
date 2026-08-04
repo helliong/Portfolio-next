@@ -95,7 +95,8 @@ export const projects: Project[] = [
     "tags": [
       "c#"
     ],
-    "link": "https://github.com/helliong/pinWindow"
+    "link": "https://github.com/helliong/pinWindow",
+    "liveDemo": "https://github.com/helliong"
   },
   {
     "id": "lumea-candles",
@@ -110,7 +111,8 @@ export const projects: Project[] = [
       "typescript",
       "scss"
     ],
-    "link": "https://github.com/helliong/lumea-candles"
+    "link": "https://github.com/helliong/lumea-candles",
+    "liveDemo": "https://lumea-candles.vercel.app/"
   },
   {
     "id": "campus-and-code",
@@ -129,7 +131,8 @@ export const projects: Project[] = [
       "typescript",
       "zustand"
     ],
-    "link": "https://github.com/helliong/Campus-and-code"
+    "link": "https://github.com/helliong/Campus-and-code",
+    "liveDemo": "https://campuscode.helliong.space/"
   },
   {
     "id": "market-ai",
@@ -145,7 +148,8 @@ export const projects: Project[] = [
       "tailwindcss",
       "typescript"
     ],
-    "link": "https://github.com/helliong/market-ai"
+    "link": "https://github.com/helliong/market-ai",
+    "liveDemo": "https://market-ai-xi.vercel.app/"
   },
   {
     "id": "linkcast",
@@ -156,7 +160,8 @@ export const projects: Project[] = [
     "tags": [
       "python"
     ],
-    "link": "https://github.com/helliong/linkcast"
+    "link": "https://github.com/helliong/linkcast",
+    "liveDemo": "https://linkcast.helliong.space/"
   },
   {
     "id": "qr-link-generator",
@@ -167,7 +172,8 @@ export const projects: Project[] = [
     "tags": [
       "typescript"
     ],
-    "link": "https://github.com/helliong/qr-link-generator"
+    "link": "https://github.com/helliong/qr-link-generator",
+    "liveDemo": "https://qrcode.helliong.space/"
   },
   {
     "id": "bmi-calculator",
@@ -178,7 +184,8 @@ export const projects: Project[] = [
     "tags": [
       "python"
     ],
-    "link": "https://github.com/helliong/bmi-calculator"
+    "link": "https://github.com/helliong/bmi-calculator",
+    "liveDemo": "https://bmi.helliong.space/"
   },
   {
     "id": "audio-switcher",
@@ -189,7 +196,8 @@ export const projects: Project[] = [
     "tags": [
       "autohotkey"
     ],
-    "link": "https://github.com/helliong/audio-switcher"
+    "link": "https://github.com/helliong/audio-switcher",
+    "liveDemo": null
   },
   {
     "id": "password-generator",
@@ -203,7 +211,8 @@ export const projects: Project[] = [
       "pet-project",
       "javascript"
     ],
-    "link": "https://github.com/helliong/password-generator"
+    "link": "https://github.com/helliong/password-generator",
+    "liveDemo": "https://helliong.github.io/password-generator/"
   },
   {
     "id": "construction",
@@ -217,6 +226,7 @@ export const projects: Project[] = [
       "jquery",
       "pet-project"
     ],
-    "link": "https://github.com/helliong/construction"
+    "link": "https://github.com/helliong/construction",
+    "liveDemo": "https://helliong.github.io/construction/"
   }
 ];
