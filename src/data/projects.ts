@@ -96,7 +96,7 @@ export const projects: Project[] = [
       "c#"
     ],
     "link": "https://github.com/helliong/pinWindow",
-    "liveDemo": "https://github.com/helliong"
+    "liveDemo": null
   },
   {
     "id": "lumea-candles",

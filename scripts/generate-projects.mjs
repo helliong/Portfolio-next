@@ -19,6 +19,19 @@ function titleCase(name) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+function normalizeLiveDemo(homepage) {
+  if (!homepage) return null;
+
+  try {
+    const url = new URL(homepage);
+    return url.hostname === "github.com" || url.hostname === "www.github.com"
+      ? null
+      : url.toString();
+  } catch {
+    return null;
+  }
+}
+
 function slugify(value) {
   return value.toLowerCase().trim();
 }
@@ -69,7 +82,7 @@ function createProject(repo) {
     description: repo.description || "No description yet.",
     tags: [...new Set(tags)],
     link: repo.html_url,
-    liveDemo: repo.homepage || null,
+    liveDemo: normalizeLiveDemo(repo.homepage),
   };
 }
 

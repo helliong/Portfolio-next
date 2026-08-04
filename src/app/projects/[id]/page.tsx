@@ -1,6 +1,6 @@
 import { getProjectDetails } from "@/data/projectDetails";
 import { projects } from "@/data/projects";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, LockKeyhole } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -84,7 +84,7 @@ export default async function ProjectPage({ params }: Props) {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center gap-3 border border-[var(--line-color)] px-5 text-[14px] font-medium lowercase transition hover:bg-[var(--text-color)] hover:text-[var(--bg-color)]"
+              className="inline-flex min-h-12 min-w-[120px] items-center justify-center gap-3 border border-[var(--line-color)] px-5 text-[14px] font-medium lowercase transition hover:bg-[var(--text-color)] hover:text-[var(--bg-color)]"
             >
               github
               <ArrowUpRight size={17} aria-hidden="true" />
@@ -95,15 +95,23 @@ export default async function ProjectPage({ params }: Props) {
                 href={project.liveDemo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-12 items-center gap-3 bg-[var(--text-color)] px-5 text-[14px] font-medium lowercase text-[var(--bg-color)] transition hover:opacity-75"
+                className="inline-flex min-h-12 min-w-[145px] items-center justify-center gap-3 bg-[var(--text-color)] px-5 text-[14px] font-medium lowercase transition hover:opacity-75"
+                style={{ color: "var(--bg-color)" }}
               >
                 live demo
                 <ArrowUpRight size={17} aria-hidden="true" />
               </a>
             ) : (
-              <span className="inline-flex min-h-12 cursor-not-allowed items-center border border-[var(--line-color)] px-5 text-[14px] lowercase opacity-35">
-                demo unavailable
-              </span>
+              <button
+                type="button"
+                disabled
+                title="Live demo unavailable"
+                className="inline-flex min-h-12 min-w-[145px] cursor-not-allowed items-center justify-center gap-3 bg-[var(--text-color)] px-5 text-[14px] font-medium lowercase opacity-30"
+                style={{ color: "var(--bg-color)" }}
+              >
+                live demo
+                <LockKeyhole size={16} aria-hidden="true" />
+              </button>
             )}
           </div>
         </header>
