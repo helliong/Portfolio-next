@@ -1,3 +1,4 @@
+// Defines the ordered stages shown in the project workflow section.
 const steps = [
   ["01", "discovery", "Understanding the goal, audience and project requirements."],
   ["02", "direction", "Defining structure, references and the visual approach."],
@@ -5,6 +6,7 @@ const steps = [
   ["04", "launch", "Testing, polishing and preparing the project for release."],
 ];
 
+/** Renders the project workflow as a numbered sequence. */
 export default function Process() {
   return (
     <section className="portfolio-section process-section">

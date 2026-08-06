@@ -1,3 +1,4 @@
+// This file is generated from GitHub by scripts/generate-projects.mjs.
 export type Project = {
   id: string;
   name: string;
@@ -9,6 +10,7 @@ export type Project = {
   liveDemo?: string | null;
 };
 
+// Hand-picked cases retained alongside the generated project collection.
 export const cases: Project[] = [
   {
     id: "pinwindow",
@@ -46,6 +48,7 @@ export const cases: Project[] = [
   },
 ];
 
+// Groups technologies and tools for reusable experience summaries.
 export const experienceGroups = [
   {
     title: "I have experience with",
@@ -85,6 +88,7 @@ export const experienceGroups = [
   },
 ];
 
+// Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
     "id": "pinwindow",

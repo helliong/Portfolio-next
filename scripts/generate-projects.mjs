@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 
+// Generates the project data module from public repositories on GitHub.
 const USERNAME = "helliong";
 const HIDDEN_TAG = "portfolio-hidden";
 
@@ -13,12 +14,14 @@ const EXCLUDED_REPOS = new Set([
   "helliong.github.io",
 ]);
 
+/** Converts repository slugs into display-friendly project names. */
 function titleCase(name) {
   return name
     .replace(/[-_]/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
+/** Accepts only valid non-GitHub homepages as live demo links. */
 function normalizeLiveDemo(homepage) {
   if (!homepage) return null;
 
@@ -32,10 +35,12 @@ function normalizeLiveDemo(homepage) {
   }
 }
 
+/** Normalizes repository names for IDs and image filenames. */
 function slugify(value) {
   return value.toLowerCase().trim();
 }
 
+/** Returns the first supported local image extension for a repository. */
 function imageExists(repoName) {
   const normalizedName = slugify(repoName);
   const extensions = [".webp", ".png", ".jpg", ".jpeg", ".svg"];
@@ -47,6 +52,7 @@ function imageExists(repoName) {
   );
 }
 
+/** Fetches the account repositories used as the generation source. */
 async function getRepos() {
   const response = await fetch(
     `https://api.github.com/users/${USERNAME}/repos?type=owner&sort=pushed&direction=desc&per_page=100`,
@@ -59,6 +65,7 @@ async function getRepos() {
   return response.json();
 }
 
+/** Converts one GitHub repository response into the local project shape. */
 function createProject(repo) {
   const id = slugify(repo.name);
   const foundExt = imageExists(repo.name);
@@ -86,8 +93,10 @@ function createProject(repo) {
   };
 }
 
+/** Serializes project records into the generated TypeScript data module. */
 function toTs(projects) {
-  return `export type Project = {
+  return `// This file is generated from GitHub by scripts/generate-projects.mjs.
+export type Project = {
   id: string;
   name: string;
   image: string;
@@ -98,6 +107,7 @@ function toTs(projects) {
   liveDemo?: string | null;
 };
 
+// Hand-picked cases retained alongside the generated project collection.
 export const cases: Project[] = [
   {
     id: "pinwindow",
@@ -135,6 +145,7 @@ export const cases: Project[] = [
   },
 ];
 
+// Groups technologies and tools for reusable experience summaries.
 export const experienceGroups = [
   {
     title: "I have experience with",
@@ -174,10 +185,12 @@ export const experienceGroups = [
   },
 ];
 
+// Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = ${JSON.stringify(projects, null, 2)};
 `;
 }
 
+/** Filters repositories and writes the final project data file. */
 async function main() {
   if (!fs.existsSync(PROJECTS_IMG_DIR)) {
     fs.mkdirSync(PROJECTS_IMG_DIR, { recursive: true });

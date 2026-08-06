@@ -6,6 +6,7 @@ import Process from "@/components/Process";
 import Projects from "@/components/Projects";
 import WhatICanDo from "@/components/WhatICanDo";
 
+/** Composes the portfolio home page from its main content sections. */
 export default function Home() {
   return (
     <main className="portfolio-site font-noto">

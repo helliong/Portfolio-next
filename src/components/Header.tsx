@@ -9,15 +9,18 @@ import SuccessPopup from "./SuccessPopup";
 
 const navItems = ["about", "services", "projects", "contact"];
 
+/** Renders primary navigation and controls the theme and contact dialogs. */
 export default function Header() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const [isLight, setIsLight] = useState(false);
 
+  // Read the theme applied to the document after the client mounts.
   useEffect(() => {
     setIsLight(document.body.classList.contains("light"));
   }, []);
 
+  /** Updates both React state and the document-level theme class. */
   const toggleTheme = () => {
     setIsLight((current) => {
       const next = !current;
@@ -26,6 +29,7 @@ export default function Header() {
     });
   };
 
+  /** Displays a short confirmation after a successful form submission. */
   const showSuccessPopup = () => {
     setIsSuccessOpen(true);
     window.setTimeout(() => setIsSuccessOpen(false), 2000);

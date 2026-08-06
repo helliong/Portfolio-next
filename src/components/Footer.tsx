@@ -1,6 +1,7 @@
 import { ArrowUp } from "lucide-react";
 import Image from "next/image";
 
+/** Renders site credits, theme-aware branding, and the back-to-top link. */
 export default function Footer() {
   return (
     <footer className="site-footer">

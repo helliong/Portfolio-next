@@ -1,6 +1,7 @@
 import { projects } from "@/data/projects";
 import Image from "next/image";
 
+/** Renders the developer introduction, project count, and personal mark. */
 export default function About() {
   return (
     <section id="about" className="portfolio-section">

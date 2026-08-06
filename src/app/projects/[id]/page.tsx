@@ -15,12 +15,14 @@ const orderedProjects = projectOrder
   .map((id) => projects.find((project) => project.id === id))
   .filter((project): project is (typeof projects)[number] => Boolean(project));
 
+/** Prebuilds a static route for every known project. */
 export function generateStaticParams() {
   return projects.map((project) => ({
     id: project.id,
   }));
 }
 
+/** Creates project-specific search and browser metadata. */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const project = projects.find((item) => item.id === id);
@@ -35,6 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/** Resolves a project and its circular previous and next navigation links. */
 export default async function ProjectPage({ params }: Props) {
   const { id } = await params;
   const projectIndex = orderedProjects.findIndex((project) => project.id === id);

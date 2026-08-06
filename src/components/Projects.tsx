@@ -13,11 +13,13 @@ const featuredIds = [
   "linkcast",
 ];
 
+// Resolve the curated project IDs into the enriched records used by the cards.
 const featuredProjects = featuredIds
   .map((id) => projects.find((project) => project.id === id))
   .filter((project) => project !== undefined)
   .map(getProjectDetails);
 
+/** Renders the curated project selection on the home page. */
 export default function Projects() {
   return (
     <section id="projects" className="portfolio-section projects-section">

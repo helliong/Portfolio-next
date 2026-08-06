@@ -14,6 +14,7 @@ type ProjectOverride = Pick<
   liveDemo?: string;
 };
 
+// Adds editorial copy that is not available from the generated GitHub data.
 const projectOverrides: Record<string, ProjectOverride> = {
   pinwindow: {
     summary:
@@ -137,6 +138,7 @@ const projectOverrides: Record<string, ProjectOverride> = {
   },
 };
 
+/** Merges generated project data with editorial details and safe fallbacks. */
 export function getProjectDetails(project: Project): ProjectDetails {
   const details = projectOverrides[project.id];
 

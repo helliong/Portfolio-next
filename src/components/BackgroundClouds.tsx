@@ -1,3 +1,4 @@
+/** Renders decorative background layers that are hidden from assistive technology. */
 export default function BackgroundClouds() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">

@@ -14,16 +14,19 @@ type ProjectFilter = "all" | "web" | "apps" | "tools";
 
 const filters: ProjectFilter[] = ["all", "web", "apps", "tools"];
 
+// Preserve the manually selected order while enriching generated project data.
 const orderedProjects = projectOrder
   .map((id) => projects.find((project) => project.id === id))
   .filter((project): project is (typeof projects)[number] => Boolean(project))
   .map(getProjectDetails);
 
+/** Renders the filterable project archive and its contact dialogs. */
 export default function ProjectsArchive() {
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
+  // Recompute the visible list only when the selected category changes.
   const visibleProjects = useMemo(
     () =>
       activeFilter === "all"

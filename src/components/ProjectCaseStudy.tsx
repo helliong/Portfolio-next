@@ -22,6 +22,7 @@ type Props = {
   nextProject: AdjacentProject;
 };
 
+/** Infers a readable project role from the technologies used by the project. */
 function getRole(project: ProjectDetails) {
   if (project.tags.some((tag) => ["nextjs", "react", "html", "css"].includes(tag))) {
     return "full-stack";
@@ -34,6 +35,7 @@ function getRole(project: ProjectDetails) {
   return "developer";
 }
 
+/** Renders one complete case study with navigation to adjacent projects. */
 export default function ProjectCaseStudy({
   project,
   number,

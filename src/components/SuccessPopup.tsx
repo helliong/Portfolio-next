@@ -8,10 +8,12 @@ type Props = {
   onClose: () => void;
 };
 
+/** Renders the animated confirmation shown after a request is accepted. */
 export default function SuccessPopup({ isOpen, onClose }: Props) {
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
 
+  // Keep the dialog mounted until its closing transition finishes.
   useEffect(() => {
     if (isOpen) {
       setShow(true);

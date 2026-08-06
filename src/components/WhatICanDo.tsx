@@ -1,3 +1,4 @@
+// Describes the service cards displayed in the capabilities section.
 const services = [
   {
     number: "01",
@@ -19,6 +20,7 @@ const services = [
   },
 ];
 
+/** Renders the developer services and their key deliverables. */
 export default function WhatICanDo() {
   return (
     <section id="services" className="portfolio-section">

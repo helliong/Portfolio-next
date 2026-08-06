@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description: "A complete archive of web, application and utility projects.",
 };
 
+/** Renders the complete project archive route. */
 export default function ProjectsPage() {
   return <ProjectsArchive />;
 }

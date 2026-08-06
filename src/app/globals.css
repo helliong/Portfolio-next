@@ -1,3 +1,4 @@
+/* Global design tokens, layout rules, responsive states, and component styles. */
 @import "tailwindcss";
 
 :root {

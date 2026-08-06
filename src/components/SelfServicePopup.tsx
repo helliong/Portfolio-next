@@ -16,6 +16,16 @@ type Errors = {
   submit: string;
 };
 
+type ApiResponse = {
+  success?: boolean;
+  code?: string;
+  message?: string;
+  retryAfter?: number;
+};
+
+const cooldownStorageKey = "portfolio_contact_cooldown";
+const clientCooldownMs = 5 * 60 * 1_000;
+
 const emptyErrors: Errors = {
   name: "",
   email: "",
@@ -23,17 +33,49 @@ const emptyErrors: Errors = {
   submit: "",
 };
 
+/** Renders and manages the validated project request form. */
 export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) {
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState<Errors>(emptyErrors);
+  const [cooldownUntil, setCooldownUntil] = useState(0);
+  const [cooldownRemaining, setCooldownRemaining] = useState(0);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const titleId = useId();
   const descriptionId = useId();
 
+  /** Persists a cooldown and immediately updates the current tab. */
+  const applyCooldown = (until: number) => {
+    setCooldownUntil(until);
+    setCooldownRemaining(Math.max(0, Math.ceil((until - Date.now()) / 1_000)));
+
+    try {
+      window.localStorage.setItem(cooldownStorageKey, String(until));
+    } catch {
+      // localStorage can be unavailable in privacy modes; the server limit remains authoritative.
+    }
+  };
+
+  // Restore the persisted cooldown whenever the dialog opens.
   useEffect(() => {
     if (isOpen) {
+      try {
+        const storedCooldown = Number(window.localStorage.getItem(cooldownStorageKey));
+
+        if (Number.isFinite(storedCooldown) && storedCooldown > Date.now()) {
+          setCooldownUntil(storedCooldown);
+          setCooldownRemaining(Math.ceil((storedCooldown - Date.now()) / 1_000));
+        } else {
+          window.localStorage.removeItem(cooldownStorageKey);
+          setCooldownUntil(0);
+          setCooldownRemaining(0);
+        }
+      } catch {
+        setCooldownUntil(0);
+        setCooldownRemaining(0);
+      }
+
       setShow(true);
       const animationFrame = window.requestAnimationFrame(() => setAnimate(true));
       const focusTimer = window.setTimeout(() => firstFieldRef.current?.focus(), 320);
@@ -48,6 +90,54 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
     return () => window.clearTimeout(hideTimer);
   }, [isOpen]);
 
+  // Update the visible countdown and remove expired cooldown data.
+  useEffect(() => {
+    if (!cooldownUntil) return;
+
+    const updateCooldown = () => {
+      const remaining = Math.max(0, Math.ceil((cooldownUntil - Date.now()) / 1_000));
+      setCooldownRemaining(remaining);
+
+      if (remaining === 0) {
+        setCooldownUntil(0);
+        setErrors((current) =>
+          current.submit === "too many requests. please wait before trying again"
+            ? { ...current, submit: "" }
+            : current,
+        );
+        try {
+          window.localStorage.removeItem(cooldownStorageKey);
+        } catch {
+          // The in-memory cooldown has still expired.
+        }
+      }
+    };
+
+    updateCooldown();
+    const timer = window.setInterval(updateCooldown, 1_000);
+    return () => window.clearInterval(timer);
+  }, [cooldownUntil]);
+
+  // Keep the cooldown consistent when the form is open in multiple tabs.
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== cooldownStorageKey) return;
+
+      const nextCooldown = Number(event.newValue);
+      if (Number.isFinite(nextCooldown) && nextCooldown > Date.now()) {
+        setCooldownUntil(nextCooldown);
+        setCooldownRemaining(Math.ceil((nextCooldown - Date.now()) / 1_000));
+      } else {
+        setCooldownUntil(0);
+        setCooldownRemaining(0);
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  // Lock page scrolling and support closing the dialog with Escape.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -65,8 +155,16 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
     };
   }, [isOpen, isSending, onClose]);
 
+  /** Clears the edited field error and any stale submission error. */
   const clearError = (field: keyof Errors) => {
     setErrors((current) => ({ ...current, [field]: "", submit: "" }));
+  };
+
+  /** Formats a duration as minutes and zero-padded seconds. */
+  const formatCooldown = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${String(remainingSeconds).padStart(2, "0")}`;
   };
 
   if (!show) return null;
@@ -112,6 +210,9 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
           noValidate
           onSubmit={async (event) => {
             event.preventDefault();
+
+            if (cooldownUntil > Date.now()) return;
+
             const form = event.currentTarget;
             const formData = new FormData(form);
             const name = String(formData.get("name") ?? "").trim();
@@ -138,7 +239,26 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                 body: JSON.stringify({ name, email, projectType, message }),
               });
 
-              if (!response.ok) throw new Error("Failed to send request");
+              const payload = (await response.json().catch(() => null)) as ApiResponse | null;
+
+              if (response.status === 429) {
+                const retryAfter =
+                  typeof payload?.retryAfter === "number" && payload.retryAfter > 0
+                    ? payload.retryAfter
+                    : 60;
+                applyCooldown(Date.now() + retryAfter * 1_000);
+                setErrors((current) => ({
+                  ...current,
+                  submit: "too many requests. please wait before trying again",
+                }));
+                return;
+              }
+
+              if (!response.ok || !payload?.success) {
+                throw new Error(payload?.message ?? "Failed to send request");
+              }
+
+              applyCooldown(Date.now() + clientCooldownMs);
 
               onClose();
               window.setTimeout(() => {
@@ -215,6 +335,11 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
           </div>
 
           {errors.submit && <p className="project-popup-submit-error">{errors.submit}</p>}
+          {!errors.submit && cooldownRemaining > 0 && (
+            <p className="project-popup-submit-error">
+              Request sent. Try again in {formatCooldown(cooldownRemaining)}
+            </p>
+          )}
 
           <footer className="project-popup-footer">
             <p>Usually replies within 24 hours</p>
@@ -227,9 +352,19 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
               >
                 CANCEL
               </button>
-              <button type="submit" className="project-popup-submit" disabled={isSending}>
-                {isSending ? "SENDING..." : "SEND REQUEST"}
-                {!isSending && <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />}
+              <button
+                type="submit"
+                className="project-popup-submit"
+                disabled={isSending || cooldownRemaining > 0}
+              >
+                {isSending
+                  ? "SENDING..."
+                  : cooldownRemaining > 0
+                    ? `TRY AGAIN IN ${formatCooldown(cooldownRemaining)}`
+                    : "SEND REQUEST"}
+                {!isSending && cooldownRemaining === 0 && (
+                  <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
+                )}
               </button>
             </div>
           </footer>

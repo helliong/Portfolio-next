@@ -11,10 +11,12 @@ const socials = [
   ["instagram", "https://www.instagram.com/hellliong/"],
 ];
 
+/** Renders contact actions and coordinates the request and success dialogs. */
 export default function Contact() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
+  /** Displays a short confirmation after a successful form submission. */
   const showSuccessPopup = () => {
     setIsSuccessOpen(true);
     window.setTimeout(() => setIsSuccessOpen(false), 2000);

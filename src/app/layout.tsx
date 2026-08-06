@@ -20,6 +20,7 @@ const dotGothic = DotGothic16({
   variable: "--font-dot-gothic",
 });
 
+// Shared metadata used by every route unless a page provides an override.
 export const metadata: Metadata = {
   title: "Egor Yakovlev | Full-stack developer",
   description: "Full-stack developer portfolio",
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
   },
 };
 
+/** Applies global fonts, styles, and document structure to every page. */
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
