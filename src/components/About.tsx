@@ -16,7 +16,7 @@ export default function About() {
 
         <div className="about-details">
           <p>
-            I&apos;m Egor Yakovlev, a front-end developer based in Russia. I build
+            I&apos;m Egor Yakovlev, a full-stack developer based in Russia. I build
             responsive interfaces and practical web products with close
             attention to structure, performance and the details people notice.
           </p>

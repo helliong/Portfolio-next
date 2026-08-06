@@ -2,7 +2,7 @@ const services = [
   {
     number: "01",
     title: "web development",
-    description: "Building fast, responsive and scalable web applications with a maintainable frontend architecture.",
+    description: "Building fast, responsive and scalable web applications with a maintainable full-stack architecture.",
     items: ["Custom web applications", "Responsive layout", "API integration", "Deployment"],
   },
   {

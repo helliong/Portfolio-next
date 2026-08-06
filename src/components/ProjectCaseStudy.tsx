@@ -24,7 +24,7 @@ type Props = {
 
 function getRole(project: ProjectDetails) {
   if (project.tags.some((tag) => ["nextjs", "react", "html", "css"].includes(tag))) {
-    return "front-end";
+    return "full-stack";
   }
 
   if (project.tags.some((tag) => ["c#", "autohotkey"].includes(tag))) {

@@ -21,8 +21,8 @@ const dotGothic = DotGothic16({
 });
 
 export const metadata: Metadata = {
-  title: "Egor Yakovlev | Frontend developer",
-  description: "Frontend developer portfolio",
+  title: "Egor Yakovlev | Full-stack developer",
+  description: "Full-stack developer portfolio",
   icons: {
     icon: "/logoWhite.svg",
   },
