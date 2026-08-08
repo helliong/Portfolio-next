@@ -91,16 +91,29 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
+    "id": "audio-switcher",
+    "name": "Audio Switcher",
+    "image": "/assets/img/projects/mockup-audio-switcher.webp",
+    "alt": "Audio Switcher",
+    "description": "No description yet.",
+    "tags": [
+      "autohotkey"
+    ],
+    "link": "https://github.com/helliong/audio-switcher",
+    "liveDemo": "https://helliong.space/"
+  },
+  {
     "id": "pinwindow",
     "name": "PinWindow",
     "image": "/assets/img/projects/mockup-pinwindow.webp",
     "alt": "PinWindow",
     "description": "No description yet.",
     "tags": [
+      "csharp",
       "c#"
     ],
     "link": "https://github.com/helliong/pinWindow",
-    "liveDemo": null
+    "liveDemo": "https://helliong.space/"
   },
   {
     "id": "lumea-candles",
@@ -190,18 +203,6 @@ export const projects: Project[] = [
     ],
     "link": "https://github.com/helliong/bmi-calculator",
     "liveDemo": "https://bmi.helliong.space/"
-  },
-  {
-    "id": "audio-switcher",
-    "name": "Audio Switcher",
-    "image": "/assets/img/projects/mockup-audio-switcher.webp",
-    "alt": "Audio Switcher",
-    "description": "No description yet.",
-    "tags": [
-      "autohotkey"
-    ],
-    "link": "https://github.com/helliong/audio-switcher",
-    "liveDemo": null
   },
   {
     "id": "password-generator",
