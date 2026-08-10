@@ -91,18 +91,6 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
-    "id": "audio-switcher",
-    "name": "Audio Switcher",
-    "image": "/assets/img/projects/mockup-audio-switcher.webp",
-    "alt": "Audio Switcher",
-    "description": "No description yet.",
-    "tags": [
-      "autohotkey"
-    ],
-    "link": "https://github.com/helliong/audio-switcher",
-    "liveDemo": "https://helliong.space/"
-  },
-  {
     "id": "pinwindow",
     "name": "PinWindow",
     "image": "/assets/img/projects/mockup-pinwindow.webp",
@@ -113,6 +101,18 @@ export const projects: Project[] = [
       "c#"
     ],
     "link": "https://github.com/helliong/pinWindow",
+    "liveDemo": "https://helliong.space/"
+  },
+  {
+    "id": "audio-switcher",
+    "name": "Audio Switcher",
+    "image": "/assets/img/projects/mockup-audio-switcher.webp",
+    "alt": "Audio Switcher",
+    "description": "No description yet.",
+    "tags": [
+      "autohotkey"
+    ],
+    "link": "https://github.com/helliong/audio-switcher",
     "liveDemo": "https://helliong.space/"
   },
   {
