@@ -91,6 +91,23 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
+    "id": "market-ai",
+    "name": "Market Ai",
+    "image": "/assets/img/projects/mockup-market-ai.webp",
+    "alt": "Market Ai",
+    "description": "No description yet.",
+    "tags": [
+      "docker",
+      "microservice",
+      "nextjs",
+      "react",
+      "tailwindcss",
+      "typescript"
+    ],
+    "link": "https://github.com/helliong/market-ai",
+    "liveDemo": "https://market-ai-xi.vercel.app/"
+  },
+  {
     "id": "audio-switcher",
     "name": "Audio Switcher",
     "image": "/assets/img/projects/mockup-audio-switcher.webp",
@@ -150,23 +167,6 @@ export const projects: Project[] = [
     ],
     "link": "https://github.com/helliong/Campus-and-code",
     "liveDemo": "https://campuscode.helliong.space/"
-  },
-  {
-    "id": "market-ai",
-    "name": "Market Ai",
-    "image": "/assets/img/projects/mockup-market-ai.webp",
-    "alt": "Market Ai",
-    "description": "No description yet.",
-    "tags": [
-      "docker",
-      "microservice",
-      "nextjs",
-      "react",
-      "tailwindcss",
-      "typescript"
-    ],
-    "link": "https://github.com/helliong/market-ai",
-    "liveDemo": "https://market-ai-xi.vercel.app/"
   },
   {
     "id": "linkcast",
