@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowUpRight, ChevronDown, X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
 type Props = {
@@ -343,29 +344,35 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
 
           <footer className="project-popup-footer">
             <p>Usually replies within 24 hours</p>
-            <div>
-              <button
-                type="button"
-                className="project-popup-cancel"
-                onClick={onClose}
-                disabled={isSending}
-              >
-                CANCEL
-              </button>
-              <button
-                type="submit"
-                className="project-popup-submit"
-                disabled={isSending || cooldownRemaining > 0}
-              >
-                {isSending
-                  ? "SENDING..."
-                  : cooldownRemaining > 0
-                    ? `TRY AGAIN IN ${formatCooldown(cooldownRemaining)}`
-                    : "SEND REQUEST"}
-                {!isSending && cooldownRemaining === 0 && (
-                  <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
-                )}
-              </button>
+            <div className="project-popup-action-area">
+              <div className="project-popup-actions">
+                <button
+                  type="button"
+                  className="project-popup-cancel"
+                  onClick={onClose}
+                  disabled={isSending}
+                >
+                  CANCEL
+                </button>
+                <button
+                  type="submit"
+                  className="project-popup-submit"
+                  disabled={isSending || cooldownRemaining > 0}
+                >
+                  {isSending
+                    ? "SENDING..."
+                    : cooldownRemaining > 0
+                      ? `TRY AGAIN IN ${formatCooldown(cooldownRemaining)}`
+                      : "SEND REQUEST"}
+                  {!isSending && cooldownRemaining === 0 && (
+                    <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+              <p className="project-popup-consent">
+                By clicking “Send request”, you agree to the{" "}
+                <Link href="/privacy">Privacy Policy</Link>.
+              </p>
             </div>
           </footer>
         </form>

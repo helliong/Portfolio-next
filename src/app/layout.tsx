@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DotGothic16, Roboto, Roboto_Mono } from "next/font/google";
+import CookieBanner from "@/components/CookieBanner";
 import "./globals.css";
 
 const robotoMono = Roboto_Mono({
@@ -35,6 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className={`${robotoMono.variable} ${roboto.variable} ${dotGothic.variable}`}>
         {children}
+        <CookieBanner />
       </body>
     </html>
   );

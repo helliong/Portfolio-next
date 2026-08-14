@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import Footer from "./Footer";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
 
@@ -52,23 +53,23 @@ export default function ProjectCaseStudy({
   };
 
   return (
-    <main className="project-case">
+    <main id="project-top" className="project-case">
       <div className="project-case-shell">
         <header className="projects-archive-topbar">
           <Link href="/" className="projects-archive-brand" aria-label="Portfolio home">
             <Image
               src="/logoWhite.svg"
               alt="EY"
-              width={44}
-              height={30}
+              width={52}
+              height={36}
               className="projects-archive-logo-dark"
               priority
             />
             <Image
               src="/logoBlack.svg"
               alt="EY"
-              width={44}
-              height={30}
+              width={52}
+              height={36}
               className="projects-archive-logo-light"
               priority
             />
@@ -209,6 +210,7 @@ export default function ProjectCaseStudy({
             <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </nav>
+        <Footer topHref="#project-top" />
       </div>
 
       <SelfServicePopup

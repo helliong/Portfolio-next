@@ -7,6 +7,7 @@ import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import Footer from "./Footer";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
 
@@ -45,23 +46,23 @@ export default function ProjectsArchive() {
   };
 
   return (
-    <main className="projects-archive">
+    <main id="projects-top" className="projects-archive">
       <div className="projects-archive-shell">
         <header className="projects-archive-topbar">
           <Link href="/" className="projects-archive-brand" aria-label="Portfolio home">
             <Image
               src="/logoWhite.svg"
               alt="EY"
-              width={44}
-              height={30}
+              width={52}
+              height={36}
               className="projects-archive-logo-dark"
               priority
             />
             <Image
               src="/logoBlack.svg"
               alt="EY"
-              width={44}
-              height={30}
+              width={52}
+              height={36}
               className="projects-archive-logo-light"
               priority
             />
@@ -189,6 +190,7 @@ export default function ProjectsArchive() {
             );
           })}
         </section>
+        <Footer topHref="#projects-top" />
       </div>
 
       <SelfServicePopup
