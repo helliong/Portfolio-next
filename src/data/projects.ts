@@ -7,6 +7,7 @@ export type Project = {
   description: string;
   tags: string[];
   category: "web" | "apps" | "tools";
+  year?: string;
   link?: string | null;
   liveDemo?: string | null;
 };
@@ -109,6 +110,7 @@ export const projects: Project[] = [
       "typescript"
     ],
     "category": "web",
+    "year": "2026",
     "link": "https://github.com/helliong/market-ai",
     "liveDemo": "https://market-ai-xi.vercel.app/"
   },
@@ -122,6 +124,7 @@ export const projects: Project[] = [
       "typescript"
     ],
     "category": "web",
+    "year": "2026",
     "link": null,
     "liveDemo": "https://kmstudy.ru/"
   },
@@ -136,6 +139,7 @@ export const projects: Project[] = [
       "live-hidden"
     ],
     "category": "apps",
+    "year": "2026",
     "link": "https://github.com/helliong/audio-switcher",
     "liveDemo": "https://helliong.space/"
   },
@@ -151,6 +155,7 @@ export const projects: Project[] = [
       "c#"
     ],
     "category": "apps",
+    "year": "2026",
     "link": "https://github.com/helliong/pinWindow",
     "liveDemo": "https://helliong.space/"
   },
@@ -168,6 +173,7 @@ export const projects: Project[] = [
       "scss"
     ],
     "category": "web",
+    "year": "2026",
     "link": "https://github.com/helliong/lumea-candles",
     "liveDemo": "https://lumea-candles.vercel.app/"
   },
@@ -189,6 +195,7 @@ export const projects: Project[] = [
       "zustand"
     ],
     "category": "web",
+    "year": "2026",
     "link": "https://github.com/helliong/Campus-and-code",
     "liveDemo": "https://campuscode.helliong.space/"
   },
@@ -202,6 +209,7 @@ export const projects: Project[] = [
       "python"
     ],
     "category": "tools",
+    "year": "2026",
     "link": "https://github.com/helliong/linkcast",
     "liveDemo": "https://linkcast.helliong.space/"
   },
@@ -217,6 +225,7 @@ export const projects: Project[] = [
       "typescript"
     ],
     "category": "tools",
+    "year": "2026",
     "link": "https://github.com/helliong/qr-link-generator",
     "liveDemo": "https://qrcode.helliong.space/"
   },
@@ -230,6 +239,7 @@ export const projects: Project[] = [
       "python"
     ],
     "category": "tools",
+    "year": "2026",
     "link": "https://github.com/helliong/bmi-calculator",
     "liveDemo": "https://bmi.helliong.space/"
   },
@@ -246,6 +256,7 @@ export const projects: Project[] = [
       "javascript"
     ],
     "category": "tools",
+    "year": "2025",
     "link": "https://github.com/helliong/password-generator",
     "liveDemo": "https://helliong.github.io/password-generator/"
   },
@@ -262,6 +273,7 @@ export const projects: Project[] = [
       "pet-project"
     ],
     "category": "web",
+    "year": "2023",
     "link": "https://github.com/helliong/construction",
     "liveDemo": "https://helliong.github.io/construction/"
   }

@@ -1,6 +1,6 @@
 import ProjectCaseStudy from "@/components/ProjectCaseStudy";
 import { getProjectDetails } from "@/data/projectDetails";
-import { projectOrder, projectYears } from "@/data/projectOrder";
+import { projectOrder } from "@/data/projectOrder";
 import { projects } from "@/data/projects";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -61,7 +61,7 @@ export default async function ProjectPage({ params }: Props) {
     <ProjectCaseStudy
       project={project}
       number={String(projectIndex + 1).padStart(2, "0")}
-      year={projectYears[project.id] ?? "2025"}
+      year={project.year ?? "—"}
       previousProject={{
         id: previousProject.id,
         name: previousProject.name,
