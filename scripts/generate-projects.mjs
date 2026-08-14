@@ -4,6 +4,10 @@ import path from "path";
 // Generates the project data module from public repositories on GitHub.
 const USERNAME = "helliong";
 const HIDDEN_TAG = "portfolio-hidden";
+const LIVE_HIDDEN_TAG = "live-hidden";
+
+// These repositories have a homepage for discovery, but no public live demo.
+const LIVE_HIDDEN_REPOS = new Set(["pinwindow", "audio-switcher"]);
 
 const OUTPUT_FILE = path.join(process.cwd(), "src/data/projects.ts");
 const PROJECTS_IMG_DIR = path.join(process.cwd(), "public/assets/img/projects");
@@ -77,6 +81,7 @@ function createProject(repo) {
   const tags = [
     ...(repo.topics || []),
     repo.language ? repo.language.toLowerCase() : null,
+    LIVE_HIDDEN_REPOS.has(id) ? LIVE_HIDDEN_TAG : null,
   ]
     .filter(Boolean)
     .map((tag) => tag.toLowerCase());
@@ -115,7 +120,7 @@ export const cases: Project[] = [
     image: "/assets/img/projects/mockup-pinwindow.webp",
     alt: "PinWindow",
     description: "No description yet.",
-    tags: ["c#"],
+    tags: ["c#", "live-hidden"],
     link: "https://github.com/helliong/pinWindow",
   },
   {
@@ -124,7 +129,7 @@ export const cases: Project[] = [
     image: "/assets/img/projects/mockup-audio-switcher.webp",
     alt: "Audio Switcher",
     description: "No description yet.",
-    tags: ["autohotkey"],
+    tags: ["autohotkey", "live-hidden"],
     link: "https://github.com/helliong/audio-switcher",
   },
   {

@@ -18,7 +18,7 @@ export const cases: Project[] = [
     image: "/assets/img/projects/mockup-pinwindow.webp",
     alt: "PinWindow",
     description: "No description yet.",
-    tags: ["c#"],
+    tags: ["c#", "live-hidden"],
     link: "https://github.com/helliong/pinWindow",
   },
   {
@@ -27,7 +27,7 @@ export const cases: Project[] = [
     image: "/assets/img/projects/mockup-audio-switcher.webp",
     alt: "Audio Switcher",
     description: "No description yet.",
-    tags: ["autohotkey"],
+    tags: ["autohotkey", "live-hidden"],
     link: "https://github.com/helliong/audio-switcher",
   },
   {
@@ -114,7 +114,8 @@ export const projects: Project[] = [
     "alt": "Audio Switcher",
     "description": "No description yet.",
     "tags": [
-      "autohotkey"
+      "autohotkey",
+      "live-hidden"
     ],
     "link": "https://github.com/helliong/audio-switcher",
     "liveDemo": "https://helliong.space/"
@@ -127,6 +128,7 @@ export const projects: Project[] = [
     "description": "No description yet.",
     "tags": [
       "csharp",
+      "live-hidden",
       "c#"
     ],
     "link": "https://github.com/helliong/pinWindow",

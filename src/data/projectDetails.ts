@@ -1,5 +1,7 @@
 import type { Project } from "./projects";
 
+const LIVE_HIDDEN_TAG = "live-hidden";
+
 export type ProjectDetails = Project & {
   summary: string;
   overview: string;
@@ -141,13 +143,17 @@ const projectOverrides: Record<string, ProjectOverride> = {
 /** Merges generated project data with editorial details and safe fallbacks. */
 export function getProjectDetails(project: Project): ProjectDetails {
   const details = projectOverrides[project.id];
+  const isLiveHidden = project.tags.includes(LIVE_HIDDEN_TAG);
+  const liveDemo = details?.liveDemo ?? project.liveDemo ?? null;
+  const visibleTags = project.tags.filter((tag) => tag !== LIVE_HIDDEN_TAG);
 
   return {
     ...project,
+    tags: visibleTags,
     summary:
       details?.summary ??
       project.description ??
-      `A personal project built with ${project.tags.join(", ")}.`,
+      `A personal project built with ${visibleTags.join(", ")}.`,
     overview:
       details?.overview ??
       project.description ??
@@ -157,6 +163,6 @@ export function getProjectDetails(project: Project): ProjectDetails {
       "Responsive user interface",
       "Maintainable implementation",
     ],
-    liveDemo: details?.liveDemo ?? project.liveDemo ?? null,
+    liveDemo: isLiveHidden ? null : liveDemo,
   };
 }
