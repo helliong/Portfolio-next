@@ -79,6 +79,14 @@ export default function Header() {
             <span>{isLight ? "dark mode" : "light mode"}</span>
           </button>
         </div>
+
+        <nav className="mobile-nav" aria-label="Mobile navigation">
+          {navItems.map((item) => (
+            <a key={item} href={`#${item}`}>
+              {item}
+            </a>
+          ))}
+        </nav>
       </div>
 
       <div className="hero-grid">

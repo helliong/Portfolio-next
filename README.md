@@ -93,7 +93,7 @@ npm run generate:projects
 
 ### Генерация проектов
 
-Скрипт `scripts/generate-projects.mjs` получает публичные репозитории пользователя `helliong`. При наличии `GITHUB_TOKEN` он также получает private-репозитории, но включает только отмеченные topic `commercial`. Проекты с `portfolio-hidden` исключаются.
+Скрипт `scripts/generate-projects.mjs` получает публичные репозитории пользователя `helliong`. При наличии `GITHUB_TOKEN` он также получает private-репозитории, но включает только отмеченные topic `commercial`. Проекты с `portfolio-hidden` исключаются. Год проекта формируется автоматически из GitHub-поля `created_at` — даты создания репозитория.
 
 Каждый проект должен иметь ровно один category topic:
 

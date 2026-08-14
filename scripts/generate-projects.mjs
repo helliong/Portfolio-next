@@ -98,6 +98,7 @@ function createProject(repo) {
   }
 
   const category = CATEGORY_BY_TOPIC.get(categoryTopics[0]);
+  const createdYear = new Date(repo.created_at).getUTCFullYear();
 
   const image = foundExt
     ? `/assets/img/projects/mockup-${id}${foundExt}`
@@ -118,6 +119,7 @@ function createProject(repo) {
     description: repo.description || "No description yet.",
     tags: [...new Set(tags)],
     category,
+    year: Number.isInteger(createdYear) ? String(createdYear) : undefined,
     link: repo.private ? null : repo.html_url,
     liveDemo: normalizeLiveDemo(repo.homepage),
   };
@@ -134,6 +136,7 @@ export type Project = {
   description: string;
   tags: string[];
   category: "web" | "apps" | "tools";
+  year?: string;
   link?: string | null;
   liveDemo?: string | null;
 };
@@ -247,7 +250,16 @@ async function main() {
       const topics = (repo.topics || []).map((topic) => topic.toLowerCase());
 
       if (topics.includes(HIDDEN_TAG)) return false;
-      if (repo.private) return topics.includes("commercial");
+      if (repo.private) {
+        const isCommercial = topics.includes("commercial");
+        const hasPublicDemo = Boolean(normalizeLiveDemo(repo.homepage));
+
+        if (isCommercial && !hasPublicDemo) {
+          console.warn(`Skipped ${repo.name}: private project has no public demo`);
+        }
+
+        return isCommercial && hasPublicDemo;
+      }
 
       return true;
     })
