@@ -101,15 +101,17 @@ export default function ProjectCaseStudy({
             <p>{project.summary}</p>
 
             <div className="project-case-actions">
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="project-case-action project-case-action-github"
-              >
-                github
-                <ArrowUpRight size={15} aria-hidden="true" />
-              </a>
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="project-case-action project-case-action-github"
+                >
+                  github
+                  <ArrowUpRight size={15} aria-hidden="true" />
+                </a>
+              )}
 
               {project.liveDemo ? (
                 <a

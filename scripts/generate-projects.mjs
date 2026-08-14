@@ -4,10 +4,12 @@ import path from "path";
 // Generates the project data module from public repositories on GitHub.
 const USERNAME = "helliong";
 const HIDDEN_TAG = "portfolio-hidden";
-const LIVE_HIDDEN_TAG = "live-hidden";
-
-// These repositories have a homepage for discovery, but no public live demo.
-const LIVE_HIDDEN_REPOS = new Set(["pinwindow", "audio-switcher"]);
+const CATEGORY_BY_TOPIC = new Map([
+  ["portfolio-web", "web"],
+  ["portfolio-app", "apps"],
+  ["portfolio-tool", "tools"],
+]);
+const CONTROL_TAGS = new Set([...CATEGORY_BY_TOPIC.keys(), "commercial"]);
 
 const OUTPUT_FILE = path.join(process.cwd(), "src/data/projects.ts");
 const PROJECTS_IMG_DIR = path.join(process.cwd(), "public/assets/img/projects");
@@ -58,8 +60,20 @@ function imageExists(repoName) {
 
 /** Fetches the account repositories used as the generation source. */
 async function getRepos() {
+  const token = process.env.GITHUB_TOKEN;
+  const endpoint = token
+    ? "https://api.github.com/user/repos?visibility=all&affiliation=owner&sort=pushed&direction=desc&per_page=100"
+    : `https://api.github.com/users/${USERNAME}/repos?type=owner&sort=pushed&direction=desc&per_page=100`;
   const response = await fetch(
-    `https://api.github.com/users/${USERNAME}/repos?type=owner&sort=pushed&direction=desc&per_page=100`,
+    endpoint,
+    {
+      headers: token
+        ? {
+            Accept: "application/vnd.github+json",
+            Authorization: `Bearer ${token}`,
+          }
+        : { Accept: "application/vnd.github+json" },
+    },
   );
 
   if (!response.ok) {
@@ -73,15 +87,25 @@ async function getRepos() {
 function createProject(repo) {
   const id = slugify(repo.name);
   const foundExt = imageExists(repo.name);
+  const topics = (repo.topics || []).map((topic) => topic.toLowerCase());
+  const categoryTopics = topics.filter((topic) => CATEGORY_BY_TOPIC.has(topic));
+
+  if (categoryTopics.length !== 1) {
+    console.warn(
+      `Skipped ${repo.name}: expected exactly one portfolio category topic`,
+    );
+    return null;
+  }
+
+  const category = CATEGORY_BY_TOPIC.get(categoryTopics[0]);
 
   const image = foundExt
     ? `/assets/img/projects/mockup-${id}${foundExt}`
     : "/assets/img/projects/no-photo.webp";
 
   const tags = [
-    ...(repo.topics || []),
+    ...topics.filter((topic) => !CONTROL_TAGS.has(topic)),
     repo.language ? repo.language.toLowerCase() : null,
-    LIVE_HIDDEN_REPOS.has(id) ? LIVE_HIDDEN_TAG : null,
   ]
     .filter(Boolean)
     .map((tag) => tag.toLowerCase());
@@ -93,7 +117,8 @@ function createProject(repo) {
     alt: titleCase(repo.name),
     description: repo.description || "No description yet.",
     tags: [...new Set(tags)],
-    link: repo.html_url,
+    category,
+    link: repo.private ? null : repo.html_url,
     liveDemo: normalizeLiveDemo(repo.homepage),
   };
 }
@@ -108,7 +133,8 @@ export type Project = {
   alt: string;
   description: string;
   tags: string[];
-  link: string;
+  category: "web" | "apps" | "tools";
+  link?: string | null;
   liveDemo?: string | null;
 };
 
@@ -121,6 +147,7 @@ export const cases: Project[] = [
     alt: "PinWindow",
     description: "No description yet.",
     tags: ["c#", "live-hidden"],
+    category: "apps",
     link: "https://github.com/helliong/pinWindow",
   },
   {
@@ -130,6 +157,7 @@ export const cases: Project[] = [
     alt: "Audio Switcher",
     description: "No description yet.",
     tags: ["autohotkey", "live-hidden"],
+    category: "apps",
     link: "https://github.com/helliong/audio-switcher",
   },
   {
@@ -146,6 +174,7 @@ export const cases: Project[] = [
       "tailwindcss",
       "typescript",
     ],
+    category: "web",
     link: "https://github.com/helliong/market-ai",
   },
 ];
@@ -217,9 +246,13 @@ async function main() {
     .filter((repo) => {
       const topics = (repo.topics || []).map((topic) => topic.toLowerCase());
 
-      return !topics.includes(HIDDEN_TAG);
+      if (topics.includes(HIDDEN_TAG)) return false;
+      if (repo.private) return topics.includes("commercial");
+
+      return true;
     })
-    .map(createProject);
+    .map(createProject)
+    .filter(Boolean);
 
   fs.writeFileSync(OUTPUT_FILE, toTs(projects), "utf8");
 

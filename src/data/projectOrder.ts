@@ -12,20 +12,6 @@ export const projectOrder = [
   "construction",
 ] as const;
 
-// Maps each project to the archive filter that should contain it.
-export const projectCategories = {
-  "qr-link-generator": "tools",
-  "campus-and-code": "web",
-  "market-ai": "web",
-  "lumea-candles": "web",
-  pinwindow: "apps",
-  linkcast: "tools",
-  "bmi-calculator": "tools",
-  "audio-switcher": "apps",
-  "password-generator": "tools",
-  construction: "web",
-} as const;
-
 // Stores the display year independently from generated repository metadata.
 export const projectYears: Record<string, string> = {
   "qr-link-generator": "2024",

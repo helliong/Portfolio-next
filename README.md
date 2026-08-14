@@ -73,18 +73,35 @@ RESEND_API_KEY=re_your_api_key
 
 Без `RESEND_API_KEY` сайт продолжит работать, но `/api/send` будет возвращать ошибку `500`, а форма не сможет отправлять заявки.
 
+`GITHUB_TOKEN` нужен только во время генерации private/commercial проектов. Используйте fine-grained token с read-доступом к metadata выбранных репозиториев. Для локального запуска передайте его процессу, например в PowerShell:
+
+```powershell
+$env:GITHUB_TOKEN = gh auth token
+npm run generate:projects
+```
+
+Для workflow сохраните отдельный минимально привилегированный token в repository secret `PORTFOLIO_GITHUB_TOKEN`.
+
 ## Команды
 
 | Команда | Назначение |
 | --- | --- |
 | `npm run dev` | запуск development-сервера |
 | `npm run generate:projects` | получение репозиториев GitHub и обновление `src/data/projects.ts` |
-| `npm run build` | синхронизация проектов и production-сборка |
+| `npm run build` | production-сборка без повторной генерации проектов |
 | `npm run start` | запуск production-сервера |
 
 ### Генерация проектов
 
-Скрипт `scripts/generate-projects.mjs` получает публичные репозитории пользователя `helliong`, исключает служебные репозитории и проекты с topic `portfolio-hidden`, а затем формирует `src/data/projects.ts`.
+Скрипт `scripts/generate-projects.mjs` получает публичные репозитории пользователя `helliong`. При наличии `GITHUB_TOKEN` он также получает private-репозитории, но включает только отмеченные topic `commercial`. Проекты с `portfolio-hidden` исключаются.
+
+Каждый проект должен иметь ровно один category topic:
+
+- `portfolio-web` → `web`;
+- `portfolio-app` → `apps`;
+- `portfolio-tool` → `tools`.
+
+Category topics и `commercial` используются только генератором и не отображаются среди технологий. Для private/commercial проекта публикуется demo из `homepage`, а GitHub-ссылка скрывается.
 
 Для изображения проекта скрипт ищет файл по шаблону:
 
@@ -94,12 +111,12 @@ public/assets/img/projects/mockup-{repository-name}.webp
 
 Если mockup отсутствует, используется `no-photo.webp`.
 
-> `npm run build` обращается к публичному GitHub API. Для сборки нужен доступ к сети; неавторизованные запросы также ограничены rate limit GitHub.
+> `npm run build` не обращается к GitHub API. Сначала обновите данные отдельной командой `npm run generate:projects` с настроенным `GITHUB_TOKEN`.
 
 ## Добавление case study
 
 1. Добавьте или обновите репозиторий на GitHub.
-2. Укажите для него описание, topics и homepage с live demo.
+2. Укажите для него описание, один `portfolio-*` topic и homepage с live demo. Для private-проекта также добавьте `commercial`.
 3. Добавьте mockup в `public/assets/img/projects`.
 4. Запустите `npm run generate:projects`.
 5. Добавьте расширенное описание в `src/data/projectDetails.ts`.

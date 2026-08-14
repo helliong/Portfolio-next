@@ -11,9 +11,13 @@ type Props = {
   }>;
 };
 
-const orderedProjects = projectOrder
-  .map((id) => projects.find((project) => project.id === id))
-  .filter((project): project is (typeof projects)[number] => Boolean(project));
+const orderedProjectIds = new Set<string>(projectOrder);
+const orderedProjects = [
+  ...projectOrder
+    .map((id) => projects.find((project) => project.id === id))
+    .filter((project): project is (typeof projects)[number] => Boolean(project)),
+  ...projects.filter((project) => !orderedProjectIds.has(project.id)),
+];
 
 /** Prebuilds a static route for every known project. */
 export function generateStaticParams() {
