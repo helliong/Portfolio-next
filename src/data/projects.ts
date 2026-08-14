@@ -6,7 +6,8 @@ export type Project = {
   alt: string;
   description: string;
   tags: string[];
-  link: string;
+  category: "web" | "apps" | "tools";
+  link?: string | null;
   liveDemo?: string | null;
 };
 
@@ -19,6 +20,7 @@ export const cases: Project[] = [
     alt: "PinWindow",
     description: "No description yet.",
     tags: ["c#", "live-hidden"],
+    category: "apps",
     link: "https://github.com/helliong/pinWindow",
   },
   {
@@ -28,6 +30,7 @@ export const cases: Project[] = [
     alt: "Audio Switcher",
     description: "No description yet.",
     tags: ["autohotkey", "live-hidden"],
+    category: "apps",
     link: "https://github.com/helliong/audio-switcher",
   },
   {
@@ -44,6 +47,7 @@ export const cases: Project[] = [
       "tailwindcss",
       "typescript",
     ],
+    category: "web",
     link: "https://github.com/helliong/market-ai",
   },
 ];
@@ -104,8 +108,22 @@ export const projects: Project[] = [
       "tailwindcss",
       "typescript"
     ],
+    "category": "web",
     "link": "https://github.com/helliong/market-ai",
     "liveDemo": "https://market-ai-xi.vercel.app/"
+  },
+  {
+    "id": "kmstudy",
+    "name": "Kmstudy",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Kmstudy",
+    "description": "No description yet.",
+    "tags": [
+      "typescript"
+    ],
+    "category": "web",
+    "link": null,
+    "liveDemo": "https://kmstudy.ru/"
   },
   {
     "id": "audio-switcher",
@@ -117,6 +135,7 @@ export const projects: Project[] = [
       "autohotkey",
       "live-hidden"
     ],
+    "category": "apps",
     "link": "https://github.com/helliong/audio-switcher",
     "liveDemo": "https://helliong.space/"
   },
@@ -131,6 +150,7 @@ export const projects: Project[] = [
       "live-hidden",
       "c#"
     ],
+    "category": "apps",
     "link": "https://github.com/helliong/pinWindow",
     "liveDemo": "https://helliong.space/"
   },
@@ -147,6 +167,7 @@ export const projects: Project[] = [
       "typescript",
       "scss"
     ],
+    "category": "web",
     "link": "https://github.com/helliong/lumea-candles",
     "liveDemo": "https://lumea-candles.vercel.app/"
   },
@@ -167,6 +188,7 @@ export const projects: Project[] = [
       "typescript",
       "zustand"
     ],
+    "category": "web",
     "link": "https://github.com/helliong/Campus-and-code",
     "liveDemo": "https://campuscode.helliong.space/"
   },
@@ -179,6 +201,7 @@ export const projects: Project[] = [
     "tags": [
       "python"
     ],
+    "category": "tools",
     "link": "https://github.com/helliong/linkcast",
     "liveDemo": "https://linkcast.helliong.space/"
   },
@@ -189,8 +212,11 @@ export const projects: Project[] = [
     "alt": "Qr Link Generator",
     "description": "No description yet.",
     "tags": [
+      "css",
+      "html",
       "typescript"
     ],
+    "category": "tools",
     "link": "https://github.com/helliong/qr-link-generator",
     "liveDemo": "https://qrcode.helliong.space/"
   },
@@ -203,6 +229,7 @@ export const projects: Project[] = [
     "tags": [
       "python"
     ],
+    "category": "tools",
     "link": "https://github.com/helliong/bmi-calculator",
     "liveDemo": "https://bmi.helliong.space/"
   },
@@ -218,6 +245,7 @@ export const projects: Project[] = [
       "pet-project",
       "javascript"
     ],
+    "category": "tools",
     "link": "https://github.com/helliong/password-generator",
     "liveDemo": "https://helliong.github.io/password-generator/"
   },
@@ -233,6 +261,7 @@ export const projects: Project[] = [
       "jquery",
       "pet-project"
     ],
+    "category": "web",
     "link": "https://github.com/helliong/construction",
     "liveDemo": "https://helliong.github.io/construction/"
   }

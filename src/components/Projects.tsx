@@ -50,14 +50,16 @@ export default function Projects() {
                 <Link href={`/projects/${project.id}`} className="text-link">
                   case study <ArrowUpRight size={16} aria-hidden="true" />
                 </Link>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-link muted-link"
-                >
-                  github <ArrowUpRight size={16} aria-hidden="true" />
-                </a>
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-link muted-link"
+                  >
+                    github <ArrowUpRight size={16} aria-hidden="true" />
+                  </a>
+                )}
               </div>
             </div>
 

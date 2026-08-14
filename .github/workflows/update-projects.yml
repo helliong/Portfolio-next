@@ -25,7 +25,14 @@ jobs:
         run: npm ci
 
       - name: Generate projects
-        run: npm run generate:projects
+        env:
+          GITHUB_TOKEN: ${{ secrets.PORTFOLIO_GITHUB_TOKEN }}
+        run: |
+          if [[ -z "$GITHUB_TOKEN" ]]; then
+            echo "::error::PORTFOLIO_GITHUB_TOKEN is not configured"
+            exit 1
+          fi
+          npm run generate:projects
 
       - name: Commit updated projects
         run: |

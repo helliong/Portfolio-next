@@ -1,7 +1,7 @@
 "use client";
 
 import { getProjectDetails } from "@/data/projectDetails";
-import { projectCategories, projectOrder } from "@/data/projectOrder";
+import { projectOrder } from "@/data/projectOrder";
 import { projects } from "@/data/projects";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
@@ -16,9 +16,13 @@ type ProjectFilter = "all" | "web" | "apps" | "tools";
 const filters: ProjectFilter[] = ["all", "web", "apps", "tools"];
 
 // Preserve the manually selected order while enriching generated project data.
-const orderedProjects = projectOrder
-  .map((id) => projects.find((project) => project.id === id))
-  .filter((project): project is (typeof projects)[number] => Boolean(project))
+const orderedProjectIds = new Set<string>(projectOrder);
+const orderedProjects = [
+  ...projectOrder
+    .map((id) => projects.find((project) => project.id === id))
+    .filter((project): project is (typeof projects)[number] => Boolean(project)),
+  ...projects.filter((project) => !orderedProjectIds.has(project.id)),
+]
   .map(getProjectDetails);
 
 /** Renders the filterable project archive and its contact dialogs. */
@@ -32,11 +36,7 @@ export default function ProjectsArchive() {
     () =>
       activeFilter === "all"
         ? orderedProjects
-        : orderedProjects.filter(
-            (project) =>
-              projectCategories[project.id as keyof typeof projectCategories] ===
-              activeFilter,
-          ),
+        : orderedProjects.filter((project) => project.category === activeFilter),
     [activeFilter],
   );
 
@@ -88,8 +88,8 @@ export default function ProjectsArchive() {
         </header>
 
         <section className="projects-archive-intro" aria-labelledby="projects-title">
-          <h1 id="projects-title" className="font-dot">
-            all projects / {String(orderedProjects.length).padStart(2, "0")}
+          <h1 id="projects-title" className="font-dot" aria-live="polite">
+            {activeFilter} projects / {String(visibleProjects.length).padStart(2, "0")}
           </h1>
 
           <div className="projects-archive-filters" aria-label="Filter projects">
@@ -153,15 +153,17 @@ export default function ProjectsArchive() {
                   </div>
 
                   <div className="projects-archive-actions">
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="projects-archive-action projects-archive-action-github"
-                    >
-                      github
-                      <ArrowUpRight size={15} aria-hidden="true" />
-                    </a>
+                    {project.link && (
+                      <a
+                        href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="projects-archive-action projects-archive-action-github"
+                      >
+                        github
+                        <ArrowUpRight size={15} aria-hidden="true" />
+                      </a>
+                    )}
 
                     {project.liveDemo ? (
                       <a

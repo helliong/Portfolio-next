@@ -344,8 +344,8 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
 
           <footer className="project-popup-footer">
             <p>Usually replies within 24 hours</p>
-            <div className="project-popup-action-area">
-              <div className="project-popup-actions">
+            <div className="project-popup-submit-panel">
+              <div className="project-popup-button-row">
                 <button
                   type="button"
                   className="project-popup-cancel"
@@ -369,7 +369,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                   )}
                 </button>
               </div>
-              <p className="project-popup-consent">
+              <p className="project-popup-privacy-note">
                 By clicking “Send request”, you agree to the{" "}
                 <Link href="/privacy">Privacy Policy</Link>.
               </p>
