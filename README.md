@@ -11,10 +11,15 @@
 - адаптивная главная страница в моноширинной editorial-стилистике;
 - светлая и тёмная темы;
 - архив проектов, автоматически синхронизируемый с GitHub;
+- фильтрация проектов по категориям `web`, `apps` и `tools` из GitHub topics;
+- поддержка private/commercial проектов без публикации ссылки на репозиторий;
+- автоматические годы проектов из даты создания GitHub-репозитория;
 - отдельные страницы проектов с описанием, стеком и навигацией;
 - интерактивный блок с логотипом и анимированным акцентом;
 - форма заявки с отправкой писем через Resend;
-- клиентская валидация и состояния успешной или неудачной отправки;
+- клиентская и серверная валидация, rate limiting через Upstash Redis;
+- Privacy Policy, cookie banner и локальное сохранение privacy-настроек;
+- мобильная навигация на главной странице и в архиве проектов;
 - адаптивные интерфейсы для desktop, tablet и mobile;
 - поддержка `prefers-reduced-motion` для ключевых анимаций.
 
@@ -26,6 +31,7 @@
 | Language | TypeScript |
 | UI | Tailwind CSS, глобальные CSS-токены, Lucide Icons |
 | Email | Resend |
+| Security | Upstash Redis, rate limiting, серверная валидация |
 | Data | GitHub REST API, локально генерируемые TypeScript-данные |
 | Fonts | `next/font`, Roboto Mono, DotGothic16 |
 
@@ -35,6 +41,7 @@
 src/
 ├── app/
 │   ├── api/send/          # API отправки заявки
+│   ├── privacy/           # Privacy Policy
 │   ├── projects/          # архив и динамические страницы проектов
 │   ├── globals.css        # темы, layout и стили компонентов
 │   ├── layout.tsx         # шрифты и metadata
@@ -69,9 +76,13 @@ npm run dev
 
 ```env
 RESEND_API_KEY=re_your_api_key
+UPSTASH_REDIS_REST_URL=https://your-database.upstash.io
+UPSTASH_REDIS_REST_TOKEN=your_upstash_token
 ```
 
 Без `RESEND_API_KEY` сайт продолжит работать, но `/api/send` будет возвращать ошибку `500`, а форма не сможет отправлять заявки.
+
+Upstash-переменные обеспечивают распределённый rate limiting формы в production. На Vercel их отсутствие отключает отправку формы с ответом `503`; локально без Upstash серверный rate limiting не применяется. Клиентский cooldown остаётся дополнительным UX-ограничением и не заменяет серверный limiter.
 
 `GITHUB_TOKEN` нужен только во время генерации private/commercial проектов. Используйте fine-grained token с read-доступом к metadata выбранных репозиториев. Для локального запуска передайте его процессу, например в PowerShell:
 
@@ -103,6 +114,8 @@ npm run generate:projects
 
 Category topics и `commercial` используются только генератором и не отображаются среди технологий. Для private/commercial проекта публикуется demo из `homepage`, а GitHub-ссылка скрывается.
 
+Private/commercial проект без публичного `homepage` пропускается. Год каждой карточки и case study определяется по `created_at`; новые проекты, отсутствующие в ручном порядке, автоматически добавляются в конец архива.
+
 Для изображения проекта скрипт ищет файл по шаблону:
 
 ```text
@@ -113,6 +126,8 @@ public/assets/img/projects/mockup-{repository-name}.webp
 
 > `npm run build` не обращается к GitHub API. Сначала обновите данные отдельной командой `npm run generate:projects` с настроенным `GITHUB_TOKEN`.
 
+Workflow `.github/workflows/update-projects.yml` запускает генерацию каждые 8 часов и вручную через `workflow_dispatch`. Если данные изменились, GitHub Actions создаёт коммит `chore: update projects`.
+
 ## Добавление case study
 
 1. Добавьте или обновите репозиторий на GitHub.
@@ -120,7 +135,7 @@ public/assets/img/projects/mockup-{repository-name}.webp
 3. Добавьте mockup в `public/assets/img/projects`.
 4. Запустите `npm run generate:projects`.
 5. Добавьте расширенное описание в `src/data/projectDetails.ts`.
-6. При необходимости задайте позицию в `src/data/projectOrder.ts`.
+6. При необходимости задайте позицию в `src/data/projectOrder.ts`; год добавлять вручную не требуется.
 
 ## Roadmap
 
@@ -150,9 +165,9 @@ public/assets/img/projects/mockup-{repository-name}.webp
 
 ### P1 — форма заявки и безопасность
 
-- [ ] Добавить серверную схему валидации входных данных.
-- [ ] Экранировать пользовательские значения перед формированием HTML-письма.
-- [ ] Добавить rate limiting и защиту от автоматического спама.
+- [x] Добавить серверную валидацию входных данных.
+- [x] Экранировать пользовательские значения перед формированием HTML-письма.
+- [x] Добавить rate limiting формы через Upstash Redis.
 - [ ] Добавить поля бюджета и ориентировочного срока проекта.
 - [ ] Сохранять источник заявки и возвращать клиенту структурированные ошибки.
 - [ ] Настроить подтверждённый домен отправителя Resend вместо тестового адреса.
