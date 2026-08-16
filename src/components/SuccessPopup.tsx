@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
+import { usePreferences } from "./PreferencesProvider";
 
 type Props = {
   isOpen: boolean;
@@ -10,6 +11,7 @@ type Props = {
 
 /** Renders the animated confirmation shown after a request is accepted. */
 export default function SuccessPopup({ isOpen, onClose }: Props) {
+  const { t } = usePreferences();
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
 
@@ -60,10 +62,10 @@ export default function SuccessPopup({ isOpen, onClose }: Props) {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold lowercase">request sent</h2>
+        <h2 className="text-2xl font-bold lowercase">{t("request sent", "заявка отправлена")}</h2>
 
         <p className="mt-3 text-[14px] opacity-[var(--opacity)]">
-          I will contact you soon
+          {t("I will contact you soon", "Я скоро свяжусь с вами")}
         </p>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
+import { usePreferences } from "./PreferencesProvider";
 
 const socials = [
   ["github", "https://github.com/helliong"],
@@ -13,6 +14,7 @@ const socials = [
 
 /** Renders contact actions and coordinates the request and success dialogs. */
 export default function Contact() {
+  const { language, t } = usePreferences();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
@@ -25,7 +27,7 @@ export default function Contact() {
   return (
     <>
       <section id="contact" className="contact-section">
-        <div className="contact-title">have a project<br />in mind?</div>
+        <div className="contact-title">{language === "ru" ? <>есть идея<br />проекта?</> : <>have a project<br />in mind?</>}</div>
 
         <div className="contact-action">
           <button
@@ -33,7 +35,7 @@ export default function Contact() {
             className="contact-link"
             onClick={() => setIsPopupOpen(true)}
           >
-            let&apos;s talk <ArrowUpRight size={30} aria-hidden="true" />
+            {t("let's talk", "обсудить")} <ArrowUpRight size={30} aria-hidden="true" />
           </button>
           <a href="mailto:saoffabg@gmail.com" className="contact-email">
             saoffabg@gmail.com
@@ -41,7 +43,7 @@ export default function Contact() {
         </div>
 
         <div className="contact-socials">
-          <span className="status-label">available for freelance</span>
+          <span className="status-label">{t("available for freelance", "доступен для проектов")}</span>
           <div>
             {socials.map(([label, href]) => (
               <a key={label} href={href} target="_blank" rel="noreferrer">

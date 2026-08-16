@@ -3,6 +3,7 @@
 import { ArrowUpRight, ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
+import { usePreferences } from "./PreferencesProvider";
 
 type Props = {
   isOpen: boolean;
@@ -36,6 +37,7 @@ const emptyErrors: Errors = {
 
 /** Renders and manages the validated project request form. */
 export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) {
+  const { t } = usePreferences();
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -101,11 +103,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
 
       if (remaining === 0) {
         setCooldownUntil(0);
-        setErrors((current) =>
-          current.submit === "too many requests. please wait before trying again"
-            ? { ...current, submit: "" }
-            : current,
-        );
+        setErrors((current) => ({ ...current, submit: "" }));
         try {
           window.localStorage.removeItem(cooldownStorageKey);
         } catch {
@@ -189,7 +187,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
           className="project-popup-close"
           onClick={onClose}
           disabled={isSending}
-          aria-label="Close dialog"
+          aria-label={t("Close dialog", "Закрыть окно")}
         >
           <X size={22} strokeWidth={1.4} aria-hidden="true" />
         </button>
@@ -197,13 +195,13 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
         <header className="project-popup-header">
           <span className="project-popup-number font-dot" aria-hidden="true">01</span>
           <div>
-            <h2 id={titleId}>START A PROJECT</h2>
-            <span className="project-popup-status">AVAILABLE FOR FREELANCE</span>
+            <h2 id={titleId}>{t("START A PROJECT", "НАЧАТЬ ПРОЕКТ")}</h2>
+            <span className="project-popup-status">{t("AVAILABLE FOR FREELANCE", "ДОСТУПЕН ДЛЯ ПРОЕКТОВ")}</span>
           </div>
         </header>
 
         <p id={descriptionId} className="project-popup-intro">
-          Tell me what you&apos;re building and I&apos;ll get back to you.
+          {t("Tell me what you're building and I'll get back to you.", "Расскажите о вашем проекте, и я свяжусь с вами.")}
         </p>
 
         <form
@@ -222,12 +220,12 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
             const message = String(formData.get("message") ?? "").trim();
             const nextErrors = { ...emptyErrors };
 
-            if (!name) nextErrors.name = "enter your name";
-            if (!email) nextErrors.email = "enter email";
+            if (!name) nextErrors.name = t("enter your name", "введите имя");
+            if (!email) nextErrors.email = t("enter email", "введите email");
             else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-              nextErrors.email = "enter a valid email";
+              nextErrors.email = t("enter a valid email", "введите корректный email");
             }
-            if (!message) nextErrors.message = "write something about your project";
+            if (!message) nextErrors.message = t("write something about your project", "расскажите о проекте");
 
             setErrors(nextErrors);
             if (nextErrors.name || nextErrors.email || nextErrors.message) return;
@@ -250,7 +248,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                 applyCooldown(Date.now() + retryAfter * 1_000);
                 setErrors((current) => ({
                   ...current,
-                  submit: "too many requests. please wait before trying again",
+                  submit: t("too many requests. please wait before trying again", "слишком много запросов. попробуйте позже"),
                 }));
                 return;
               }
@@ -270,7 +268,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
             } catch {
               setErrors((current) => ({
                 ...current,
-                submit: "something went wrong. please try again later",
+                submit: t("something went wrong. please try again later", "что-то пошло не так. попробуйте позже"),
               }));
             } finally {
               setIsSending(false);
@@ -279,7 +277,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
         >
           <div className="project-popup-fields">
             <label className="project-popup-field">
-              <span>YOUR NAME</span>
+              <span>{t("YOUR NAME", "ВАШЕ ИМЯ")}</span>
               <input
                 ref={firstFieldRef}
                 name="name"
@@ -308,24 +306,24 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
             </label>
 
             <label className="project-popup-field project-popup-type">
-              <span>PROJECT TYPE</span>
+              <span>{t("PROJECT TYPE", "ТИП ПРОЕКТА")}</span>
               <span className="project-popup-select">
                 <select name="projectType" defaultValue="Website" disabled={isSending}>
-                  <option>Website</option>
-                  <option>Web application</option>
-                  <option>Landing page</option>
-                  <option>Interface design</option>
-                  <option>Other</option>
+                  <option value="Website">{t("Website", "Сайт")}</option>
+                  <option value="Web application">{t("Web application", "Веб-приложение")}</option>
+                  <option value="Landing page">{t("Landing page", "Лендинг")}</option>
+                  <option value="Interface design">{t("Interface design", "Дизайн интерфейса")}</option>
+                  <option value="Other">{t("Other", "Другое")}</option>
                 </select>
                 <ChevronDown size={18} strokeWidth={1.4} aria-hidden="true" />
               </span>
             </label>
 
             <label className="project-popup-field project-popup-message">
-              <span>MESSAGE</span>
+              <span>{t("MESSAGE", "СООБЩЕНИЕ")}</span>
               <textarea
                 name="message"
-                placeholder="A short project description..."
+                placeholder={t("A short project description...", "Кратко опишите проект...")}
                 rows={5}
                 disabled={isSending}
                 aria-invalid={Boolean(errors.message)}
@@ -338,12 +336,12 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
           {errors.submit && <p className="project-popup-submit-error">{errors.submit}</p>}
           {!errors.submit && cooldownRemaining > 0 && (
             <p className="project-popup-submit-error">
-              Request sent. Try again in {formatCooldown(cooldownRemaining)}
+              {t("Request sent. Try again in", "Заявка отправлена. Повторите через")} {formatCooldown(cooldownRemaining)}
             </p>
           )}
 
           <footer className="project-popup-footer">
-            <p>Usually replies within 24 hours</p>
+            <p>{t("Usually replies within 24 hours", "Обычно отвечаю в течение 24 часов")}</p>
             <div className="project-popup-submit-panel">
               <div className="project-popup-button-row">
                 <button
@@ -352,7 +350,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                   onClick={onClose}
                   disabled={isSending}
                 >
-                  CANCEL
+                  {t("CANCEL", "ОТМЕНА")}
                 </button>
                 <button
                   type="submit"
@@ -360,18 +358,18 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                   disabled={isSending || cooldownRemaining > 0}
                 >
                   {isSending
-                    ? "SENDING..."
+                    ? t("SENDING...", "ОТПРАВКА...")
                     : cooldownRemaining > 0
-                      ? `TRY AGAIN IN ${formatCooldown(cooldownRemaining)}`
-                      : "SEND REQUEST"}
+                      ? `${t("TRY AGAIN IN", "ПОВТОРИТЬ ЧЕРЕЗ")} ${formatCooldown(cooldownRemaining)}`
+                      : t("SEND REQUEST", "ОТПРАВИТЬ")}
                   {!isSending && cooldownRemaining === 0 && (
                     <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
                   )}
                 </button>
               </div>
               <p className="project-popup-privacy-note">
-                By clicking “Send request”, you agree to the{" "}
-                <Link href="/privacy">Privacy Policy</Link>.
+                {t("By clicking “Send request”, you agree to the", "Нажимая «Отправить», вы соглашаетесь с")} {" "}
+                <Link href="/privacy">{t("Privacy Policy", "Политикой конфиденциальности")}</Link>.
               </p>
             </div>
           </footer>

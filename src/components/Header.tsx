@@ -1,33 +1,20 @@
 "use client";
 
-import { ArrowDown, ArrowUpRight, MapPin, Moon, Sun } from "lucide-react";
+import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import PreferenceControls from "./PreferenceControls";
+import { usePreferences } from "./PreferencesProvider";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
-
-const navItems = ["about", "services", "projects", "contact"];
 
 /** Renders primary navigation and controls the theme and contact dialogs. */
 export default function Header() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-  const [isLight, setIsLight] = useState(false);
-
-  // Read the theme applied to the document after the client mounts.
-  useEffect(() => {
-    setIsLight(document.body.classList.contains("light"));
-  }, []);
-
-  /** Updates both React state and the document-level theme class. */
-  const toggleTheme = () => {
-    setIsLight((current) => {
-      const next = !current;
-      document.body.classList.toggle("light", next);
-      return next;
-    });
-  };
+  const { theme, t } = usePreferences();
+  const navItems = [["about", "обо мне"], ["services", "услуги"], ["projects", "проекты"], ["contact", "контакты"]];
 
   /** Displays a short confirmation after a successful form submission. */
   const showSuccessPopup = () => {
@@ -38,9 +25,9 @@ export default function Header() {
   return (
     <header id="home" className="site-header">
       <div className="topbar">
-        <a href="#home" aria-label="Back to top" className="brand-mark">
+        <a href="#home" aria-label={t("Back to top", "Наверх")} className="brand-mark">
           <Image
-            src={isLight ? "/logoBlack.svg" : "/logoWhite.svg"}
+            src={theme === "light" ? "/logoBlack.svg" : "/logoWhite.svg"}
             alt="Egor Yakovlev"
             width={52}
             height={36}
@@ -48,10 +35,10 @@ export default function Header() {
           />
         </a>
 
-        <nav className="desktop-nav" aria-label="Primary navigation">
-          {navItems.map((item) => (
-            <a key={item} href={`#${item}`}>
-              {item}
+        <nav className="desktop-nav" aria-label={t("Primary navigation", "Основная навигация")}>
+          {navItems.map(([id, ru]) => (
+            <a key={id} href={`#${id}`}>
+              {t(id, ru)}
             </a>
           ))}
         </nav>
@@ -62,28 +49,17 @@ export default function Header() {
             className="order-action"
             onClick={() => setIsPopupOpen(true)}
           >
-            <span>order a website</span>
+            <span>{t("order a website", "заказать сайт")}</span>
             <small>20% OFF</small>
           </button>
           <span className="topbar-divider" aria-hidden="true" />
-          <button
-            type="button"
-            className="icon-action"
-            onClick={toggleTheme}
-            aria-label={
-              isLight ? "Switch to dark mode" : "Switch to light mode"
-            }
-            title={isLight ? "dark mode" : "light mode"}
-          >
-            {isLight ? <Moon size={17} /> : <Sun size={17} />}
-            <span>{isLight ? "dark mode" : "light mode"}</span>
-          </button>
+          <PreferenceControls showThemeLabel />
         </div>
 
-        <nav className="mobile-nav" aria-label="Mobile navigation">
-          {navItems.map((item) => (
-            <a key={item} href={`#${item}`}>
-              {item}
+        <nav className="mobile-nav" aria-label={t("Mobile navigation", "Мобильная навигация")}>
+          {navItems.map(([id, ru]) => (
+            <a key={id} href={`#${id}`}>
+              {t(id, ru)}
             </a>
           ))}
         </nav>
@@ -93,19 +69,19 @@ export default function Header() {
         <div className="hero-copy">
           <div>
             <h1 className="font-dot">
-              <span className="hero-title-line">full-stack web</span>
+              <span className="hero-title-line">{t("full-stack web", "full-stack веб")}</span>
               <br />
-              developer
+              {t("developer", "разработчик")}
               <span className="blink-cursor" aria-hidden="true" />
             </h1>
-            <p>I build fast, accessible and focused web experiences.</p>
+            <p>{t("I build fast, accessible and focused web experiences.", "Создаю быстрые, доступные и продуманные веб-продукты.")}</p>
           </div>
 
           <div className="hero-meta">
-            <span className="status-label">available for freelance</span>
+            <span className="status-label">{t("available for freelance", "доступен для проектов")}</span>
             <span className="meta-separator" aria-hidden="true" />
             <span>
-              <MapPin size={14} aria-hidden="true" /> based in Russia
+              <MapPin size={14} aria-hidden="true" /> {t("based in Russia", "нахожусь в России")}
             </span>
             <span className="meta-separator" aria-hidden="true" />
             <span>UTC +6</span>
@@ -113,16 +89,16 @@ export default function Header() {
 
           <a href="#projects" className="scroll-link">
             <ArrowDown size={18} aria-hidden="true" />
-            scroll to explore
+            {t("scroll to explore", "листайте дальше")}
           </a>
         </div>
 
         <article className="featured-project">
           <div className="featured-heading">
-            <span className="section-kicker">selected project</span>
+            <span className="section-kicker">{t("selected project", "избранный проект")}</span>
             <div className="featured-title-row">
               <h2>pin window</h2>
-              <span className="status-label">open source</span>
+              <span className="status-label">{t("open source", "открытый код")}</span>
             </div>
           </div>
 
@@ -138,17 +114,17 @@ export default function Header() {
 
           <div className="featured-footer">
             <Link href="/projects/pinwindow" className="text-link">
-              view project <ArrowUpRight size={17} aria-hidden="true" />
+              {t("view project", "смотреть проект")} <ArrowUpRight size={17} aria-hidden="true" />
             </Link>
             <div className="featured-facts">
               <span>
-                <small>role</small>developer
+                <small>{t("role", "роль")}</small>{t("developer", "разработчик")}
               </span>
               <span>
                 <small>stack</small>typescript
               </span>
               <span>
-                <small>status</small>published
+                <small>{t("status", "статус")}</small>{t("published", "опубликован")}
               </span>
             </div>
           </div>

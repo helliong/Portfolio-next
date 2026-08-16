@@ -1,3 +1,7 @@
+"use client";
+
+import { usePreferences } from "./PreferencesProvider";
+
 // Describes the service cards displayed in the capabilities section.
 const services = [
   {
@@ -22,15 +26,21 @@ const services = [
 
 /** Renders the developer services and their key deliverables. */
 export default function WhatICanDo() {
+  const { language, t } = usePreferences();
+  const localizedServices = language === "ru" ? [
+    { number: "01", title: "веб-разработка", description: "Создание быстрых, адаптивных и масштабируемых веб-приложений с поддерживаемой full-stack архитектурой.", items: ["Веб-приложения на заказ", "Адаптивная вёрстка", "Интеграция API", "Развёртывание"] },
+    { number: "02", title: "реализация интерфейсов", description: "Превращение макетов в точные и доступные интерфейсы, удобные на любом экране.", items: ["Из Figma в код", "Системы компонентов", "Состояния взаимодействия", "Поддержка браузеров"] },
+    { number: "03", title: "скорость и доступность", description: "Улучшение загрузки, семантики и удобства, чтобы продукт был понятным и надёжным.", items: ["Core Web Vitals", "Доступность", "Основы SEO", "Разделение кода"] },
+  ] : services;
   return (
     <section id="services" className="portfolio-section">
       <div className="section-heading">
         <span className="accent-dash" aria-hidden="true" />
-        <h2>services / what I do</h2>
+        <h2>{t("services / what I do", "услуги / что я делаю")}</h2>
       </div>
 
       <div className="services-grid">
-        {services.map((service) => (
+        {localizedServices.map((service) => (
           <article key={service.number} className="service-item">
             <span className="service-number">{service.number}</span>
             <div className="service-content">

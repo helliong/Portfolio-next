@@ -1,8 +1,11 @@
-import { getProjectDetails } from "@/data/projectDetails";
+"use client";
+
+import { getLocalizedProjectDetails } from "@/data/projectDetails";
 import { projects } from "@/data/projects";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePreferences } from "./PreferencesProvider";
 
 const featuredIds = [
   "qr-link-generator",
@@ -16,22 +19,23 @@ const featuredIds = [
 // Resolve the curated project IDs into the enriched records used by the cards.
 const featuredProjects = featuredIds
   .map((id) => projects.find((project) => project.id === id))
-  .filter((project) => project !== undefined)
-  .map(getProjectDetails);
+  .filter((project) => project !== undefined);
 
 /** Renders the curated project selection on the home page. */
 export default function Projects() {
+  const { language, t } = usePreferences();
+  const localizedProjects = featuredProjects.map((project) => getLocalizedProjectDetails(project, language));
   return (
     <section id="projects" className="portfolio-section projects-section">
       <div className="section-heading">
         <span className="accent-dash" aria-hidden="true" />
         <h2>
-          selected projects / {String(featuredProjects.length).padStart(2, "0")}
+          {t("selected projects", "избранные проекты")} / {String(localizedProjects.length).padStart(2, "0")}
         </h2>
       </div>
 
       <div className="project-list">
-        {featuredProjects.map((project, index) => (
+        {localizedProjects.map((project, index) => (
           <article className="project-row" key={project.id}>
             <div className="project-index">
               {String(index + 1).padStart(2, "0")}
@@ -41,14 +45,14 @@ export default function Projects() {
               <h3>{project.name}</h3>
               <p>{project.summary}</p>
               <div className="project-tags">
-                <span className="status-label">repository</span>
+                <span className="status-label">{t("repository", "репозиторий")}</span>
                 {project.tags.slice(0, 4).map((tag) => (
                   <span key={tag}>{tag}</span>
                 ))}
               </div>
               <div className="project-links">
                 <Link href={`/projects/${project.id}`} className="text-link">
-                  case study <ArrowUpRight size={16} aria-hidden="true" />
+                  {t("case study", "о проекте")} <ArrowUpRight size={16} aria-hidden="true" />
                 </Link>
                 {project.link && (
                   <a
@@ -79,7 +83,7 @@ export default function Projects() {
 
       <div className="projects-more">
         <Link href="/projects" className="text-link">
-          view all projects <ArrowUpRight size={17} aria-hidden="true" />
+          {t("view all projects", "все проекты")} <ArrowUpRight size={17} aria-hidden="true" />
         </Link>
       </div>
     </section>
