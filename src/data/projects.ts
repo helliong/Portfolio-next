@@ -112,6 +112,23 @@ export const projects: Project[] = [
     "liveDemo": "https://kmstudy.ru/"
   },
   {
+    "id": "lumea-candles",
+    "name": "Lumea Candles",
+    "image": "/assets/img/projects/mockup-lumea-candles.webp",
+    "alt": "Lumea Candles",
+    "description": "A responsive storefront concept for a handmade candle brand with a calm, product-led interface.",
+    "tags": [
+      "nextjs",
+      "pet-project",
+      "scss-modules",
+      "typescript"
+    ],
+    "category": "web",
+    "year": "2026",
+    "link": "https://github.com/helliong/lumea-candles",
+    "liveDemo": "https://lumea-candles.vercel.app/"
+  },
+  {
     "id": "market-ai",
     "name": "Market Ai",
     "image": "/assets/img/projects/mockup-market-ai.webp",
@@ -160,24 +177,6 @@ export const projects: Project[] = [
     "year": "2026",
     "link": "https://github.com/helliong/pinWindow",
     "liveDemo": "https://helliong.space/"
-  },
-  {
-    "id": "lumea-candles",
-    "name": "Lumea Candles",
-    "image": "/assets/img/projects/mockup-lumea-candles.webp",
-    "alt": "Lumea Candles",
-    "description": "A responsive storefront concept for a handmade candle brand with a calm, product-led interface.",
-    "tags": [
-      "nextjs",
-      "pet-project",
-      "scss-modules",
-      "typescript",
-      "scss"
-    ],
-    "category": "web",
-    "year": "2026",
-    "link": "https://github.com/helliong/lumea-candles",
-    "liveDemo": "https://lumea-candles.vercel.app/"
   },
   {
     "id": "campus-and-code",
