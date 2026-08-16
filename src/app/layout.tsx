@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DotGothic16, Roboto, Roboto_Mono } from "next/font/google";
 import CookieBanner from "@/components/CookieBanner";
+import PreferencesProvider from "@/components/PreferencesProvider";
 import "./globals.css";
 
 const robotoMono = Roboto_Mono({
@@ -33,10 +34,16 @@ export const metadata: Metadata = {
 /** Applies global fonts, styles, and document structure to every page. */
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${robotoMono.variable} ${roboto.variable} ${dotGothic.variable}`}>
-        {children}
-        <CookieBanner />
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${robotoMono.variable} ${roboto.variable} ${dotGothic.variable}`}
+        suppressHydrationWarning
+      >
+        <script dangerouslySetInnerHTML={{ __html: `(function(){try{var l=localStorage.getItem('portfolio-language');var t=localStorage.getItem('portfolio-theme');if(l==='ru'||l==='en')document.documentElement.lang=l;if(t==='light')document.body.classList.add('light');}catch(e){}})();` }} />
+        <PreferencesProvider>
+          {children}
+          <CookieBanner />
+        </PreferencesProvider>
       </body>
     </html>
   );

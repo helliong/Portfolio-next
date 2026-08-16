@@ -1,6 +1,6 @@
 "use client";
 
-import type { ProjectDetails } from "@/data/projectDetails";
+import { getLocalizedProjectDetails, type ProjectDetails } from "@/data/projectDetails";
 import { ArrowLeft, ArrowRight, ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +8,8 @@ import { useState } from "react";
 import Footer from "./Footer";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
+import PreferenceControls from "./PreferenceControls";
+import { usePreferences } from "./PreferencesProvider";
 
 type AdjacentProject = {
   id: string;
@@ -44,6 +46,8 @@ export default function ProjectCaseStudy({
   previousProject,
   nextProject,
 }: Props) {
+  const { language, t } = usePreferences();
+  const localizedProject = getLocalizedProjectDetails(project, language);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
@@ -56,7 +60,7 @@ export default function ProjectCaseStudy({
     <main id="project-top" className="project-case">
       <div className="project-case-shell">
         <header className="projects-archive-topbar">
-          <Link href="/" className="projects-archive-brand" aria-label="Portfolio home">
+          <Link href="/" className="projects-archive-brand" aria-label={t("Portfolio home", "Главная портфолио")}>
             <Image
               src="/logoWhite.svg"
               alt="EY"
@@ -75,30 +79,30 @@ export default function ProjectCaseStudy({
             />
           </Link>
 
-          <nav className="projects-archive-nav" aria-label="Primary navigation">
-            <Link href="/#about">about</Link>
-            <Link href="/#services">services</Link>
+          <nav className="projects-archive-nav" aria-label={t("Primary navigation", "Основная навигация")}>
+            <Link href="/#about">{t("about", "обо мне")}</Link>
+            <Link href="/#services">{t("services", "услуги")}</Link>
             <Link href="/projects" className="is-active">
-              projects
+              {t("projects", "проекты")}
             </Link>
-            <Link href="/#contact">contact</Link>
+            <Link href="/#contact">{t("contact", "контакты")}</Link>
           </nav>
 
-          <button
+          <div className="projects-archive-header-actions"><PreferenceControls compact /><button
             type="button"
             className="projects-archive-order"
             onClick={() => setIsPopupOpen(true)}
           >
-            order a website
+            {t("order a website", "заказать сайт")}
             <ArrowUpRight size={16} aria-hidden="true" />
-          </button>
+          </button></div>
         </header>
 
         <section className="project-case-hero">
           <div className="project-case-heading">
-            <span className="project-case-kicker">selected project / {number}</span>
+            <span className="project-case-kicker">{t("selected project", "избранный проект")} / {number}</span>
             <h1 className="font-dot">{project.name}</h1>
-            <p>{project.summary}</p>
+            <p>{localizedProject.summary}</p>
 
             <div className="project-case-actions">
               {project.link && (
@@ -120,17 +124,17 @@ export default function ProjectCaseStudy({
                   rel="noopener noreferrer"
                   className="project-case-action project-case-action-live"
                 >
-                  live demo
+                  {t("live demo", "демо")}
                   <ArrowUpRight size={15} aria-hidden="true" />
                 </a>
               ) : (
                 <button
                   type="button"
                   disabled
-                  title="Live demo unavailable"
+                  title={t("Live demo unavailable", "Демо недоступно")}
                   className="project-case-action project-case-action-live is-disabled"
                 >
-                  live demo
+                  {t("live demo", "демо")}
                   <LockKeyhole size={14} aria-hidden="true" />
                 </button>
               )}
@@ -139,21 +143,21 @@ export default function ProjectCaseStudy({
 
           <dl className="project-case-facts">
             <div>
-              <dt>year</dt>
+              <dt>{t("year", "год")}</dt>
               <dd>{year}</dd>
             </div>
             <div>
-              <dt>role</dt>
-              <dd>{getRole(project)}</dd>
+              <dt>{t("role", "роль")}</dt>
+              <dd>{getRole(project) === "desktop app" ? t("desktop app", "настольное приложение") : getRole(project) === "developer" ? t("developer", "разработчик") : getRole(project)}</dd>
             </div>
             <div>
               <dt>stack</dt>
               <dd>{project.tags.slice(0, 2).join(", ")}</dd>
             </div>
             <div>
-              <dt>status</dt>
+              <dt>{t("status", "статус")}</dt>
               <dd className={project.liveDemo ? "is-live" : undefined}>
-                {project.liveDemo ? "live" : "repository"}
+                {project.liveDemo ? t("live", "онлайн") : t("repository", "репозиторий")}
               </dd>
             </div>
           </dl>
@@ -172,17 +176,17 @@ export default function ProjectCaseStudy({
         <section className="project-case-details">
           <article>
             <h2>
-              <span className="font-dot">01</span> / overview
+              <span className="font-dot">01</span> / {t("overview", "обзор")}
             </h2>
-            <p>{project.overview}</p>
+            <p>{localizedProject.overview}</p>
           </article>
 
           <article>
             <h2>
-              <span className="font-dot">02</span> / contribution
+              <span className="font-dot">02</span> / {t("contribution", "вклад")}
             </h2>
             <ul>
-              {project.features.slice(0, 3).map((feature) => (
+              {localizedProject.features.slice(0, 3).map((feature) => (
                 <li key={feature}>{feature}</li>
               ))}
             </ul>
@@ -190,7 +194,7 @@ export default function ProjectCaseStudy({
 
           <article>
             <h2>
-              <span className="font-dot">03</span> / technology
+              <span className="font-dot">03</span> / {t("technology", "технологии")}
             </h2>
             <ul>
               {project.tags.slice(0, 4).map((tag) => (
@@ -200,7 +204,7 @@ export default function ProjectCaseStudy({
           </article>
         </section>
 
-        <nav className="project-case-pagination" aria-label="Adjacent projects">
+        <nav className="project-case-pagination" aria-label={t("Adjacent projects", "Соседние проекты")}>
           <Link href={`/projects/${previousProject.id}`}>
             <ArrowLeft size={16} aria-hidden="true" />
             <span>{previousProject.number}</span>

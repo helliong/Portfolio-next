@@ -1,6 +1,6 @@
 "use client";
 
-import { getProjectDetails } from "@/data/projectDetails";
+import { getLocalizedProjectDetails } from "@/data/projectDetails";
 import { projectOrder } from "@/data/projectOrder";
 import { projects } from "@/data/projects";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
@@ -10,6 +10,8 @@ import { useMemo, useState } from "react";
 import Footer from "./Footer";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
+import PreferenceControls from "./PreferenceControls";
+import { usePreferences } from "./PreferencesProvider";
 
 type ProjectFilter = "all" | "web" | "apps" | "tools";
 
@@ -22,23 +24,25 @@ const orderedProjects = [
     .map((id) => projects.find((project) => project.id === id))
     .filter((project): project is (typeof projects)[number] => Boolean(project)),
   ...projects.filter((project) => !orderedProjectIds.has(project.id)),
-]
-  .map(getProjectDetails);
+];
 
 /** Renders the filterable project archive and its contact dialogs. */
 export default function ProjectsArchive() {
+  const { language, t } = usePreferences();
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   // Recompute the visible list only when the selected category changes.
-  const visibleProjects = useMemo(
-    () =>
-      activeFilter === "all"
-        ? orderedProjects
-        : orderedProjects.filter((project) => project.category === activeFilter),
-    [activeFilter],
-  );
+  const localizedProjects = useMemo(() => orderedProjects.map((project) => getLocalizedProjectDetails(project, language)), [language]);
+  const visibleProjects = useMemo(() => activeFilter === "all" ? localizedProjects : localizedProjects.filter((project) => project.category === activeFilter), [activeFilter, localizedProjects]);
+  const filterLabels: Record<ProjectFilter, string> = { all: t("all", "все"), web: t("web", "веб"), apps: t("apps", "приложения"), tools: t("tools", "инструменты") };
+  const archiveTitles: Record<ProjectFilter, string> = {
+    all: t("all projects", "все проекты"),
+    web: t("web projects", "веб-проекты"),
+    apps: t("apps projects", "проекты приложений"),
+    tools: t("tools projects", "проекты инструментов"),
+  };
 
   const showSuccessPopup = () => {
     setIsSuccessOpen(true);
@@ -49,7 +53,7 @@ export default function ProjectsArchive() {
     <main id="projects-top" className="projects-archive">
       <div className="projects-archive-shell">
         <header className="projects-archive-topbar">
-          <Link href="/" className="projects-archive-brand" aria-label="Portfolio home">
+          <Link href="/" className="projects-archive-brand" aria-label={t("Portfolio home", "Главная портфолио")}>
             <Image
               src="/logoWhite.svg"
               alt="EY"
@@ -68,31 +72,31 @@ export default function ProjectsArchive() {
             />
           </Link>
 
-          <nav className="projects-archive-nav" aria-label="Primary navigation">
-            <Link href="/#about">about</Link>
-            <Link href="/#services">services</Link>
+          <nav className="projects-archive-nav" aria-label={t("Primary navigation", "Основная навигация")}>
+            <Link href="/#about">{t("about", "обо мне")}</Link>
+            <Link href="/#services">{t("services", "услуги")}</Link>
             <Link href="/projects" className="is-active" aria-current="page">
-              projects
+              {t("projects", "проекты")}
             </Link>
-            <Link href="/#contact">contact</Link>
+            <Link href="/#contact">{t("contact", "контакты")}</Link>
           </nav>
 
-          <button
+          <div className="projects-archive-header-actions"><PreferenceControls compact /><button
             type="button"
             className="projects-archive-order"
             onClick={() => setIsPopupOpen(true)}
           >
-            order a website
+            {t("order a website", "заказать сайт")}
             <ArrowUpRight size={16} aria-hidden="true" />
-          </button>
+          </button></div>
         </header>
 
         <section className="projects-archive-intro" aria-labelledby="projects-title">
           <h1 id="projects-title" className="font-dot" aria-live="polite">
-            {activeFilter} projects / {String(visibleProjects.length).padStart(2, "0")}
+            {archiveTitles[activeFilter]} / {String(visibleProjects.length).padStart(2, "0")}
           </h1>
 
-          <div className="projects-archive-filters" aria-label="Filter projects">
+          <div className="projects-archive-filters" aria-label={t("Filter projects", "Фильтр проектов")}>
             {filters.map((filter) => (
               <button
                 key={filter}
@@ -101,7 +105,7 @@ export default function ProjectsArchive() {
                 aria-pressed={activeFilter === filter}
                 onClick={() => setActiveFilter(filter)}
               >
-                {filter}
+                {filterLabels[filter]}
               </button>
             ))}
           </div>
@@ -109,7 +113,7 @@ export default function ProjectsArchive() {
 
         <section className="projects-archive-grid" aria-live="polite">
           {visibleProjects.map((project) => {
-            const projectIndex = orderedProjects.findIndex(
+            const projectIndex = localizedProjects.findIndex(
               (item) => item.id === project.id,
             );
 
@@ -122,7 +126,7 @@ export default function ProjectsArchive() {
                 <Link
                   href={`/projects/${project.id}`}
                   className="projects-archive-media"
-                  aria-label={`View ${project.name} project`}
+                  aria-label={`${t("View project", "Смотреть проект")} ${project.name}`}
                   style={{ aspectRatio: "16 / 9" }}
                 >
                   <Image
@@ -172,17 +176,17 @@ export default function ProjectsArchive() {
                         rel="noopener noreferrer"
                         className="projects-archive-action projects-archive-action-live"
                       >
-                        live demo
+                        {t("live demo", "демо")}
                         <ArrowUpRight size={15} aria-hidden="true" />
                       </a>
                     ) : (
                       <button
                         type="button"
                         disabled
-                        title="Live demo unavailable"
+                      title={t("Live demo unavailable", "Демо недоступно")}
                         className="projects-archive-action projects-archive-action-live is-disabled"
                       >
-                        live demo
+                        {t("live demo", "демо")}
                         <LockKeyhole size={14} aria-hidden="true" />
                       </button>
                     )}
