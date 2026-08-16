@@ -96,20 +96,6 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
-    "id": "climate-profi",
-    "name": "Climate Profi",
-    "image": "/assets/img/projects/no-photo.webp",
-    "alt": "Climate Profi",
-    "description": "No description yet.",
-    "tags": [
-      "typescript"
-    ],
-    "category": "web",
-    "year": "2026",
-    "link": null,
-    "liveDemo": "https://climate-profi.vercel.app/"
-  },
-  {
     "id": "kmstudy",
     "name": "Kmstudy",
     "image": "/assets/img/projects/mockup-kmstudy.webp",
