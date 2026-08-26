@@ -46,7 +46,7 @@ export default function ProjectCaseStudy({
   previousProject,
   nextProject,
 }: Props) {
-  const { language, t } = usePreferences();
+  const { language, localizedHref, t } = usePreferences();
   const localizedProject = getLocalizedProjectDetails(project, language);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
@@ -60,7 +60,7 @@ export default function ProjectCaseStudy({
     <main id="project-top" className="project-case">
       <div className="project-case-shell">
         <header className="projects-archive-topbar">
-          <Link href="/" className="projects-archive-brand" aria-label={t("Portfolio home", "Главная портфолио")}>
+          <Link href={localizedHref("/")} className="projects-archive-brand" aria-label={t("Portfolio home", "Главная портфолио")}>
             <Image
               src="/logoWhite.svg"
               alt="EY"
@@ -80,12 +80,12 @@ export default function ProjectCaseStudy({
           </Link>
 
           <nav className="projects-archive-nav" aria-label={t("Primary navigation", "Основная навигация")}>
-            <Link href="/#about">{t("about", "обо мне")}</Link>
-            <Link href="/#services">{t("services", "услуги")}</Link>
-            <Link href="/projects" className="is-active">
+            <Link href={localizedHref("/#about")}>{t("about", "обо мне")}</Link>
+            <Link href={localizedHref("/#services")}>{t("services", "услуги")}</Link>
+            <Link href={localizedHref("/projects")} className="is-active">
               {t("projects", "проекты")}
             </Link>
-            <Link href="/#contact">{t("contact", "контакты")}</Link>
+            <Link href={localizedHref("/#contact")}>{t("contact", "контакты")}</Link>
           </nav>
 
           <div className="projects-archive-header-actions"><PreferenceControls compact /><button
@@ -205,12 +205,12 @@ export default function ProjectCaseStudy({
         </section>
 
         <nav className="project-case-pagination" aria-label={t("Adjacent projects", "Соседние проекты")}>
-          <Link href={`/projects/${previousProject.id}`}>
+          <Link href={localizedHref(`/projects/${previousProject.id}`)}>
             <ArrowLeft size={16} aria-hidden="true" />
             <span>{previousProject.number}</span>
             {previousProject.name}
           </Link>
-          <Link href={`/projects/${nextProject.id}`}>
+          <Link href={localizedHref(`/projects/${nextProject.id}`)}>
             <span>{nextProject.number}</span>
             {nextProject.name}
             <ArrowRight size={16} aria-hidden="true" />

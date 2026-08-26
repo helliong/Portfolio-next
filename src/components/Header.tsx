@@ -13,7 +13,7 @@ import SuccessPopup from "./SuccessPopup";
 export default function Header() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-  const { theme, t } = usePreferences();
+  const { localizedHref, theme, t } = usePreferences();
   const navItems = [["about", "обо мне"], ["services", "услуги"], ["projects", "проекты"], ["contact", "контакты"]];
 
   /** Displays a short confirmation after a successful form submission. */
@@ -102,7 +102,7 @@ export default function Header() {
             </div>
           </div>
 
-          <Link href="/projects/pinwindow" className="featured-media">
+          <Link href={localizedHref("/projects/pinwindow")} className="featured-media">
             <Image
               src="/assets/img/projects/mockup-pinwindow.webp"
               alt="QR Link Generator project preview"
@@ -113,7 +113,7 @@ export default function Header() {
           </Link>
 
           <div className="featured-footer">
-            <Link href="/projects/pinwindow" className="text-link">
+            <Link href={localizedHref("/projects/pinwindow")} className="text-link">
               {t("view project", "смотреть проект")} <ArrowUpRight size={17} aria-hidden="true" />
             </Link>
             <div className="featured-facts">

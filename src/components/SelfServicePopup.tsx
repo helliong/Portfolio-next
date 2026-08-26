@@ -37,7 +37,7 @@ const emptyErrors: Errors = {
 
 /** Renders and manages the validated project request form. */
 export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) {
-  const { t } = usePreferences();
+  const { localizedHref, t } = usePreferences();
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSending, setIsSending] = useState(false);
@@ -369,7 +369,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
               </div>
               <p className="project-popup-privacy-note">
                 {t("By clicking “Send request”, you agree to the", "Нажимая «Отправить», вы соглашаетесь с")} {" "}
-                <Link href="/privacy">{t("Privacy Policy", "Политикой конфиденциальности")}</Link>.
+                <Link href={localizedHref("/privacy")}>{t("Privacy Policy", "Политикой конфиденциальности")}</Link>.
               </p>
             </div>
           </footer>

@@ -23,7 +23,7 @@ const featuredProjects = featuredIds
 
 /** Renders the curated project selection on the home page. */
 export default function Projects() {
-  const { language, t } = usePreferences();
+  const { language, localizedHref, t } = usePreferences();
   const localizedProjects = featuredProjects.map((project) => getLocalizedProjectDetails(project, language));
   return (
     <section id="projects" className="portfolio-section projects-section">
@@ -51,7 +51,7 @@ export default function Projects() {
                 ))}
               </div>
               <div className="project-links">
-                <Link href={`/projects/${project.id}`} className="text-link">
+                <Link href={localizedHref(`/projects/${project.id}`)} className="text-link">
                   {t("case study", "о проекте")} <ArrowUpRight size={16} aria-hidden="true" />
                 </Link>
                 {project.link && (
@@ -67,7 +67,7 @@ export default function Projects() {
               </div>
             </div>
 
-            <Link href={`/projects/${project.id}`} className="project-media">
+            <Link href={localizedHref(`/projects/${project.id}`)} className="project-media">
               <span className="project-media-frame">
                 <Image
                   src={project.image}
@@ -82,7 +82,7 @@ export default function Projects() {
       </div>
 
       <div className="projects-more">
-        <Link href="/projects" className="text-link">
+        <Link href={localizedHref("/projects")} className="text-link">
           {t("view all projects", "все проекты")} <ArrowUpRight size={17} aria-hidden="true" />
         </Link>
       </div>
