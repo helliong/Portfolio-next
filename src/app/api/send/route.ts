@@ -22,11 +22,11 @@ const ratelimit =
     : null;
 
 const allowedProjectTypes = new Set([
-  "Website",
-  "Web application",
   "Landing page",
-  "Interface design",
-  "Other",
+  "Business card website",
+  "Online store",
+  "Web application / MVP",
+  "Additional services",
 ]);
 
 type ContactRequest = {
@@ -70,9 +70,11 @@ function parseContactRequest(value: unknown): ContactRequest | null {
     !email ||
     email.length > 254 ||
     !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+    !projectType ||
     !message ||
+    (projectType === "Additional services" && message.length < 20) ||
     message.length > 5_000 ||
-    (projectType && !allowedProjectTypes.has(projectType))
+    !allowedProjectTypes.has(projectType)
   ) {
     return null;
   }

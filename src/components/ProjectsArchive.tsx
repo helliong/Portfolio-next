@@ -6,16 +6,36 @@ import { projects } from "@/data/projects";
 import { ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useState } from "react";
 import Footer from "./Footer";
 import SelfServicePopup from "./SelfServicePopup";
 import SuccessPopup from "./SuccessPopup";
 import PreferenceControls from "./PreferenceControls";
 import { usePreferences } from "./PreferencesProvider";
 
-type ProjectFilter = "all" | "web" | "apps" | "tools";
+export type ProjectFilter = "all" | "web" | "apps" | "tools";
 
 const filters: ProjectFilter[] = ["all", "web", "apps", "tools"];
+const filterUrlFlags: Record<ProjectFilter, string> = {
+  all: "all",
+  web: "web",
+  apps: "app",
+  tools: "tools",
+};
+
+function projectFilterFromSearch(search: string): ProjectFilter {
+  const params = new URLSearchParams(search);
+  if (params.has("web")) return "web";
+  if (params.has("app") || params.has("apps")) return "apps";
+  if (params.has("tools")) return "tools";
+  return "all";
+}
+
+function setProjectFilterUrl(filter: ProjectFilter) {
+  const url = new URL(window.location.href);
+  url.search = `?${filterUrlFlags[filter]}`;
+  window.history.pushState(null, "", url);
+}
 
 // Preserve the manually selected order while enriching generated project data.
 const orderedProjectIds = new Set<string>(projectOrder);
@@ -28,12 +48,27 @@ const orderedProjects = [
   ...projects.filter((project) => !orderedProjectIds.has(project.id)),
 ];
 
+type Props = {
+  initialFilter?: ProjectFilter;
+};
+
 /** Renders the filterable project archive and its contact dialogs. */
-export default function ProjectsArchive() {
+export default function ProjectsArchive({ initialFilter = "all" }: Props) {
   const { language, localizedHref, t } = usePreferences();
-  const [activeFilter, setActiveFilter] = useState<ProjectFilter>("all");
+  const [activeFilter, setActiveFilter] = useState<ProjectFilter>(initialFilter);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
+
+  useLayoutEffect(() => {
+    setActiveFilter(projectFilterFromSearch(window.location.search));
+
+    const handlePopState = () => {
+      setActiveFilter(projectFilterFromSearch(window.location.search));
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   // Recompute the visible list only when the selected category changes.
   const localizedProjects = useMemo(
@@ -108,11 +143,11 @@ export default function ProjectsArchive() {
             >
               {t("projects", "проекты")}
             </Link>
+            <Link href={localizedHref("/#about")}>{t("about", "обо мне")}</Link>
             <Link href={localizedHref("/#services")}>
               {t("services", "услуги")}
             </Link>
-            <Link href={localizedHref("/#about")}>{t("about", "обо мне")}</Link>
-
+            <Link href={localizedHref("/pricing")}>{t("pricing", "цены")}</Link>
             <Link href={localizedHref("/#contact")}>
               {t("contact", "контакты")}
             </Link>
@@ -150,7 +185,10 @@ export default function ProjectsArchive() {
                 type="button"
                 className={activeFilter === filter ? "is-active" : undefined}
                 aria-pressed={activeFilter === filter}
-                onClick={() => setActiveFilter(filter)}
+                onClick={() => {
+                  setActiveFilter(filter);
+                  setProjectFilterUrl(filter);
+                }}
               >
                 {filterLabels[filter]}
               </button>

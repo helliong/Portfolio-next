@@ -2,6 +2,7 @@ import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Pricing from "@/components/Pricing";
 import Process from "@/components/Process";
 import Projects from "@/components/Projects";
 import SiteProviders from "@/components/SiteProviders";
@@ -64,9 +65,10 @@ export default async function LocalizedHome({ params }: Props) {
         <div className="portfolio-shell">
           <Header />
           <Projects />
-          <WhatICanDo />
           <About />
+          <WhatICanDo />
           <Process />
+          <Pricing />
           <Contact />
           <Footer />
         </div>

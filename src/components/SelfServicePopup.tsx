@@ -9,7 +9,15 @@ type Props = {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  initialProjectType?: ProjectType;
 };
+
+export type ProjectType =
+  | "Landing page"
+  | "Business card website"
+  | "Online store"
+  | "Web application / MVP"
+  | "Additional services";
 
 type Errors = {
   name: string;
@@ -36,17 +44,59 @@ const emptyErrors: Errors = {
 };
 
 /** Renders and manages the validated project request form. */
-export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) {
+export default function SelfServicePopup({
+  isOpen,
+  onClose,
+  onSuccess,
+  initialProjectType = "Landing page",
+}: Props) {
   const { localizedHref, t } = usePreferences();
   const [show, setShow] = useState(false);
   const [animate, setAnimate] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState<Errors>(emptyErrors);
+  const [projectType, setProjectType] = useState<ProjectType>(initialProjectType);
   const [cooldownUntil, setCooldownUntil] = useState(0);
   const [cooldownRemaining, setCooldownRemaining] = useState(0);
   const firstFieldRef = useRef<HTMLInputElement>(null);
+  const messageFieldRef = useRef<HTMLTextAreaElement>(null);
   const titleId = useId();
   const descriptionId = useId();
+
+  const validateName = (value: string) => {
+    const name = value.trim();
+    if (!name) return t("enter your name", "введите имя");
+    if (name.length > 100) return t("name is too long", "имя слишком длинное");
+    return "";
+  };
+
+  const validateEmail = (value: string) => {
+    const email = value.trim();
+    if (!email) return t("enter email", "введите email");
+    if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return t("enter a valid email", "введите корректный email");
+    }
+    return "";
+  };
+
+  const validateMessage = (value: string, type: ProjectType = projectType) => {
+    const message = value.trim();
+    if (!message) {
+      return type === "Additional services"
+        ? t("describe the add-on services you need", "опишите нужные дополнительные услуги")
+        : t("write something about your project", "расскажите о проекте");
+    }
+    if (type === "Additional services" && message.length < 20) {
+      return t(
+        "please describe the task in a little more detail",
+        "опишите задачу немного подробнее",
+      );
+    }
+    if (message.length > 5_000) {
+      return t("message is too long", "сообщение слишком длинное");
+    }
+    return "";
+  };
 
   /** Persists a cooldown and immediately updates the current tab. */
   const applyCooldown = (until: number) => {
@@ -63,6 +113,8 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
   // Restore the persisted cooldown whenever the dialog opens.
   useEffect(() => {
     if (isOpen) {
+      setProjectType(initialProjectType);
+      setErrors(emptyErrors);
       try {
         const storedCooldown = Number(window.localStorage.getItem(cooldownStorageKey));
 
@@ -91,7 +143,7 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
     setAnimate(false);
     const hideTimer = window.setTimeout(() => setShow(false), 260);
     return () => window.clearTimeout(hideTimer);
-  }, [isOpen]);
+  }, [initialProjectType, isOpen]);
 
   // Update the visible countdown and remove expired cooldown data.
   useEffect(() => {
@@ -154,11 +206,6 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
     };
   }, [isOpen, isSending, onClose]);
 
-  /** Clears the edited field error and any stale submission error. */
-  const clearError = (field: keyof Errors) => {
-    setErrors((current) => ({ ...current, [field]: "", submit: "" }));
-  };
-
   /** Formats a duration as minutes and zero-padded seconds. */
   const formatCooldown = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -216,16 +263,12 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
             const formData = new FormData(form);
             const name = String(formData.get("name") ?? "").trim();
             const email = String(formData.get("email") ?? "").trim();
-            const projectType = String(formData.get("projectType") ?? "").trim();
             const message = String(formData.get("message") ?? "").trim();
             const nextErrors = { ...emptyErrors };
 
-            if (!name) nextErrors.name = t("enter your name", "введите имя");
-            if (!email) nextErrors.email = t("enter email", "введите email");
-            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-              nextErrors.email = t("enter a valid email", "введите корректный email");
-            }
-            if (!message) nextErrors.message = t("write something about your project", "расскажите о проекте");
+            nextErrors.name = validateName(name);
+            nextErrors.email = validateEmail(email);
+            nextErrors.message = validateMessage(message, projectType);
 
             setErrors(nextErrors);
             if (nextErrors.name || nextErrors.email || nextErrors.message) return;
@@ -286,9 +329,16 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                 autoComplete="name"
                 disabled={isSending}
                 aria-invalid={Boolean(errors.name)}
-                onChange={() => clearError("name")}
+                maxLength={100}
+                onChange={(event) => {
+                  setErrors((current) => ({
+                    ...current,
+                    name: validateName(event.target.value),
+                    submit: "",
+                  }));
+                }}
               />
-              {errors.name && <small>{errors.name}</small>}
+              {errors.name && <small role="alert">{errors.name}</small>}
             </label>
 
             <label className="project-popup-field">
@@ -300,36 +350,75 @@ export default function SelfServicePopup({ isOpen, onClose, onSuccess }: Props) 
                 autoComplete="email"
                 disabled={isSending}
                 aria-invalid={Boolean(errors.email)}
-                onChange={() => clearError("email")}
+                maxLength={254}
+                onChange={(event) => {
+                  setErrors((current) => ({
+                    ...current,
+                    email: validateEmail(event.target.value),
+                    submit: "",
+                  }));
+                }}
               />
-              {errors.email && <small>{errors.email}</small>}
+              {errors.email && <small role="alert">{errors.email}</small>}
             </label>
 
             <label className="project-popup-field project-popup-type">
               <span>{t("PROJECT TYPE", "ТИП ПРОЕКТА")}</span>
               <span className="project-popup-select">
-                <select name="projectType" defaultValue="Website" disabled={isSending}>
-                  <option value="Website">{t("Website", "Сайт")}</option>
-                  <option value="Web application">{t("Web application", "Веб-приложение")}</option>
+                <select
+                  name="projectType"
+                  value={projectType}
+                  disabled={isSending}
+                  onChange={(event) => {
+                    const nextProjectType = event.target.value as ProjectType;
+                    setProjectType(nextProjectType);
+                    setErrors((current) => ({
+                      ...current,
+                      message: validateMessage(messageFieldRef.current?.value ?? "", nextProjectType),
+                      submit: "",
+                    }));
+                  }}
+                >
                   <option value="Landing page">{t("Landing page", "Лендинг")}</option>
-                  <option value="Interface design">{t("Interface design", "Дизайн интерфейса")}</option>
-                  <option value="Other">{t("Other", "Другое")}</option>
+                  <option value="Business card website">{t("Business card website", "Сайт-визитка")}</option>
+                  <option value="Online store">{t("Online store", "Интернет-магазин")}</option>
+                  <option value="Web application / MVP">{t("Web application / MVP", "Веб-приложение / MVP")}</option>
+                  <option value="Additional services">{t("Additional services", "Дополнительные услуги")}</option>
                 </select>
                 <ChevronDown size={18} strokeWidth={1.4} aria-hidden="true" />
               </span>
             </label>
 
             <label className="project-popup-field project-popup-message">
-              <span>{t("MESSAGE", "СООБЩЕНИЕ")}</span>
+              <span>
+                {projectType === "Additional services"
+                  ? t("ADD-ON DETAILS", "ОПИСАНИЕ ДОП. УСЛУГ")
+                  : t("MESSAGE", "СООБЩЕНИЕ")}
+              </span>
               <textarea
+                ref={messageFieldRef}
                 name="message"
-                placeholder={t("A short project description...", "Кратко опишите проект...")}
+                placeholder={
+                  projectType === "Additional services"
+                    ? t(
+                        "List the services you need and describe the current project...",
+                        "Перечислите нужные услуги и опишите текущий проект...",
+                      )
+                    : t("A short project description...", "Кратко опишите проект...")
+                }
                 rows={5}
                 disabled={isSending}
                 aria-invalid={Boolean(errors.message)}
-                onChange={() => clearError("message")}
+                maxLength={5_000}
+                onChange={(event) => {
+                  setErrors((current) => ({
+                    ...current,
+                    message: validateMessage(event.target.value),
+                    submit: "",
+                  }));
+                }}
               />
-              {errors.message && <small>{errors.message}</small>}
+              {errors.message && <small role="alert">{errors.message}</small>}
             </label>
           </div>
 

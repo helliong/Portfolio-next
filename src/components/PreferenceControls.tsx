@@ -21,7 +21,8 @@ export default function PreferenceControls({ compact = false, showThemeLabel = f
   const isLight = mounted && theme === "light";
   const changeLanguage = (nextLanguage: Language) => {
     setLanguage(nextLanguage);
-    router.push(localizedPath(pathname || "/", nextLanguage));
+    const suffix = `${window.location.search}${window.location.hash}`;
+    router.push(`${localizedPath(pathname || "/", nextLanguage)}${suffix}`);
   };
 
   return (

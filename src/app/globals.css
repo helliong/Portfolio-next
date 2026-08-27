@@ -1343,6 +1343,331 @@ body.light .projects-archive-logo-light {
   line-height: 1.65;
 }
 
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--border-color);
+}
+
+.pricing-item {
+  display: flex;
+  min-height: 360px;
+  flex-direction: column;
+  padding: clamp(28px, 2.6vw, 42px);
+}
+
+.pricing-item + .pricing-item {
+  border-left: 1px solid var(--border-color);
+}
+
+.pricing-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 36px;
+}
+
+.pricing-topline span {
+  font-family: var(--font-dot-gothic), "DotGothic16", monospace;
+  font-size: 20px;
+}
+
+.pricing-topline small {
+  color: var(--muted-color);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.pricing-item h3 {
+  margin: 0;
+  font-size: clamp(18px, 1.25vw, 23px);
+  font-weight: 400;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.pricing-item p {
+  min-height: 68px;
+  margin: 22px 0 28px;
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.pricing-item strong {
+  display: block;
+  margin-bottom: 30px;
+  font-family: var(--font-dot-gothic), "DotGothic16", monospace;
+  font-size: clamp(28px, 2.2vw, 38px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.pricing-item ul {
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-item li {
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.pricing-item li + li {
+  margin-top: 9px;
+}
+
+.pricing-item li::before {
+  margin-right: 10px;
+  content: "•";
+}
+
+.pricing-section-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px clamp(22px, 2.6vw, 42px);
+  border: 1px solid var(--border-color);
+  border-top: 0;
+}
+
+.pricing-section-footer p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.pricing-more-link,
+.pricing-page-button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 15px;
+  border: 1px solid var(--text-color);
+  background: var(--text-color);
+  color: var(--bg-color);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: lowercase;
+  transition: opacity 0.2s ease;
+}
+
+.pricing-more-link:hover,
+.pricing-page-button:hover {
+  opacity: 0.76;
+}
+
+/* Pricing page */
+.pricing-page {
+  min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+.pricing-page-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: clamp(28px, 5vw, 84px);
+  align-items: end;
+  padding: clamp(46px, 6vw, 92px) clamp(20px, 3.2vw, 56px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-page-intro h1 {
+  max-width: 920px;
+  margin: 18px 0 0;
+  font-family: var(--font-dot-gothic), "DotGothic16", monospace;
+  font-size: clamp(48px, 5.8vw, 96px);
+  font-weight: 400;
+  line-height: 0.98;
+  text-transform: lowercase;
+}
+
+.pricing-page-intro p {
+  max-width: 540px;
+  margin: 0;
+  color: var(--muted-color);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.pricing-tabs {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-tabs button {
+  min-height: 54px;
+  padding: 0 clamp(18px, 3vw, 38px);
+  cursor: pointer;
+  border: 0;
+  border-right: 1px solid var(--border-color);
+  background: transparent;
+  font-size: 13px;
+  text-transform: lowercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pricing-tabs button:hover {
+  background: var(--panel-color);
+}
+
+.pricing-tabs button.is-active {
+  background: var(--accent-color);
+  color: #0b0c0c;
+}
+
+.pricing-page-panel[hidden] {
+  display: none;
+}
+
+.pricing-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pricing-detail-item {
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  padding: clamp(30px, 3vw, 52px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-detail-item:nth-child(odd) {
+  border-right: 1px solid var(--border-color);
+}
+
+.pricing-detail-item h2,
+.pricing-extra-item h2,
+.pricing-page-cta h2 {
+  margin: 0;
+  font-size: clamp(20px, 1.6vw, 30px);
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.pricing-detail-item p,
+.pricing-extra-item p,
+.pricing-page-cta p {
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.pricing-detail-item p {
+  max-width: 520px;
+  margin: 22px 0 28px;
+}
+
+.pricing-detail-item strong {
+  display: block;
+  margin-bottom: 34px;
+  font-family: var(--font-dot-gothic), "DotGothic16", monospace;
+  font-size: clamp(34px, 3vw, 54px);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.pricing-detail-item ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 22px;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pricing-detail-item li {
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.pricing-detail-item li::before {
+  margin-right: 10px;
+  content: "•";
+}
+
+.pricing-extra-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.pricing-extra-item {
+  display: grid;
+  grid-template-columns: 64px minmax(220px, 1fr) minmax(260px, auto);
+  gap: clamp(16px, 2vw, 28px);
+  align-items: start;
+  min-height: 178px;
+  padding: clamp(26px, 2.4vw, 40px) clamp(22px, 2.8vw, 48px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-extra-item > * {
+  min-width: 0;
+}
+
+.pricing-extra-item:nth-child(odd) {
+  border-right: 1px solid var(--border-color);
+}
+
+.pricing-extra-index,
+.pricing-extra-item strong {
+  font-family: var(--font-dot-gothic), "DotGothic16", monospace;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.pricing-extra-index {
+  font-size: clamp(34px, 3vw, 52px);
+}
+
+.pricing-extra-item p {
+  max-width: 480px;
+  margin: 14px 0 0;
+}
+
+.pricing-extra-item strong {
+  display: block;
+  font-size: clamp(24px, 2vw, 34px);
+  white-space: nowrap;
+}
+
+.pricing-extra-item small {
+  display: block;
+  margin-top: 16px;
+  color: var(--muted-color);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.pricing-page-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: clamp(32px, 4vw, 58px) clamp(20px, 3.2vw, 56px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pricing-page-cta p {
+  max-width: 540px;
+  margin: 14px 0 0;
+}
+
 .contact-section {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr 0.8fr;
@@ -2152,6 +2477,7 @@ body.light .footer-logo-light {
 }
 
 .project-popup-field input[aria-invalid="true"],
+.project-popup-field select[aria-invalid="true"],
 .project-popup-field textarea[aria-invalid="true"] {
   border-color: #ff6b6b;
 }
@@ -2538,11 +2864,13 @@ body.light .footer-logo-light {
   }
 
   .services-grid,
+  .pricing-grid,
   .process-grid {
     grid-template-columns: 1fr;
   }
 
   .service-item,
+  .pricing-item,
   .process-grid article {
     min-height: 0;
   }
@@ -2552,9 +2880,60 @@ body.light .footer-logo-light {
   }
 
   .service-item + .service-item,
+  .pricing-item + .pricing-item,
   .process-grid article + article {
     border-top: 1px solid var(--border-color);
     border-left: 0;
+  }
+
+  .pricing-item p {
+    min-height: 0;
+  }
+
+  .pricing-section-footer,
+  .pricing-page-cta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .pricing-page-intro,
+  .pricing-detail-grid,
+  .pricing-extra-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-detail-item:nth-child(odd),
+  .pricing-extra-item:nth-child(odd) {
+    border-right: 0;
+  }
+
+  .pricing-extra-item {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 16px 24px;
+  }
+
+  .pricing-extra-item strong,
+  .pricing-extra-item small {
+    grid-column: 2;
+  }
+
+  .pricing-extra-item strong {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 12px;
+    font-size: clamp(22px, 6vw, 28px);
+    line-height: 1.15;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .pricing-price-period {
+    display: block;
+    margin-top: 6px;
+  }
+
+  .pricing-extra-item small {
+    margin-top: 0;
   }
 
   .about-grid {
