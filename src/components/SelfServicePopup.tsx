@@ -41,9 +41,9 @@ type RateLimitState = {
   retryAfter?: number;
 };
 
-const rateLimitStorageKey = "portfolio_project_rate_limit";
-const rateLimitWindowMs = 10 * 60 * 1_000;
-const defaultRateLimit: RateLimitState = { limit: 3, remaining: 3, resetAt: 0 };
+const rateLimitStorageKey = "portfolio_project_cooldown_v2";
+const rateLimitWindowMs = 3 * 60 * 1_000;
+const defaultRateLimit: RateLimitState = { limit: 1, remaining: 1, resetAt: 0 };
 
 const emptyErrors: Errors = {
   name: "",
@@ -301,7 +301,7 @@ export default function SelfServicePopup({
                     ? payload.retryAfter
                     : 60;
                 applyRateLimit(payload?.rateLimit ?? {
-                  limit: 3,
+                  limit: 1,
                   remaining: 0,
                   resetAt: Date.now() + retryAfter * 1_000,
                 });
@@ -317,8 +317,8 @@ export default function SelfServicePopup({
               }
 
               applyRateLimit(payload.rateLimit ?? {
-                limit: 3,
-                remaining: Math.max(0, rateLimit.remaining - 1),
+                limit: 1,
+                remaining: 0,
                 resetAt: Date.now() + rateLimitWindowMs,
               });
 
