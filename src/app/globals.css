@@ -15,6 +15,9 @@
   --tag-bg-color: rgba(255, 255, 255, 0.04);
   --tag-border-color: rgba(255, 255, 255, 0.22);
   --form-shadow: none;
+  --scrollbar-thumb-color: rgba(201, 255, 49, 0.48);
+  --scrollbar-thumb-hover-color: #c9ff31;
+  --scrollbar-track-color: rgba(243, 243, 237, 0.08);
 }
 
 * {
@@ -23,6 +26,14 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 html,
@@ -56,6 +67,57 @@ body.light {
   --opacity: 0.65;
   --tag-bg-color: rgba(0, 0, 0, 0.03);
   --tag-border-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-color: rgba(113, 149, 0, 0.52);
+  --scrollbar-thumb-hover-color: #719500;
+  --scrollbar-track-color: rgba(17, 18, 18, 0.08);
+}
+
+.custom-scrollbar {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.custom-scrollbar.is-visible {
+  opacity: 1;
+}
+
+.custom-scrollbar::before {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  bottom: 0;
+  width: 1px;
+  background: var(--scrollbar-track-color);
+  content: "";
+}
+
+.custom-scrollbar-thumb {
+  position: absolute;
+  right: 3px;
+  width: 6px;
+  min-height: 44px;
+  cursor: grab;
+  background: var(--scrollbar-thumb-color);
+  transition: background-color 0.15s ease, width 0.15s ease, right 0.15s ease;
+}
+
+.custom-scrollbar-thumb:hover,
+.custom-scrollbar.is-visible .custom-scrollbar-thumb:active {
+  right: 2px;
+  width: 8px;
+  background: var(--scrollbar-thumb-hover-color);
+}
+
+@media (pointer: coarse) {
+  .custom-scrollbar {
+    display: none;
+  }
 }
 
 button,

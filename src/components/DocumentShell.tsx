@@ -1,5 +1,6 @@
 import { DotGothic16, Roboto, Roboto_Mono } from "next/font/google";
 import type { ReactNode } from "react";
+import CustomScrollbar from "@/components/CustomScrollbar";
 import type { Locale } from "@/i18n";
 
 const robotoMono = Roboto_Mono({
@@ -40,6 +41,7 @@ export default function DocumentShell({ children, language }: DocumentShellProps
           }}
         />
         {children}
+        <CustomScrollbar />
       </body>
     </html>
   );
