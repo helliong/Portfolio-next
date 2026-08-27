@@ -34,25 +34,25 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <aside className="cookie-banner" aria-label={t("Cookie notice", "РЈРІРµРґРѕРјР»РµРЅРёРµ Рѕ cookies")} role="region">
+    <aside className="cookie-banner" aria-label={t("Cookie notice", "Уведомление о cookies")} role="region">
       <div className="cookie-banner-copy">
-        <span className="cookie-banner-label">{t("privacy / cookies", "РєРѕРЅС„РёРґРµРЅС†РёР°Р»СЊРЅРѕСЃС‚СЊ / cookies")}</span>
+        <span className="cookie-banner-label">{t("privacy / cookies", "конфиденциальность / cookies")}</span>
         <p>
-          {t("Essential browser storage remembers your privacy choice and keeps forms working. No optional, advertising or analytics cookies are currently used. Read the", "РќРµРѕР±С…РѕРґРёРјРѕРµ С…СЂР°РЅРёР»РёС‰Рµ Р±СЂР°СѓР·РµСЂР° Р·Р°РїРѕРјРёРЅР°РµС‚ РІР°С€ РІС‹Р±РѕСЂ Рё РѕР±РµСЃРїРµС‡РёРІР°РµС‚ СЂР°Р±РѕС‚Сѓ С„РѕСЂРј. Р РµРєР»Р°РјРЅС‹Рµ Рё Р°РЅР°Р»РёС‚РёС‡РµСЃРєРёРµ cookies РЅРµ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ. РџРѕРґСЂРѕР±РЅРµРµ:")}{" "}
-          <Link href={localizedHref("/privacy")}>{t("privacy policy", "РїРѕР»РёС‚РёРєР° РєРѕРЅС„РёРґРµРЅС†РёР°Р»СЊРЅРѕСЃС‚Рё")}</Link>.
+          {t("Essential browser storage remembers your privacy choice and keeps forms working. No optional, advertising or analytics cookies are currently used. Read the", "Необходимое хранилище браузера запоминает ваш выбор и обеспечивает работу форм. Рекламные и аналитические cookies не используются. Подробнее:")}{" "}
+          <Link href={localizedHref("/privacy")}>{t("privacy policy", "политика конфиденциальности")}</Link>.
         </p>
       </div>
 
       <div className="cookie-banner-actions">
         <button type="button" onClick={() => saveConsent("declined")}>
-          {t("decline", "РѕС‚РєР»РѕРЅРёС‚СЊ")}
+          {t("decline", "отклонить")}
         </button>
         <button
           type="button"
           className="cookie-banner-accept"
           onClick={() => saveConsent("accepted")}
         >
-          {t("accept", "РїСЂРёРЅСЏС‚СЊ")}
+          {t("accept", "принять")}
         </button>
       </div>
     </aside>

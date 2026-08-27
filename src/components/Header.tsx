@@ -14,7 +14,13 @@ export default function Header() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const { localizedHref, theme, t } = usePreferences();
-  const navItems = [["about", "обо мне"], ["services", "услуги"], ["projects", "проекты"], ["contact", "контакты"]];
+  const navItems = [
+    ["projects", "проекты"],
+    ["services", "услуги"],
+    ["about", "обо мне"],
+
+    ["contact", "контакты"],
+  ];
 
   /** Displays a short confirmation after a successful form submission. */
   const showSuccessPopup = () => {
@@ -25,17 +31,33 @@ export default function Header() {
   return (
     <header id="home" className="site-header">
       <div className="topbar">
-        <a href="#home" aria-label={t("Back to top", "Наверх")} className="brand-mark">
+        <a
+          href="#home"
+          aria-label={t("Back to top", "Наверх")}
+          className="brand-mark"
+        >
           <Image
-            src={theme === "light" ? "/logoBlack.svg" : "/logoWhite.svg"}
+            src="/logoWhite.svg"
             alt="Egor Yakovlev"
             width={52}
             height={36}
+            className="footer-logo-dark"
+            priority
+          />
+          <Image
+            src="/logoBlack.svg"
+            alt="Egor Yakovlev"
+            width={52}
+            height={36}
+            className="footer-logo-light"
             priority
           />
         </a>
 
-        <nav className="desktop-nav" aria-label={t("Primary navigation", "Основная навигация")}>
+        <nav
+          className="desktop-nav"
+          aria-label={t("Primary navigation", "Основная навигация")}
+        >
           {navItems.map(([id, ru]) => (
             <a key={id} href={`#${id}`}>
               {t(id, ru)}
@@ -56,7 +78,10 @@ export default function Header() {
           <PreferenceControls showThemeLabel />
         </div>
 
-        <nav className="mobile-nav" aria-label={t("Mobile navigation", "Мобильная навигация")}>
+        <nav
+          className="mobile-nav"
+          aria-label={t("Mobile navigation", "Мобильная навигация")}
+        >
           {navItems.map(([id, ru]) => (
             <a key={id} href={`#${id}`}>
               {t(id, ru)}
@@ -69,19 +94,29 @@ export default function Header() {
         <div className="hero-copy">
           <div>
             <h1 className="font-dot">
-              <span className="hero-title-line">{t("full-stack web", "full-stack веб")}</span>
+              <span className="hero-title-line">
+                {t("full-stack web", "full-stack веб")}
+              </span>
               <br />
               {t("developer", "разработчик")}
               <span className="blink-cursor" aria-hidden="true" />
             </h1>
-            <p>{t("I build fast, accessible and focused web experiences.", "Создаю быстрые, доступные и продуманные веб-продукты.")}</p>
+            <p>
+              {t(
+                "I build fast, accessible and focused web experiences.",
+                "Создаю быстрые, доступные и продуманные веб-продукты.",
+              )}
+            </p>
           </div>
 
           <div className="hero-meta">
-            <span className="status-label">{t("available for freelance", "доступен для проектов")}</span>
+            <span className="status-label">
+              {t("available for freelance", "доступен для проектов")}
+            </span>
             <span className="meta-separator" aria-hidden="true" />
             <span>
-              <MapPin size={14} aria-hidden="true" /> {t("based in Russia", "нахожусь в России")}
+              <MapPin size={14} aria-hidden="true" />{" "}
+              {t("based in Russia", "нахожусь в России")}
             </span>
             <span className="meta-separator" aria-hidden="true" />
             <span>UTC +6</span>
@@ -95,14 +130,21 @@ export default function Header() {
 
         <article className="featured-project">
           <div className="featured-heading">
-            <span className="section-kicker">{t("selected project", "избранный проект")}</span>
+            <span className="section-kicker">
+              {t("selected project", "избранный проект")}
+            </span>
             <div className="featured-title-row">
               <h2>pin window</h2>
-              <span className="status-label">{t("open source", "открытый код")}</span>
+              <span className="status-label">
+                {t("open source", "открытый код")}
+              </span>
             </div>
           </div>
 
-          <Link href={localizedHref("/projects/pinwindow")} className="featured-media">
+          <Link
+            href={localizedHref("/projects/pinwindow")}
+            className="featured-media"
+          >
             <Image
               src="/assets/img/projects/mockup-pinwindow.webp"
               alt="QR Link Generator project preview"
@@ -113,18 +155,24 @@ export default function Header() {
           </Link>
 
           <div className="featured-footer">
-            <Link href={localizedHref("/projects/pinwindow")} className="text-link">
-              {t("view project", "смотреть проект")} <ArrowUpRight size={17} aria-hidden="true" />
+            <Link
+              href={localizedHref("/projects/pinwindow")}
+              className="text-link"
+            >
+              {t("view project", "смотреть проект")}{" "}
+              <ArrowUpRight size={17} aria-hidden="true" />
             </Link>
             <div className="featured-facts">
               <span>
-                <small>{t("role", "роль")}</small>{t("developer", "разработчик")}
+                <small>{t("role", "роль")}</small>
+                {t("developer", "разработчик")}
               </span>
               <span>
                 <small>stack</small>typescript
               </span>
               <span>
-                <small>{t("status", "статус")}</small>{t("published", "опубликован")}
+                <small>{t("status", "статус")}</small>
+                {t("published", "опубликован")}
               </span>
             </div>
           </div>

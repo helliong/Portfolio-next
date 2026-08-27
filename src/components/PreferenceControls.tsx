@@ -3,15 +3,22 @@
 import { localizedPath } from "@/i18n";
 import { Moon, Sun } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { usePreferences, type Language } from "./PreferencesProvider";
 
 type Props = { compact?: boolean; showThemeLabel?: boolean };
 
 export default function PreferenceControls({ compact = false, showThemeLabel = false }: Props) {
   const { language, setLanguage, theme, toggleTheme, t } = usePreferences();
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const isLight = theme === "light";
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isLight = mounted && theme === "light";
   const changeLanguage = (nextLanguage: Language) => {
     setLanguage(nextLanguage);
     router.push(localizedPath(pathname || "/", nextLanguage));

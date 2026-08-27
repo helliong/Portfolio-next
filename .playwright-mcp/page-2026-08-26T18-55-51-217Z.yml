@@ -1,0 +1,282 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "Back to top" [ref=e6] [cursor=pointer]:
+          - /url: "#home"
+          - img "Egor Yakovlev" [ref=e7]
+        - navigation "Primary navigation" [ref=e8]:
+          - link "about" [ref=e9] [cursor=pointer]:
+            - /url: "#about"
+          - link "services" [ref=e10] [cursor=pointer]:
+            - /url: "#services"
+          - link "projects" [ref=e11] [cursor=pointer]:
+            - /url: "#projects"
+          - link "contact" [ref=e12] [cursor=pointer]:
+            - /url: "#contact"
+        - generic [ref=e13]:
+          - button "order a website 20% OFF" [ref=e14] [cursor=pointer]:
+            - generic [ref=e15]: order a website
+            - generic [ref=e16]: 20% OFF
+          - generic [ref=e18]:
+            - generic "Choose language" [ref=e19]:
+              - button "EN" [pressed] [ref=e20] [cursor=pointer]
+              - generic [ref=e21]: /
+              - button "RU" [ref=e22] [cursor=pointer]
+            - button "Switch to light mode" [ref=e23] [cursor=pointer]:
+              - generic [ref=e30]: light mode
+      - generic [ref=e31]:
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - heading "full-stack web developer" [level=1] [ref=e34]: full-stack webdeveloper
+            - paragraph [ref=e36]: I build fast, accessible and focused web experiences.
+          - generic [ref=e37]:
+            - generic [ref=e38]: available for freelance
+            - generic [ref=e40]: based in Russia
+            - generic [ref=e45]: UTC +6
+          - link "scroll to explore" [ref=e46] [cursor=pointer]:
+            - /url: "#projects"
+        - article [ref=e49]:
+          - generic [ref=e50]:
+            - text: selected project
+            - generic [ref=e51]:
+              - heading "pin window" [level=2] [ref=e52]
+              - generic [ref=e53]: open source
+          - link [ref=e54] [cursor=pointer]:
+            - /url: /en/projects/pinwindow
+            - img "QR Link Generator project preview" [ref=e55]
+          - generic [ref=e56]:
+            - link "view project" [ref=e57] [cursor=pointer]:
+              - /url: /en/projects/pinwindow
+            - generic [ref=e61]:
+              - generic [ref=e62]:
+                - generic [ref=e63]: role
+                - text: developer
+              - generic [ref=e64]:
+                - generic [ref=e65]: stack
+                - text: typescript
+              - generic [ref=e66]:
+                - generic [ref=e67]: status
+                - text: published
+    - generic [ref=e68]:
+      - heading "selected projects / 06" [level=2] [ref=e71]
+      - generic [ref=e72]:
+        - article [ref=e73]:
+          - generic [ref=e74]: "01"
+          - generic [ref=e75]:
+            - heading "Qr Link Generator" [level=3] [ref=e76]
+            - paragraph [ref=e77]: A typed web utility that turns links into QR codes ready to preview and share.
+            - generic [ref=e78]:
+              - generic [ref=e79]: repository
+              - generic [ref=e80]: css
+              - generic [ref=e81]: html
+              - generic [ref=e82]: typescript
+            - generic [ref=e83]:
+              - link "case study" [ref=e84] [cursor=pointer]:
+                - /url: /en/projects/qr-link-generator
+              - link "github" [ref=e88] [cursor=pointer]:
+                - /url: https://github.com/helliong/qr-link-generator
+          - link [ref=e92] [cursor=pointer]:
+            - /url: /en/projects/qr-link-generator
+            - img "Qr Link Generator" [ref=e94]
+        - article [ref=e95]:
+          - generic [ref=e96]: "02"
+          - generic [ref=e97]:
+            - heading "Campus And Code" [level=3] [ref=e98]
+            - paragraph [ref=e99]: A full-stack learning platform that connects a modern frontend with persistent data and supporting services.
+            - generic [ref=e100]:
+              - generic [ref=e101]: repository
+              - generic [ref=e102]: docker
+              - generic [ref=e103]: nextjs
+              - generic [ref=e104]: nodemailer
+              - generic [ref=e105]: postgresql
+            - generic [ref=e106]:
+              - link "case study" [ref=e107] [cursor=pointer]:
+                - /url: /en/projects/campus-and-code
+              - link "github" [ref=e111] [cursor=pointer]:
+                - /url: https://github.com/helliong/Campus-and-code
+          - link [ref=e115] [cursor=pointer]:
+            - /url: /en/projects/campus-and-code
+            - img "Campus And Code" [ref=e117]
+        - article [ref=e118]:
+          - generic [ref=e119]: "03"
+          - generic [ref=e120]:
+            - heading "Market Ai" [level=3] [ref=e121]
+            - paragraph [ref=e122]: An AI-oriented market application built as a set of connected frontend and backend services.
+            - generic [ref=e123]:
+              - generic [ref=e124]: repository
+              - generic [ref=e125]: docker
+              - generic [ref=e126]: microservice
+              - generic [ref=e127]: nextjs
+              - generic [ref=e128]: react
+            - generic [ref=e129]:
+              - link "case study" [ref=e130] [cursor=pointer]:
+                - /url: /en/projects/market-ai
+              - link "github" [ref=e134] [cursor=pointer]:
+                - /url: https://github.com/helliong/market-ai
+          - link [ref=e138] [cursor=pointer]:
+            - /url: /en/projects/market-ai
+            - img "Market Ai" [ref=e140]
+        - article [ref=e141]:
+          - generic [ref=e142]: "04"
+          - generic [ref=e143]:
+            - heading "Lumea Candles" [level=3] [ref=e144]
+            - paragraph [ref=e145]: A responsive storefront concept for a handmade candle brand with a calm, product-led interface.
+            - generic [ref=e146]:
+              - generic [ref=e147]: repository
+              - generic [ref=e148]: nextjs
+              - generic [ref=e149]: pet-project
+              - generic [ref=e150]: scss-modules
+              - generic [ref=e151]: typescript
+            - generic [ref=e152]:
+              - link "case study" [ref=e153] [cursor=pointer]:
+                - /url: /en/projects/lumea-candles
+              - link "github" [ref=e157] [cursor=pointer]:
+                - /url: https://github.com/helliong/lumea-candles
+          - link [ref=e161] [cursor=pointer]:
+            - /url: /en/projects/lumea-candles
+            - img "Lumea Candles" [ref=e163]
+        - article [ref=e164]:
+          - generic [ref=e165]: "05"
+          - generic [ref=e166]:
+            - heading "PinWindow" [level=3] [ref=e167]
+            - paragraph [ref=e168]: A lightweight Windows utility for keeping any selected window above the rest of the desktop.
+            - generic [ref=e169]:
+              - generic [ref=e170]: repository
+              - generic [ref=e171]: csharp
+              - generic [ref=e172]: c#
+            - generic [ref=e173]:
+              - link "case study" [ref=e174] [cursor=pointer]:
+                - /url: /en/projects/pinwindow
+              - link "github" [ref=e178] [cursor=pointer]:
+                - /url: https://github.com/helliong/pinWindow
+          - link [ref=e182] [cursor=pointer]:
+            - /url: /en/projects/pinwindow
+            - img "PinWindow" [ref=e184]
+        - article [ref=e185]:
+          - generic [ref=e186]: "06"
+          - generic [ref=e187]:
+            - heading "Linkcast" [level=3] [ref=e188]
+            - paragraph [ref=e189]: A Python utility for working with links through a small, task-focused workflow.
+            - generic [ref=e190]:
+              - generic [ref=e191]: repository
+              - generic [ref=e192]: python
+            - generic [ref=e193]:
+              - link "case study" [ref=e194] [cursor=pointer]:
+                - /url: /en/projects/linkcast
+              - link "github" [ref=e198] [cursor=pointer]:
+                - /url: https://github.com/helliong/linkcast
+          - link [ref=e202] [cursor=pointer]:
+            - /url: /en/projects/linkcast
+            - img "Linkcast" [ref=e204]
+      - link "view all projects" [ref=e206] [cursor=pointer]:
+        - /url: /en/projects
+    - generic [ref=e210]:
+      - heading "services / what I do" [level=2] [ref=e213]
+      - generic [ref=e214]:
+        - article [ref=e215]:
+          - generic [ref=e216]: "01"
+          - generic [ref=e217]:
+            - heading "web development" [level=3] [ref=e218]
+            - paragraph [ref=e219]: Building fast, responsive and scalable web applications with a maintainable full-stack architecture.
+            - list [ref=e220]:
+              - listitem [ref=e221]: •Custom web applications
+              - listitem [ref=e222]: •Responsive layout
+              - listitem [ref=e223]: •API integration
+              - listitem [ref=e224]: •Deployment
+        - article [ref=e225]:
+          - generic [ref=e226]: "02"
+          - generic [ref=e227]:
+            - heading "ui implementation" [level=3] [ref=e228]
+            - paragraph [ref=e229]: Turning layouts into precise, accessible interfaces that remain comfortable on every screen.
+            - list [ref=e230]:
+              - listitem [ref=e231]: •Figma to code
+              - listitem [ref=e232]: •Component systems
+              - listitem [ref=e233]: •Interaction states
+              - listitem [ref=e234]: •Cross-browser support
+        - article [ref=e235]:
+          - generic [ref=e236]: "03"
+          - generic [ref=e237]:
+            - heading "performance & accessibility" [level=3] [ref=e238]
+            - paragraph [ref=e239]: Improving loading, semantics and usability so a product feels clear and dependable in daily use.
+            - list [ref=e240]:
+              - listitem [ref=e241]: •Core Web Vitals
+              - listitem [ref=e242]: •Accessibility
+              - listitem [ref=e243]: •SEO foundations
+              - listitem [ref=e244]: •Code splitting
+    - generic [ref=e245]:
+      - heading "about / developer" [level=2] [ref=e248]
+      - generic [ref=e249]:
+        - generic [ref=e250]: I turn clear ideas into fast, thoughtful web experiences.
+        - generic [ref=e251]:
+          - paragraph [ref=e252]: I'm Egor Yakovlev, a full-stack developer based in Russia. I build responsive interfaces and practical web products with close attention to structure, performance and the details people notice.
+          - generic [ref=e253]:
+            - generic [ref=e254]:
+              - strong [ref=e255]: 11+
+              - generic [ref=e256]: projects
+            - generic [ref=e257]:
+              - strong [ref=e258]: Russia
+              - generic [ref=e259]: location
+            - generic [ref=e260]:
+              - strong [ref=e261]: 100%
+              - generic [ref=e262]: attention
+        - generic "Egor Yakovlev logo" [ref=e263]
+    - generic [ref=e266]:
+      - heading "process / how we work" [level=2] [ref=e269]
+      - generic [ref=e270]:
+        - article [ref=e271]:
+          - generic [ref=e272]:
+            - generic [ref=e273]: "01"
+            - heading "discovery" [level=3] [ref=e274]
+          - paragraph [ref=e275]: Understanding the goal, audience and project requirements.
+        - article [ref=e276]:
+          - generic [ref=e277]:
+            - generic [ref=e278]: "02"
+            - heading "direction" [level=3] [ref=e279]
+          - paragraph [ref=e280]: Defining structure, references and the visual approach.
+        - article [ref=e281]:
+          - generic [ref=e282]:
+            - generic [ref=e283]: "03"
+            - heading "development" [level=3] [ref=e284]
+          - paragraph [ref=e285]: Building clean, scalable and performant code.
+        - article [ref=e286]:
+          - generic [ref=e287]:
+            - generic [ref=e288]: "04"
+            - heading "launch" [level=3] [ref=e289]
+          - paragraph [ref=e290]: Testing, polishing and preparing the project for release.
+    - generic [ref=e291]:
+      - generic [ref=e292]: have a projectin mind?
+      - generic [ref=e293]:
+        - button "let's talk" [ref=e294] [cursor=pointer]
+        - link "saoffabg@gmail.com" [ref=e298] [cursor=pointer]:
+          - /url: mailto:saoffabg@gmail.com
+      - generic [ref=e299]:
+        - generic [ref=e300]: available for freelance
+        - generic [ref=e301]:
+          - link "github" [ref=e302] [cursor=pointer]:
+            - /url: https://github.com/helliong
+          - link "telegram" [ref=e306] [cursor=pointer]:
+            - /url: https://t.me/lege0rge
+          - link "instagram" [ref=e310] [cursor=pointer]:
+            - /url: https://www.instagram.com/hellliong/
+    - generic [ref=e314]:
+      - generic [ref=e315]:
+        - link "Portfolio home" [ref=e316] [cursor=pointer]:
+          - /url: /en
+          - img "EY" [ref=e317]
+        - generic [ref=e318]: © 2026
+        - generic [ref=e319]:
+          - generic "Choose language" [ref=e320]:
+            - button "EN" [pressed] [ref=e321] [cursor=pointer]
+            - generic [ref=e322]: /
+            - button "RU" [ref=e323] [cursor=pointer]
+          - button "Switch to light mode" [ref=e324] [cursor=pointer]
+      - generic [ref=e331]:
+        - text: built by
+        - link "helliong" [ref=e332] [cursor=pointer]:
+          - /url: https://github.com/helliong
+      - generic [ref=e333]:
+        - link "privacy policy" [ref=e334] [cursor=pointer]:
+          - /url: /en/privacy
+        - link "back to top" [ref=e335] [cursor=pointer]:
+          - /url: "#home"
