@@ -19,6 +19,7 @@ export default function Header() {
     { href: "#about", label: "about", ru: "обо мне" },
     { href: "#services", label: "services", ru: "услуги" },
     { href: "#pricing", label: "pricing", ru: "цены" },
+    { href: "/hire-me", label: "hire me", ru: "для компаний" },
     { href: "#contact", label: "contact", ru: "контакты" },
   ];
 
@@ -59,9 +60,9 @@ export default function Header() {
           aria-label={t("Primary navigation", "Основная навигация")}
         >
           {navItems.map((item) => (
-            <a key={item.label} href={item.href}>
+            <Link key={item.label} href={localizedHref(item.href)}>
               {t(item.label, item.ru)}
-            </a>
+            </Link>
           ))}
         </nav>
 
@@ -83,9 +84,9 @@ export default function Header() {
           aria-label={t("Mobile navigation", "Мобильная навигация")}
         >
           {navItems.map((item) => (
-            <a key={item.label} href={item.href}>
+            <Link key={item.label} href={localizedHref(item.href)}>
               {t(item.label, item.ru)}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
