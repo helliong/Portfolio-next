@@ -8,7 +8,12 @@ import { usePreferences } from "./PreferencesProvider";
 type Props = { isOpen: boolean; onClose: () => void; onSuccess: () => void };
 type WorkFormat = "Full-time" | "Contract" | "Remote" | "Office";
 type Errors = Partial<Record<"name" | "email" | "company" | "position" | "message" | "submit", string>>;
-type ApiResponse = { success?: boolean; message?: string };
+type RateLimitState = { limit: number; remaining: number; resetAt: number; retryAfter?: number };
+type ApiResponse = { success?: boolean; message?: string; retryAfter?: number; rateLimit?: RateLimitState | null };
+
+const rateLimitStorageKey = "portfolio_employment_rate_limit";
+const rateLimitWindowMs = 10 * 60 * 1_000;
+const defaultRateLimit: RateLimitState = { limit: 3, remaining: 3, resetAt: 0 };
 
 /** Renders a dedicated form for employment and contract opportunities. */
 export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
@@ -18,6 +23,8 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
   const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const [workFormat, setWorkFormat] = useState<WorkFormat>("Full-time");
+  const [rateLimit, setRateLimit] = useState<RateLimitState>(defaultRateLimit);
+  const [resetRemaining, setResetRemaining] = useState(0);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const titleId = useId();
   const descriptionId = useId();
@@ -25,6 +32,21 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
   useEffect(() => {
     if (isOpen) {
       setErrors({});
+      try {
+        const storedValue = window.localStorage.getItem(rateLimitStorageKey);
+        const storedRateLimit = storedValue ? JSON.parse(storedValue) as RateLimitState : null;
+        if (storedRateLimit && storedRateLimit.resetAt > Date.now()) {
+          setRateLimit(storedRateLimit);
+          setResetRemaining(Math.ceil((storedRateLimit.resetAt - Date.now()) / 1_000));
+        } else {
+          window.localStorage.removeItem(rateLimitStorageKey);
+          setRateLimit(defaultRateLimit);
+          setResetRemaining(0);
+        }
+      } catch {
+        setRateLimit(defaultRateLimit);
+        setResetRemaining(0);
+      }
       setShow(true);
       const frame = window.requestAnimationFrame(() => setAnimate(true));
       const focusTimer = window.setTimeout(() => firstFieldRef.current?.focus(), 320);
@@ -37,6 +59,40 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
     const hideTimer = window.setTimeout(() => setShow(false), 260);
     return () => window.clearTimeout(hideTimer);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!rateLimit.resetAt) return;
+    const updateReset = () => {
+      const remaining = Math.max(0, Math.ceil((rateLimit.resetAt - Date.now()) / 1_000));
+      setResetRemaining(remaining);
+      if (remaining === 0) {
+        setRateLimit(defaultRateLimit);
+        setErrors((current) => ({ ...current, submit: undefined }));
+        try { window.localStorage.removeItem(rateLimitStorageKey); } catch {}
+      }
+    };
+    updateReset();
+    const timer = window.setInterval(updateReset, 1_000);
+    return () => window.clearInterval(timer);
+  }, [rateLimit.resetAt]);
+
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== rateLimitStorageKey) return;
+      try {
+        const nextRateLimit = event.newValue ? JSON.parse(event.newValue) as RateLimitState : null;
+        if (nextRateLimit && nextRateLimit.resetAt > Date.now()) {
+          setRateLimit(nextRateLimit);
+          setResetRemaining(Math.ceil((nextRateLimit.resetAt - Date.now()) / 1_000));
+          return;
+        }
+      } catch {}
+      setRateLimit(defaultRateLimit);
+      setResetRemaining(0);
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -54,6 +110,17 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
 
   const clearError = (field: keyof Errors) => {
     setErrors((current) => ({ ...current, [field]: undefined, submit: undefined }));
+  };
+
+  const applyRateLimit = (nextRateLimit: RateLimitState) => {
+    setRateLimit(nextRateLimit);
+    setResetRemaining(Math.max(0, Math.ceil((nextRateLimit.resetAt - Date.now()) / 1_000)));
+    try { window.localStorage.setItem(rateLimitStorageKey, JSON.stringify(nextRateLimit)); } catch {}
+  };
+
+  const formatReset = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    return `${minutes}:${String(seconds % 60).padStart(2, "0")}`;
   };
 
   if (!show) return null;
@@ -96,6 +163,7 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
           noValidate
           onSubmit={async (event) => {
             event.preventDefault();
+            if (rateLimit.remaining === 0 && rateLimit.resetAt > Date.now()) return;
             const form = event.currentTarget;
             const formData = new FormData(form);
             const name = String(formData.get("name") ?? "").trim();
@@ -128,6 +196,14 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
               });
               const payload = (await response.json().catch(() => null)) as ApiResponse | null;
               if (!response.ok || !payload?.success) {
+                if (response.status === 429) {
+                  const retryAfter = payload?.retryAfter ?? 60;
+                  applyRateLimit(payload?.rateLimit ?? {
+                    limit: 3,
+                    remaining: 0,
+                    resetAt: Date.now() + retryAfter * 1_000,
+                  });
+                }
                 setErrors((current) => ({
                   ...current,
                   submit: response.status === 429
@@ -136,6 +212,11 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
                 }));
                 return;
               }
+              applyRateLimit(payload.rateLimit ?? {
+                limit: 3,
+                remaining: Math.max(0, rateLimit.remaining - 1),
+                resetAt: Date.now() + rateLimitWindowMs,
+              });
               onClose();
               window.setTimeout(() => {
                 onSuccess();
@@ -190,14 +271,23 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
           </div>
 
           {errors.submit && <p className="project-popup-submit-error" role="alert">{errors.submit}</p>}
+          {!errors.submit && rateLimit.resetAt > Date.now() && (
+            <p className="project-popup-rate-limit" aria-live="polite">
+              {t("Limit resets in", "Лимит обновится через")} {formatReset(resetRemaining)}
+            </p>
+          )}
           <footer className="project-popup-footer">
             <p>{t("Usually replies within 24 hours", "Обычно отвечаю в течение 24 часов")}</p>
             <div className="project-popup-submit-panel">
               <div className="project-popup-button-row">
                 <button type="button" className="project-popup-cancel" onClick={onClose} disabled={isSending}>{t("CANCEL", "ОТМЕНА")}</button>
-                <button type="submit" className="project-popup-submit" disabled={isSending}>
-                  {isSending ? t("SENDING...", "ОТПРАВКА...") : t("SEND OFFER", "ОТПРАВИТЬ")}
-                  {!isSending && <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />}
+                <button type="submit" className="project-popup-submit" disabled={isSending || (rateLimit.remaining === 0 && resetRemaining > 0)}>
+                  {isSending
+                    ? t("SENDING...", "ОТПРАВКА...")
+                    : rateLimit.remaining === 0 && resetRemaining > 0
+                      ? `${t("TRY AGAIN IN", "ПОВТОРИТЬ ЧЕРЕЗ")} ${formatReset(resetRemaining)}`
+                      : t("SEND OFFER", "ОТПРАВИТЬ")}
+                  {!isSending && !(rateLimit.remaining === 0 && resetRemaining > 0) && <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />}
                 </button>
               </div>
               <p className="project-popup-privacy-note">
