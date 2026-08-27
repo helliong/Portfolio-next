@@ -34,7 +34,7 @@ function NotFoundContent() {
               priority
             />
           </Link>
-          <div className="legal-header-actions"><PreferenceControls compact /><span className="not-found-status"><span aria-hidden="true" /> {t("error", "Р С•РЎв‚¬Р С‘Р В±Р С”Р В°")} / 404</span></div>
+          <div className="legal-header-actions"><PreferenceControls compact /><span className="not-found-status"><span aria-hidden="true" /> {t("error", "ошибка")} / 404</span></div>
         </header>
 
         <section className="not-found-content">
@@ -45,21 +45,21 @@ function NotFoundContent() {
           </div>
 
           <div className="not-found-message">
-            <span className="not-found-kicker">{t("lost in the stack", "Р С—Р С•РЎвЂљР ВµРЎР‚РЎРЏР Р…Р С• Р Р† РЎРѓРЎвЂљР ВµР С”Р Вµ")} / 01</span>
+            <span className="not-found-kicker">{t("lost in the stack", "потеряно в стеке")} / 01</span>
             <h1>
-              {t("page not found", "РЎРѓРЎвЂљРЎР‚Р В°Р Р…Р С‘РЎвЂ Р В° Р Р…Р Вµ Р Р…Р В°Р в„–Р Т‘Р ВµР Р…Р В°")}
+              {t("page not found", "страница не найдена")}
               <span className="blink-cursor" aria-hidden="true" />
             </h1>
             <p>
-              {t("The page may have moved, been removed, or never existed. Let's get you back somewhere useful.", "Р вЂ™Р С•Р В·Р СР С•Р В¶Р Р…Р С•, РЎРѓРЎвЂљРЎР‚Р В°Р Р…Р С‘РЎвЂ Р В° Р В±РЎвЂ№Р В»Р В° Р С—Р ВµРЎР‚Р ВµР СР ВµРЎвЂ°Р ВµР Р…Р В°, РЎС“Р Т‘Р В°Р В»Р ВµР Р…Р В° Р С‘Р В»Р С‘ Р Р…Р С‘Р С”Р С•Р С–Р Т‘Р В° Р Р…Р Вµ РЎРѓРЎС“РЎвЂ°Р ВµРЎРѓРЎвЂљР Р†Р С•Р Р†Р В°Р В»Р В°. Р вЂ™Р ВµРЎР‚Р Р…РЎвЂР СРЎРѓРЎРЏ Р С” Р С—Р С•Р В»Р ВµР В·Р Р…Р С•Р СРЎС“.")}
+              {t("The page may have moved, been removed, or never existed. Let's get you back somewhere useful.", "Возможно, страница была перемещена, удалена или никогда не существовала. Вернёмся к полезному.")}
             </p>
 
             <div className="not-found-actions">
               <Link href={localizedHref("/")} className="not-found-primary-action">
-                <ArrowLeft size={16} aria-hidden="true" /> {t("back home", "Р Р…Р В° Р С–Р В»Р В°Р Р†Р Р…РЎС“РЎР‹")}
+                <ArrowLeft size={16} aria-hidden="true" /> {t("back home", "на главную")}
               </Link>
               <Link href={localizedHref("/projects")} className="not-found-secondary-action">
-                {t("view projects", "РЎРѓР СР С•РЎвЂљРЎР‚Р ВµРЎвЂљРЎРЉ Р С—РЎР‚Р С•Р ВµР С”РЎвЂљРЎвЂ№")} <ArrowUpRight size={16} aria-hidden="true" />
+                {t("view projects", "смотреть проекты")} <ArrowUpRight size={16} aria-hidden="true" />
               </Link>
             </div>
           </div>

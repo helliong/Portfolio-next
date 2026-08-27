@@ -1,6 +1,6 @@
 import { DotGothic16, Roboto, Roboto_Mono } from "next/font/google";
-import Script from "next/script";
 import type { ReactNode } from "react";
+import CustomScrollbar from "@/components/CustomScrollbar";
 import type { Locale } from "@/i18n";
 
 const robotoMono = Roboto_Mono({
@@ -34,10 +34,14 @@ export default function DocumentShell({ children, language }: DocumentShellProps
         className={`${robotoMono.variable} ${roboto.variable} ${dotGothic.variable}`}
         suppressHydrationWarning
       >
-        <Script id="portfolio-preferences" strategy="beforeInteractive">
-          {`(function(){try{var p=location.pathname.split('/')[1];var l=(p==='ru'||p==='en')?p:localStorage.getItem('portfolio-language');var t=localStorage.getItem('portfolio-theme');if(l==='ru'||l==='en')document.documentElement.lang=l;if(t==='light')document.body.classList.add('light');else document.body.classList.remove('light');}catch(e){}})();`}
-        </Script>
+        <script
+          id="portfolio-preferences"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=location.pathname.split('/')[1];var l=(p==='ru'||p==='en')?p:localStorage.getItem('portfolio-language');var t=localStorage.getItem('portfolio-theme');if(l==='ru'||l==='en')document.documentElement.lang=l;if(t==='light')document.body.classList.add('light');else document.body.classList.remove('light');}catch(e){}})();`,
+          }}
+        />
         {children}
+        <CustomScrollbar />
       </body>
     </html>
   );

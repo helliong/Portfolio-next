@@ -1,6 +1,9 @@
 "use client";
 
-import { getLocalizedProjectDetails, type ProjectDetails } from "@/data/projectDetails";
+import {
+  getLocalizedProjectDetails,
+  type ProjectDetails,
+} from "@/data/projectDetails";
 import { ArrowLeft, ArrowRight, ArrowUpRight, LockKeyhole } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,7 +30,9 @@ type Props = {
 
 /** Infers a readable project role from the technologies used by the project. */
 function getRole(project: ProjectDetails) {
-  if (project.tags.some((tag) => ["nextjs", "react", "html", "css"].includes(tag))) {
+  if (
+    project.tags.some((tag) => ["nextjs", "react", "html", "css"].includes(tag))
+  ) {
     return "full-stack";
   }
 
@@ -60,7 +65,11 @@ export default function ProjectCaseStudy({
     <main id="project-top" className="project-case">
       <div className="project-case-shell">
         <header className="projects-archive-topbar">
-          <Link href={localizedHref("/")} className="projects-archive-brand" aria-label={t("Portfolio home", "Главная портфолио")}>
+          <Link
+            href={localizedHref("/")}
+            className="projects-archive-brand"
+            aria-label={t("Portfolio home", "Главная портфолио")}
+          >
             <Image
               src="/logoWhite.svg"
               alt="EY"
@@ -79,28 +88,41 @@ export default function ProjectCaseStudy({
             />
           </Link>
 
-          <nav className="projects-archive-nav" aria-label={t("Primary navigation", "Основная навигация")}>
-            <Link href={localizedHref("/#about")}>{t("about", "обо мне")}</Link>
-            <Link href={localizedHref("/#services")}>{t("services", "услуги")}</Link>
+          <nav
+            className="projects-archive-nav"
+            aria-label={t("Primary navigation", "Основная навигация")}
+          >
             <Link href={localizedHref("/projects")} className="is-active">
               {t("projects", "проекты")}
             </Link>
-            <Link href={localizedHref("/#contact")}>{t("contact", "контакты")}</Link>
+            <Link href={localizedHref("/#services")}>
+              {t("services", "услуги")}
+            </Link>
+            <Link href={localizedHref("/#about")}>{t("about", "обо мне")}</Link>
+
+            <Link href={localizedHref("/#contact")}>
+              {t("contact", "контакты")}
+            </Link>
           </nav>
 
-          <div className="projects-archive-header-actions"><PreferenceControls compact /><button
-            type="button"
-            className="projects-archive-order"
-            onClick={() => setIsPopupOpen(true)}
-          >
-            {t("order a website", "заказать сайт")}
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </button></div>
+          <div className="projects-archive-header-actions">
+            <PreferenceControls compact />
+            <button
+              type="button"
+              className="projects-archive-order"
+              onClick={() => setIsPopupOpen(true)}
+            >
+              {t("order a website", "заказать сайт")}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </button>
+          </div>
         </header>
 
         <section className="project-case-hero">
           <div className="project-case-heading">
-            <span className="project-case-kicker">{t("selected project", "избранный проект")} / {number}</span>
+            <span className="project-case-kicker">
+              {t("selected project", "избранный проект")} / {number}
+            </span>
             <h1 className="font-dot">{project.name}</h1>
             <p>{localizedProject.summary}</p>
 
@@ -148,7 +170,13 @@ export default function ProjectCaseStudy({
             </div>
             <div>
               <dt>{t("role", "роль")}</dt>
-              <dd>{getRole(project) === "desktop app" ? t("desktop app", "настольное приложение") : getRole(project) === "developer" ? t("developer", "разработчик") : getRole(project)}</dd>
+              <dd>
+                {getRole(project) === "desktop app"
+                  ? t("desktop app", "настольное приложение")
+                  : getRole(project) === "developer"
+                    ? t("developer", "разработчик")
+                    : getRole(project)}
+              </dd>
             </div>
             <div>
               <dt>stack</dt>
@@ -157,7 +185,9 @@ export default function ProjectCaseStudy({
             <div>
               <dt>{t("status", "статус")}</dt>
               <dd className={project.liveDemo ? "is-live" : undefined}>
-                {project.liveDemo ? t("live", "онлайн") : t("repository", "репозиторий")}
+                {project.liveDemo
+                  ? t("live", "онлайн")
+                  : t("repository", "репозиторий")}
               </dd>
             </div>
           </dl>
@@ -183,7 +213,8 @@ export default function ProjectCaseStudy({
 
           <article>
             <h2>
-              <span className="font-dot">02</span> / {t("contribution", "вклад")}
+              <span className="font-dot">02</span> /{" "}
+              {t("contribution", "вклад")}
             </h2>
             <ul>
               {localizedProject.features.slice(0, 3).map((feature) => (
@@ -194,7 +225,8 @@ export default function ProjectCaseStudy({
 
           <article>
             <h2>
-              <span className="font-dot">03</span> / {t("technology", "технологии")}
+              <span className="font-dot">03</span> /{" "}
+              {t("technology", "технологии")}
             </h2>
             <ul>
               {project.tags.slice(0, 4).map((tag) => (
@@ -204,7 +236,10 @@ export default function ProjectCaseStudy({
           </article>
         </section>
 
-        <nav className="project-case-pagination" aria-label={t("Adjacent projects", "Соседние проекты")}>
+        <nav
+          className="project-case-pagination"
+          aria-label={t("Adjacent projects", "Соседние проекты")}
+        >
           <Link href={localizedHref(`/projects/${previousProject.id}`)}>
             <ArrowLeft size={16} aria-hidden="true" />
             <span>{previousProject.number}</span>
