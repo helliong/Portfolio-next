@@ -1,9 +1,9 @@
 import type { NextConfig } from "next";
 
-// Keep exported project images portable across static and Vercel deployments.
+// Let Next.js serve responsive modern formats while source assets stay portable.
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
   },
   devIndicators: false,
 };
