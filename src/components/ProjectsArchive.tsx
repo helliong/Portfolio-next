@@ -148,6 +148,9 @@ export default function ProjectsArchive({ initialFilter = "all" }: Props) {
               {t("services", "услуги")}
             </Link>
             <Link href={localizedHref("/pricing")}>{t("pricing", "цены")}</Link>
+            <Link href={localizedHref("/hire-me")}>
+              {t("hire me", "для компаний")}
+            </Link>
             <Link href={localizedHref("/#contact")}>
               {t("contact", "контакты")}
             </Link>
