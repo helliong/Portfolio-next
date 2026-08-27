@@ -16,9 +16,9 @@ export default function Header() {
   const { localizedHref, theme, t } = usePreferences();
   const navItems = [
     ["projects", "проекты"],
-    ["services", "услуги"],
     ["about", "обо мне"],
-
+    ["services", "услуги"],
+    ["pricing", "цены"],
     ["contact", "контакты"],
   ];
 
