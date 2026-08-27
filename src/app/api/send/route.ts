@@ -27,6 +27,7 @@ const allowedProjectTypes = new Set([
   "Online store",
   "Web application / MVP",
   "Additional services",
+  "Employment opportunity",
 ]);
 
 type ContactRequest = {
@@ -178,10 +179,10 @@ export async function POST(request: Request) {
     const { error } = await resend.emails.send({
       from: "Portfolio <onboarding@resend.dev>",
       to: "saoffabg@gmail.com",
-      subject: `New request from ${name}`,
+      subject: `${projectType === "Employment opportunity" ? "New employment offer" : "New request"} from ${name}`,
       replyTo: email,
       html: `
-        <h2>New Project Request</h2>
+        <h2>${projectType === "Employment opportunity" ? "New Employment Offer" : "New Project Request"}</h2>
         <p><strong>Name:</strong> ${escapeHtml(name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(email)}</p>
         <p><strong>Project type:</strong> ${escapeHtml(projectType || "not specified")}</p>

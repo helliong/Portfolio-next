@@ -6,6 +6,7 @@ const staticRoutes = [
   { path: "/", priority: 1 },
   { path: "/projects", priority: 0.9 },
   { path: "/pricing", priority: 0.8 },
+  { path: "/hire-me", priority: 0.8 },
   { path: "/privacy", priority: 0.4 },
 ] as const;
 
