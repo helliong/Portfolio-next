@@ -31,10 +31,19 @@ type ApiResponse = {
   code?: string;
   message?: string;
   retryAfter?: number;
+  rateLimit?: RateLimitState | null;
 };
 
-const cooldownStorageKey = "portfolio_contact_cooldown";
-const clientCooldownMs = 5 * 60 * 1_000;
+type RateLimitState = {
+  limit: number;
+  remaining: number;
+  resetAt: number;
+  retryAfter?: number;
+};
+
+const rateLimitStorageKey = "portfolio_project_rate_limit";
+const rateLimitWindowMs = 10 * 60 * 1_000;
+const defaultRateLimit: RateLimitState = { limit: 3, remaining: 3, resetAt: 0 };
 
 const emptyErrors: Errors = {
   name: "",
@@ -56,8 +65,8 @@ export default function SelfServicePopup({
   const [isSending, setIsSending] = useState(false);
   const [errors, setErrors] = useState<Errors>(emptyErrors);
   const [projectType, setProjectType] = useState<ProjectType>(initialProjectType);
-  const [cooldownUntil, setCooldownUntil] = useState(0);
-  const [cooldownRemaining, setCooldownRemaining] = useState(0);
+  const [rateLimit, setRateLimit] = useState<RateLimitState>(defaultRateLimit);
+  const [resetRemaining, setResetRemaining] = useState(0);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const messageFieldRef = useRef<HTMLTextAreaElement>(null);
   const titleId = useId();
@@ -98,37 +107,37 @@ export default function SelfServicePopup({
     return "";
   };
 
-  /** Persists a cooldown and immediately updates the current tab. */
-  const applyCooldown = (until: number) => {
-    setCooldownUntil(until);
-    setCooldownRemaining(Math.max(0, Math.ceil((until - Date.now()) / 1_000)));
-
+  /** Persists the server quota so the remaining count survives reopening. */
+  const applyRateLimit = (nextRateLimit: RateLimitState) => {
+    setRateLimit(nextRateLimit);
+    setResetRemaining(Math.max(0, Math.ceil((nextRateLimit.resetAt - Date.now()) / 1_000)));
     try {
-      window.localStorage.setItem(cooldownStorageKey, String(until));
+      window.localStorage.setItem(rateLimitStorageKey, JSON.stringify(nextRateLimit));
     } catch {
       // localStorage can be unavailable in privacy modes; the server limit remains authoritative.
     }
   };
 
-  // Restore the persisted cooldown whenever the dialog opens.
+  // Restore the persisted quota whenever the dialog opens.
   useEffect(() => {
     if (isOpen) {
       setProjectType(initialProjectType);
       setErrors(emptyErrors);
       try {
-        const storedCooldown = Number(window.localStorage.getItem(cooldownStorageKey));
+        const storedValue = window.localStorage.getItem(rateLimitStorageKey);
+        const storedRateLimit = storedValue ? JSON.parse(storedValue) as RateLimitState : null;
 
-        if (Number.isFinite(storedCooldown) && storedCooldown > Date.now()) {
-          setCooldownUntil(storedCooldown);
-          setCooldownRemaining(Math.ceil((storedCooldown - Date.now()) / 1_000));
+        if (storedRateLimit && storedRateLimit.resetAt > Date.now()) {
+          setRateLimit(storedRateLimit);
+          setResetRemaining(Math.ceil((storedRateLimit.resetAt - Date.now()) / 1_000));
         } else {
-          window.localStorage.removeItem(cooldownStorageKey);
-          setCooldownUntil(0);
-          setCooldownRemaining(0);
+          window.localStorage.removeItem(rateLimitStorageKey);
+          setRateLimit(defaultRateLimit);
+          setResetRemaining(0);
         }
       } catch {
-        setCooldownUntil(0);
-        setCooldownRemaining(0);
+        setRateLimit(defaultRateLimit);
+        setResetRemaining(0);
       }
 
       setShow(true);
@@ -145,43 +154,46 @@ export default function SelfServicePopup({
     return () => window.clearTimeout(hideTimer);
   }, [initialProjectType, isOpen]);
 
-  // Update the visible countdown and remove expired cooldown data.
+  // Update the visible reset countdown and restore all three messages on expiry.
   useEffect(() => {
-    if (!cooldownUntil) return;
+    if (!rateLimit.resetAt) return;
 
-    const updateCooldown = () => {
-      const remaining = Math.max(0, Math.ceil((cooldownUntil - Date.now()) / 1_000));
-      setCooldownRemaining(remaining);
+    const updateReset = () => {
+      const remaining = Math.max(0, Math.ceil((rateLimit.resetAt - Date.now()) / 1_000));
+      setResetRemaining(remaining);
 
       if (remaining === 0) {
-        setCooldownUntil(0);
+        setRateLimit(defaultRateLimit);
         setErrors((current) => ({ ...current, submit: "" }));
         try {
-          window.localStorage.removeItem(cooldownStorageKey);
+          window.localStorage.removeItem(rateLimitStorageKey);
         } catch {
-          // The in-memory cooldown has still expired.
+          // The in-memory quota has still expired.
         }
       }
     };
 
-    updateCooldown();
-    const timer = window.setInterval(updateCooldown, 1_000);
+    updateReset();
+    const timer = window.setInterval(updateReset, 1_000);
     return () => window.clearInterval(timer);
-  }, [cooldownUntil]);
+  }, [rateLimit.resetAt]);
 
-  // Keep the cooldown consistent when the form is open in multiple tabs.
+  // Keep the quota consistent when the form is open in multiple tabs.
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
-      if (event.key !== cooldownStorageKey) return;
-
-      const nextCooldown = Number(event.newValue);
-      if (Number.isFinite(nextCooldown) && nextCooldown > Date.now()) {
-        setCooldownUntil(nextCooldown);
-        setCooldownRemaining(Math.ceil((nextCooldown - Date.now()) / 1_000));
-      } else {
-        setCooldownUntil(0);
-        setCooldownRemaining(0);
+      if (event.key !== rateLimitStorageKey) return;
+      try {
+        const nextRateLimit = event.newValue ? JSON.parse(event.newValue) as RateLimitState : null;
+        if (nextRateLimit && nextRateLimit.resetAt > Date.now()) {
+          setRateLimit(nextRateLimit);
+          setResetRemaining(Math.ceil((nextRateLimit.resetAt - Date.now()) / 1_000));
+          return;
+        }
+      } catch {
+        // Fall through to the default quota for malformed storage values.
       }
+      setRateLimit(defaultRateLimit);
+      setResetRemaining(0);
     };
 
     window.addEventListener("storage", handleStorage);
@@ -257,7 +269,7 @@ export default function SelfServicePopup({
           onSubmit={async (event) => {
             event.preventDefault();
 
-            if (cooldownUntil > Date.now()) return;
+            if (rateLimit.remaining === 0 && rateLimit.resetAt > Date.now()) return;
 
             const form = event.currentTarget;
             const formData = new FormData(form);
@@ -288,7 +300,11 @@ export default function SelfServicePopup({
                   typeof payload?.retryAfter === "number" && payload.retryAfter > 0
                     ? payload.retryAfter
                     : 60;
-                applyCooldown(Date.now() + retryAfter * 1_000);
+                applyRateLimit(payload?.rateLimit ?? {
+                  limit: 3,
+                  remaining: 0,
+                  resetAt: Date.now() + retryAfter * 1_000,
+                });
                 setErrors((current) => ({
                   ...current,
                   submit: t("too many requests. please wait before trying again", "слишком много запросов. попробуйте позже"),
@@ -300,7 +316,11 @@ export default function SelfServicePopup({
                 throw new Error(payload?.message ?? "Failed to send request");
               }
 
-              applyCooldown(Date.now() + clientCooldownMs);
+              applyRateLimit(payload.rateLimit ?? {
+                limit: 3,
+                remaining: Math.max(0, rateLimit.remaining - 1),
+                resetAt: Date.now() + rateLimitWindowMs,
+              });
 
               onClose();
               window.setTimeout(() => {
@@ -423,9 +443,9 @@ export default function SelfServicePopup({
           </div>
 
           {errors.submit && <p className="project-popup-submit-error">{errors.submit}</p>}
-          {!errors.submit && cooldownRemaining > 0 && (
-            <p className="project-popup-submit-error">
-              {t("Request sent. Try again in", "Заявка отправлена. Повторите через")} {formatCooldown(cooldownRemaining)}
+          {!errors.submit && rateLimit.resetAt > Date.now() && (
+            <p className="project-popup-rate-limit" aria-live="polite">
+              {t("Limit resets in", "Лимит обновится через")} {formatCooldown(resetRemaining)}
             </p>
           )}
 
@@ -444,14 +464,14 @@ export default function SelfServicePopup({
                 <button
                   type="submit"
                   className="project-popup-submit"
-                  disabled={isSending || cooldownRemaining > 0}
+                  disabled={isSending || (rateLimit.remaining === 0 && resetRemaining > 0)}
                 >
                   {isSending
                     ? t("SENDING...", "ОТПРАВКА...")
-                    : cooldownRemaining > 0
-                      ? `${t("TRY AGAIN IN", "ПОВТОРИТЬ ЧЕРЕЗ")} ${formatCooldown(cooldownRemaining)}`
+                    : rateLimit.remaining === 0 && resetRemaining > 0
+                      ? `${t("TRY AGAIN IN", "ПОВТОРИТЬ ЧЕРЕЗ")} ${formatCooldown(resetRemaining)}`
                       : t("SEND REQUEST", "ОТПРАВИТЬ")}
-                  {!isSending && cooldownRemaining === 0 && (
+                  {!isSending && !(rateLimit.remaining === 0 && resetRemaining > 0) && (
                     <ArrowUpRight size={17} strokeWidth={1.5} aria-hidden="true" />
                   )}
                 </button>

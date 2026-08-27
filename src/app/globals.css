@@ -2999,6 +2999,13 @@ body.light .footer-logo-light {
   margin-bottom: 0;
 }
 
+.project-popup-rate-limit {
+  margin: 14px 0 0;
+  color: #c9ff31;
+  font-size: 10px;
+  text-transform: lowercase;
+}
+
 .project-popup-footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
