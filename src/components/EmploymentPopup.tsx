@@ -11,9 +11,9 @@ type Errors = Partial<Record<"name" | "email" | "company" | "position" | "messag
 type RateLimitState = { limit: number; remaining: number; resetAt: number; retryAfter?: number };
 type ApiResponse = { success?: boolean; message?: string; retryAfter?: number; rateLimit?: RateLimitState | null };
 
-const rateLimitStorageKey = "portfolio_employment_rate_limit";
-const rateLimitWindowMs = 10 * 60 * 1_000;
-const defaultRateLimit: RateLimitState = { limit: 3, remaining: 3, resetAt: 0 };
+const rateLimitStorageKey = "portfolio_employment_cooldown_v2";
+const rateLimitWindowMs = 3 * 60 * 1_000;
+const defaultRateLimit: RateLimitState = { limit: 1, remaining: 1, resetAt: 0 };
 
 /** Renders a dedicated form for employment and contract opportunities. */
 export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
@@ -199,7 +199,7 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
                 if (response.status === 429) {
                   const retryAfter = payload?.retryAfter ?? 60;
                   applyRateLimit(payload?.rateLimit ?? {
-                    limit: 3,
+                    limit: 1,
                     remaining: 0,
                     resetAt: Date.now() + retryAfter * 1_000,
                   });
@@ -213,8 +213,8 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
                 return;
               }
               applyRateLimit(payload.rateLimit ?? {
-                limit: 3,
-                remaining: Math.max(0, rateLimit.remaining - 1),
+                limit: 1,
+                remaining: 0,
                 resetAt: Date.now() + rateLimitWindowMs,
               });
               onClose();

@@ -15,8 +15,8 @@ const redis =
     ? new Redis({ url: redisUrl, token: redisToken })
     : null;
 
-const rateLimitMax = 3;
-const rateLimitWindowMs = 10 * 60 * 1_000;
+const rateLimitMax = 1;
+const rateLimitWindowMs = 3 * 60 * 1_000;
 
 type RateLimitResult = {
   success: boolean;
@@ -75,7 +75,7 @@ function getRateLimitIdentifier(ip: string) {
 async function applyRateLimit(ip: string, category: "project" | "employment"): Promise<RateLimitResult | null> {
   if (!redis) return null;
 
-  const key = `portfolio:${deploymentEnvironment}:contact:${category}:${getRateLimitIdentifier(ip)}`;
+  const key = `portfolio:${deploymentEnvironment}:contact-v2:${category}:${getRateLimitIdentifier(ip)}`;
   const [allowed, count, ttl] = await redis.eval<
     [string, string],
     [number, number, number]

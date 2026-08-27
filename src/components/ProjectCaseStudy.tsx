@@ -99,7 +99,9 @@ export default function ProjectCaseStudy({
               {t("services", "услуги")}
             </Link>
             <Link href={localizedHref("/#about")}>{t("about", "обо мне")}</Link>
-
+            <Link href={localizedHref("/hire-me")}>
+              {t("hire me", "для компаний")}
+            </Link>
             <Link href={localizedHref("/#contact")}>
               {t("contact", "контакты")}
             </Link>
