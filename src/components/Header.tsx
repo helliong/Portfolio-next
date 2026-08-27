@@ -15,11 +15,11 @@ export default function Header() {
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const { localizedHref, theme, t } = usePreferences();
   const navItems = [
-    ["projects", "проекты"],
-    ["about", "обо мне"],
-    ["services", "услуги"],
-    ["pricing", "цены"],
-    ["contact", "контакты"],
+    { href: "#projects", label: "projects", ru: "проекты" },
+    { href: "#about", label: "about", ru: "обо мне" },
+    { href: "#services", label: "services", ru: "услуги" },
+    { href: "#pricing", label: "pricing", ru: "цены" },
+    { href: "#contact", label: "contact", ru: "контакты" },
   ];
 
   /** Displays a short confirmation after a successful form submission. */
@@ -32,7 +32,7 @@ export default function Header() {
     <header id="home" className="site-header">
       <div className="topbar">
         <a
-          href="#home"
+          href="/"
           aria-label={t("Back to top", "Наверх")}
           className="brand-mark"
         >
@@ -58,9 +58,9 @@ export default function Header() {
           className="desktop-nav"
           aria-label={t("Primary navigation", "Основная навигация")}
         >
-          {navItems.map(([id, ru]) => (
-            <a key={id} href={`#${id}`}>
-              {t(id, ru)}
+          {navItems.map((item) => (
+            <a key={item.label} href={item.href}>
+              {t(item.label, item.ru)}
             </a>
           ))}
         </nav>
@@ -82,9 +82,9 @@ export default function Header() {
           className="mobile-nav"
           aria-label={t("Mobile navigation", "Мобильная навигация")}
         >
-          {navItems.map(([id, ru]) => (
-            <a key={id} href={`#${id}`}>
-              {t(id, ru)}
+          {navItems.map((item) => (
+            <a key={item.label} href={item.href}>
+              {t(item.label, item.ru)}
             </a>
           ))}
         </nav>
@@ -95,10 +95,10 @@ export default function Header() {
           <div>
             <h1 className="font-dot">
               <span className="hero-title-line">
-                {t("full-stack web", "full-stack веб")}
+                {t("full-stack web", "full-stack web")}
               </span>
               <br />
-              {t("developer", "разработчик")}
+              {t("developer", "developer")}
               <span className="blink-cursor" aria-hidden="true" />
             </h1>
             <p>

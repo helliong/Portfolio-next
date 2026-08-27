@@ -1,4 +1,5 @@
 import ProjectsArchive from "@/components/ProjectsArchive";
+import type { ProjectFilter } from "@/components/ProjectsArchive";
 import SiteProviders from "@/components/SiteProviders";
 import { projects } from "@/data/projects";
 import { isLocale, locales, localizedAlternates, type Locale } from "@/i18n";
@@ -10,6 +11,7 @@ type Props = {
   params: Promise<{
     locale: string;
   }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 const localizedMetadata: Record<Locale, Metadata> = {
@@ -43,10 +45,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function projectFilterFromSearchParams(
+  searchParams: Record<string, string | string[] | undefined>,
+): ProjectFilter {
+  if ("web" in searchParams) return "web";
+  if ("app" in searchParams || "apps" in searchParams) return "apps";
+  if ("tools" in searchParams) return "tools";
+  return "all";
+}
+
 /** Renders the localized complete project archive route. */
-export default async function LocalizedProjectsPage({ params }: Props) {
+export default async function LocalizedProjectsPage({ params, searchParams }: Props) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
+  const resolvedSearchParams = searchParams ? await searchParams : {};
+  const initialFilter = projectFilterFromSearchParams(resolvedSearchParams);
   const structuredData = projectsJsonLd(projects, locale);
 
   return (
@@ -56,7 +69,7 @@ export default async function LocalizedProjectsPage({ params }: Props) {
           type="application/ld+json"
           dangerouslySetInnerHTML={jsonLd(structuredData)}
         />
-        <ProjectsArchive />
+        <ProjectsArchive initialFilter={initialFilter} />
       </>
     </SiteProviders>
   );
