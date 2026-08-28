@@ -11,7 +11,7 @@ type Errors = Partial<Record<"name" | "email" | "company" | "position" | "messag
 type RateLimitState = { limit: number; remaining: number; resetAt: number; retryAfter?: number };
 type ApiResponse = { success?: boolean; message?: string; retryAfter?: number; rateLimit?: RateLimitState | null };
 
-const rateLimitStorageKey = "portfolio_employment_cooldown_v2";
+const rateLimitStorageKey = "portfolio_employment_cooldown_v3";
 const rateLimitWindowMs = 3 * 60 * 1_000;
 const defaultRateLimit: RateLimitState = { limit: 1, remaining: 1, resetAt: 0 };
 
@@ -113,9 +113,17 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
   };
 
   const applyRateLimit = (nextRateLimit: RateLimitState) => {
-    setRateLimit(nextRateLimit);
-    setResetRemaining(Math.max(0, Math.ceil((nextRateLimit.resetAt - Date.now()) / 1_000)));
-    try { window.localStorage.setItem(rateLimitStorageKey, JSON.stringify(nextRateLimit)); } catch {}
+    const retryAfter =
+      typeof nextRateLimit.retryAfter === "number" && nextRateLimit.retryAfter > 0
+        ? Math.ceil(nextRateLimit.retryAfter)
+        : null;
+    const synchronizedRateLimit = retryAfter
+      ? { ...nextRateLimit, resetAt: Date.now() + retryAfter * 1_000 }
+      : nextRateLimit;
+
+    setRateLimit(synchronizedRateLimit);
+    setResetRemaining(Math.max(0, Math.ceil((synchronizedRateLimit.resetAt - Date.now()) / 1_000)));
+    try { window.localStorage.setItem(rateLimitStorageKey, JSON.stringify(synchronizedRateLimit)); } catch {}
   };
 
   const formatReset = (seconds: number) => {
@@ -197,7 +205,7 @@ export default function EmploymentPopup({ isOpen, onClose, onSuccess }: Props) {
               const payload = (await response.json().catch(() => null)) as ApiResponse | null;
               if (!response.ok || !payload?.success) {
                 if (response.status === 429) {
-                  const retryAfter = payload?.retryAfter ?? 60;
+                  const retryAfter = payload?.retryAfter ?? rateLimitWindowMs / 1_000;
                   applyRateLimit(payload?.rateLimit ?? {
                     limit: 1,
                     remaining: 0,

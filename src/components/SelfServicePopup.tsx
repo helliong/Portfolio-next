@@ -41,7 +41,7 @@ type RateLimitState = {
   retryAfter?: number;
 };
 
-const rateLimitStorageKey = "portfolio_project_cooldown_v2";
+const rateLimitStorageKey = "portfolio_project_cooldown_v3";
 const rateLimitWindowMs = 3 * 60 * 1_000;
 const defaultRateLimit: RateLimitState = { limit: 1, remaining: 1, resetAt: 0 };
 
@@ -109,10 +109,18 @@ export default function SelfServicePopup({
 
   /** Persists the server quota so the remaining count survives reopening. */
   const applyRateLimit = (nextRateLimit: RateLimitState) => {
-    setRateLimit(nextRateLimit);
-    setResetRemaining(Math.max(0, Math.ceil((nextRateLimit.resetAt - Date.now()) / 1_000)));
+    const retryAfter =
+      typeof nextRateLimit.retryAfter === "number" && nextRateLimit.retryAfter > 0
+        ? Math.ceil(nextRateLimit.retryAfter)
+        : null;
+    const synchronizedRateLimit = retryAfter
+      ? { ...nextRateLimit, resetAt: Date.now() + retryAfter * 1_000 }
+      : nextRateLimit;
+
+    setRateLimit(synchronizedRateLimit);
+    setResetRemaining(Math.max(0, Math.ceil((synchronizedRateLimit.resetAt - Date.now()) / 1_000)));
     try {
-      window.localStorage.setItem(rateLimitStorageKey, JSON.stringify(nextRateLimit));
+      window.localStorage.setItem(rateLimitStorageKey, JSON.stringify(synchronizedRateLimit));
     } catch {
       // localStorage can be unavailable in privacy modes; the server limit remains authoritative.
     }
@@ -299,7 +307,7 @@ export default function SelfServicePopup({
                 const retryAfter =
                   typeof payload?.retryAfter === "number" && payload.retryAfter > 0
                     ? payload.retryAfter
-                    : 60;
+                    : rateLimitWindowMs / 1_000;
                 applyRateLimit(payload?.rateLimit ?? {
                   limit: 1,
                   remaining: 0,
