@@ -112,6 +112,22 @@ export const projects: Project[] = [
     "liveDemo": "https://kmstudy.ru/"
   },
   {
+    "id": "cityvet",
+    "name": "Cityvet",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Cityvet",
+    "description": "No description yet.",
+    "tags": [
+      "nextjs",
+      "react",
+      "typescript"
+    ],
+    "category": "web",
+    "year": "2026",
+    "link": null,
+    "liveDemo": "https://cityvet.vercel.app/"
+  },
+  {
     "id": "lumea-candles",
     "name": "Lumea Candles",
     "image": "/assets/img/projects/mockup-lumea-candles.webp",
