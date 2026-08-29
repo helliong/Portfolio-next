@@ -96,6 +96,20 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
+    "id": "human.collective",
+    "name": "Human.Collective",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Human.Collective",
+    "description": "No description yet.",
+    "tags": [
+      "typescript"
+    ],
+    "category": "web",
+    "year": "2026",
+    "link": null,
+    "liveDemo": "https://human-collective.vercel.app/"
+  },
+  {
     "id": "kmstudy",
     "name": "Kmstudy",
     "image": "/assets/img/projects/mockup-kmstudy.webp",
