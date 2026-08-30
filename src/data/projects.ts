@@ -98,7 +98,7 @@ export const projects: Project[] = [
   {
     "id": "human.collective",
     "name": "Human.Collective",
-    "image": "/assets/img/projects/no-photo.webp",
+    "image": "/assets/img/projects/mockup-human.collective.webp",
     "alt": "Human.Collective",
     "description": "No description yet.",
     "tags": [
