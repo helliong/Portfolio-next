@@ -96,6 +96,21 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
+    "id": "audio-switcher",
+    "name": "Audio Switcher",
+    "image": "/assets/img/projects/mockup-audio-switcher.webp",
+    "alt": "Audio Switcher",
+    "description": "A Windows automation script for changing audio devices without opening system settings.",
+    "tags": [
+      "autohotkey",
+      "live-hidden"
+    ],
+    "category": "apps",
+    "year": "2026",
+    "link": "https://github.com/helliong/audio-switcher",
+    "liveDemo": "https://helliong.space/"
+  },
+  {
     "id": "human.collective",
     "name": "Human.Collective",
     "image": "/assets/img/projects/mockup-human.collective.webp",
@@ -176,21 +191,6 @@ export const projects: Project[] = [
     "year": "2026",
     "link": "https://github.com/helliong/market-ai",
     "liveDemo": "https://market-ai-xi.vercel.app/"
-  },
-  {
-    "id": "audio-switcher",
-    "name": "Audio Switcher",
-    "image": "/assets/img/projects/mockup-audio-switcher.webp",
-    "alt": "Audio Switcher",
-    "description": "A Windows automation script for changing audio devices without opening system settings.",
-    "tags": [
-      "autohotkey",
-      "live-hidden"
-    ],
-    "category": "apps",
-    "year": "2026",
-    "link": "https://github.com/helliong/audio-switcher",
-    "liveDemo": "https://helliong.space/"
   },
   {
     "id": "pinwindow",
