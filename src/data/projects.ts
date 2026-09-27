@@ -96,6 +96,25 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
+    "id": "baganov-lawyer",
+    "name": "Baganov Lawyer",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Baganov Lawyer",
+    "description": "No description yet.",
+    "tags": [
+      "docker",
+      "nextjs",
+      "payloadcms",
+      "react",
+      "scss-modules",
+      "typescript"
+    ],
+    "category": "web",
+    "year": "2026",
+    "link": null,
+    "liveDemo": "https://advokatbaganov.ru/"
+  },
+  {
     "id": "audio-switcher",
     "name": "Audio Switcher",
     "image": "/assets/img/projects/mockup-audio-switcher.webp",
