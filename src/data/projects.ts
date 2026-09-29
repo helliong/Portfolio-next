@@ -96,21 +96,6 @@ export const experienceGroups = [
 // Repository-backed projects displayed throughout the portfolio.
 export const projects: Project[] = [
   {
-    "id": "rust-gamma",
-    "name": "Rust Gamma",
-    "image": "/assets/img/projects/no-photo.webp",
-    "alt": "Rust Gamma",
-    "description": "Hardware monitor gamma switcher for Rust — instant hotkey control for NVIDIA, AMD, and Intel GPUs. EAC-safe, no injection or game file modifications.",
-    "tags": [
-      "live-hidden",
-      "c#"
-    ],
-    "category": "apps",
-    "year": "2026",
-    "link": "https://github.com/helliong/rust-gamma",
-    "liveDemo": "https://helliong.space/en"
-  },
-  {
     "id": "baganov-lawyer",
     "name": "Baganov Lawyer",
     "image": "/assets/img/projects/no-photo.webp",
@@ -128,6 +113,21 @@ export const projects: Project[] = [
     "year": "2026",
     "link": null,
     "liveDemo": "https://advokatbaganov.ru/"
+  },
+  {
+    "id": "rust-gamma",
+    "name": "Rust Gamma",
+    "image": "/assets/img/projects/no-photo.webp",
+    "alt": "Rust Gamma",
+    "description": "Hardware monitor gamma switcher for Rust — instant hotkey control for NVIDIA, AMD, and Intel GPUs. EAC-safe, no injection or game file modifications.",
+    "tags": [
+      "live-hidden",
+      "c#"
+    ],
+    "category": "apps",
+    "year": "2026",
+    "link": "https://github.com/helliong/rust-gamma",
+    "liveDemo": "https://helliong.space/en"
   },
   {
     "id": "audio-switcher",
