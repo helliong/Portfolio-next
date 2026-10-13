@@ -48,6 +48,8 @@ npm run dev
 
 Откройте [localhost:3000](http://localhost:3000).
 
+Инструкция по production-контейнеру и развёртыванию на сервере находится в [DOCKER.md](DOCKER.md).
+
 Чтобы включить отправку заявок, создайте `.env.local`:
 
 ```env

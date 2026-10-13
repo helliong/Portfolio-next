@@ -13,7 +13,7 @@
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.2",
     "lucide-react": "^1.14.0",
-    "next": "latest",
+    "next": "^16.4.0",
     "react": "latest",
     "react-dom": "latest",
     "resend": "^6.12.3",
