@@ -48,6 +48,8 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000).
 
+For a production container and server deployment, see [DOCKER.md](DOCKER.md).
+
 Create `.env.local` to enable the contact form:
 
 ```env
